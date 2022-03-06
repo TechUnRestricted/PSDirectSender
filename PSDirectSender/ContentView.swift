@@ -30,8 +30,13 @@ struct ContentView: View {
                         SidebarButton(type: screen)
                     }
                 }
-                
-            }.listStyle(SidebarListStyle())
+                Spacer()
+                Text("PS4 Connection Status: 􀇺")
+                    .lineLimit(2)
+                    .font(.subheadline)
+
+            }
+            .listStyle(SidebarListStyle())
                 .toolbar {
                     ToolbarItem(placement: .automatic) {
                         Button(action: {
