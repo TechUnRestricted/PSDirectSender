@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import Introspect
 
 
 enum Screen: String, CaseIterable{
@@ -20,21 +20,23 @@ enum Screen: String, CaseIterable{
 
 struct ContentView: View {
     @State var currentScreen : Screen? = .queue
+    @State var currentTab : Screen = .queue
+
     var body: some View {
         NavigationView(){
             List(selection: $currentScreen){
                 Text("Navigation")
                     .font(.subheadline)
                 ForEach(Screen.allCases, id: \.self) { screen in
-                    NavigationLink(destination: ScreenView(screen: currentScreen ?? .queue)) {
                         SidebarButton(type: screen)
-                    }
                 }
                 Spacer()
                 Text("PS4 Connection Status: 􀇺")
                     .lineLimit(2)
                     .font(.subheadline)
 
+            }.onChange(of: currentScreen!){ action in
+                currentTab = action
             }
             .listStyle(SidebarListStyle())
                 .toolbar {
@@ -46,6 +48,19 @@ struct ContentView: View {
                         })
                     }
                 }
+            TabView(selection: $currentTab){
+                ForEach(Screen.allCases, id: \.self) { screen in
+                    ScreenView(screen: screen)
+                        .tag(screen)
+                }
+            }
+            .introspectTabView{ property in
+                            /* Using Introspect dependency
+                             to disable TabView stock styling */
+                            property.tabPosition = .none
+                            property.tabViewBorderType = .none
+                        }
+
             
         }
     }

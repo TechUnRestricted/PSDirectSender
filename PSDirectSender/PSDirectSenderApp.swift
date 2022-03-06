@@ -12,7 +12,6 @@ struct PSDirectSenderApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                
             .navigationSubtitle("for Remote Package Installer")
         }
     }
