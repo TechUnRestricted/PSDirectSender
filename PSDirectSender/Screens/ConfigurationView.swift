@@ -2,86 +2,74 @@
 //  ConfigurationView.swift
 //  PSDirectSender
 //
-//  Created by Macintosh on 06.03.2022.
+//  Created by Macintosh on 23.04.2022.
 //
 
 import SwiftUI
 
-func selectPackages() -> String?{
-    let dialog = NSOpenPanel()
-
-    dialog.title                   = "Choose PKGs"
-    dialog.showsResizeIndicator    = true
-    dialog.showsHiddenFiles        = false
-    dialog.allowsMultipleSelection = true
-    dialog.canCreateDirectories    = true
-    dialog.allowedFileTypes = ["pkg"]
-    dialog.canChooseDirectories = false;
-
-    if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
-        return dialog.url?.path
-    }
+struct ConfigurationView: View {
+    @State var serverIP : String = ""
+    @State var serverPort : String = "15460"
+    @State var consoleIP : String = ""
+    @State var consolePort : String = "12800"
     
-    return nil
-}
-
-struct ConfigurationView: View{
-    
-    @State var consoleIPAddressTextField : String = ""
-    @State var consoleRPIPortTextField : String = ""
-    
-    @State var webServerDirectoryTextField : String = ""
-    @State var webServerDefaultPortTextField : String = ""
-    
-    @State var useBuiltInWebServerToggle : Bool = true
-    
-    var body: some View{
-        VStack(spacing: 40){
-            //TODO: Better UI Handling
-            VStack(alignment: .leading){
-
-                Group{
-                    Text("Console IP Address: ")
-                    TextField("IP", text: $consoleIPAddressTextField)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+    @State var networkingPorts : [String] = []
+    @State var test = 1
+    var body: some View {
+        ScrollView(.vertical){
+            VStack(spacing: 25){
+                
+                VStack(){
+                    Text("Server Configuration")
+                        .font(.title3)
+                        .opacity(0.6)
+                    Group{
+                        HStack{
+                            Text("IP Address")
+                            VDKComboBox(items: $networkingPorts, text: $serverIP)
+                        }.onAppear(perform: {
+                            networkingPorts = networking.getIPNetworkAddresses()
+                            if let ip = networkingPorts.first, serverPort.isEmpty{
+                                serverIP = ip;
+                            }
+                        })
+                        HStack{
+                            Text("Port")
+                            TextField("15460", text: $serverPort)
+                        }
+                    }
                 }
-                Group{
-                    Text("RPI Port: ")
-                    TextField("12800 (default)", text: $consoleRPIPortTextField)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                VStack{
+                    Text("Remote Package Installer Configuration")
+                        .font(.title3)
+                        .opacity(0.6)
+                    Group{
+                        HStack{
+                            Text("Console IP Address")
+                            TextField("192.168.1.100 (example)", text: $consoleIP)
+                        }
+                        HStack{
+                            Text("RPI Port")
+                            TextField("12800 (default)", text: $consolePort)
+                        }
+                    }
+                    .pickerStyle(DefaultPickerStyle())
                 }
-            }
-            VStack(alignment: .leading){
-                Group{
-                    Text("Web Server Directory: ")
-                    TextField("/ (default)", text: $webServerDirectoryTextField)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                }
-                Group{
-                    Text("Default Port: ")
-                    TextField("19132 (default)", text: $webServerDefaultPortTextField)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                VStack{
+                  
                 }
             }
+            .padding()
+            .frame(maxWidth: 500)
             
-            Toggle("Use Built-in Web Server", isOn: $useBuiltInWebServerToggle)
-                .toggleStyle(CheckboxToggleStyle())
-                .frame(maxWidth: .infinity, alignment: .leading)
-            VStack(alignment: .center){
-            
-                Button("Force Save and Restart"){
-                    selectPackages()
-                }
-                Button("Reset to Default Settings"){}
-            
-            
-            }
-            
-        }.padding()
+        }
     }
 }
+
 struct ConfigurationView_Previews: PreviewProvider {
     static var previews: some View {
         ConfigurationView()
+            .frame(width: 300, height: 250)
     }
 }
