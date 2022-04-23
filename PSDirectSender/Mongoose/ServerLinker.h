@@ -16,6 +16,7 @@
 
 - (void) startServer;
 - (void) stopServer;
+- (BOOL) serverIsRunning;
 
 @end
 

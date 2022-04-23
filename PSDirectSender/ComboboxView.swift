@@ -8,8 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct VDKComboBox: NSViewRepresentable
-{
+struct VDKComboBox: NSViewRepresentable{
     // The items that will show up in the pop-up menu:
     @Binding var items: [String]
     
@@ -22,19 +21,17 @@ struct VDKComboBox: NSViewRepresentable
     }
     
     
-    func makeNSView(context: Context) -> NSComboBox
-    {
+    func makeNSView(context: Context) -> NSComboBox{
         let comboBox = NSComboBox()
         comboBox.usesDataSource = false
-        comboBox.completes = false
+        comboBox.completes = true
         comboBox.delegate = context.coordinator
         comboBox.intercellSpacing = NSSize(width: 0.0, height: 10.0)            // Matches the look and feel of Big Sur onwards.
         return comboBox
     }
     
 
-    func updateNSView(_ nsView: NSComboBox, context: Context)
-    {
+    func updateNSView(_ nsView: NSComboBox, context: Context){
         nsView.removeAllItems()
         nsView.addItems(withObjectValues: items)
         
@@ -51,10 +48,9 @@ struct VDKComboBox: NSViewRepresentable
 // MARK: - Coordinator
 
 
-extension VDKComboBox
-{
-    class Coordinator: NSObject, NSComboBoxDelegate
-    {
+extension VDKComboBox {
+    
+    class Coordinator: NSObject, NSComboBoxDelegate {
         var parent: VDKComboBox
         var ignoreSelectionChanges: Bool = false
         
@@ -62,9 +58,8 @@ extension VDKComboBox
             self.parent = parent
         }
         
-
-        func comboBoxSelectionDidChange(_ notification: Notification)
-        {
+        
+        func comboBoxSelectionDidChange(_ notification: Notification){
             if !ignoreSelectionChanges,
                let box: NSComboBox = notification.object as? NSComboBox,
                let newStringValue: String = box.objectValueOfSelectedItem as? String
@@ -74,8 +69,7 @@ extension VDKComboBox
         }
         
         
-        func controlTextDidEndEditing(_ obj: Notification)
-        {
+        func controlTextDidEndEditing(_ obj: Notification){
             if let textField = obj.object as? NSTextField
             {
                 parent.text = textField.stringValue

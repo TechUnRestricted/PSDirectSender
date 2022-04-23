@@ -42,6 +42,10 @@ static void fn(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
     serverIsTurnedOn = false;
 }
 
+- (BOOL) serverIsRunning {
+    return serverIsTurnedOn;
+}
+
 - (void) setDirectoryPath:(NSString*)input {
     directoryPath = input;
 }

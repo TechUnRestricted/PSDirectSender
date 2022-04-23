@@ -15,6 +15,10 @@ struct ConfigurationView: View {
     
     @State var networkingPorts : [String] = []
     @State var test = 1
+    
+    @State var showingAlert : Bool = false;
+    @State var alertText : String = ""
+    
     var body: some View {
         ScrollView(.vertical){
             VStack(spacing: 25){
@@ -29,13 +33,15 @@ struct ConfigurationView: View {
                             VDKComboBox(items: $networkingPorts, text: $serverIP)
                         }.onAppear(perform: {
                             networkingPorts = networking.getIPNetworkAddresses()
-                            if let ip = networkingPorts.first, serverPort.isEmpty{
+                            if let ip = networkingPorts.first, serverIP.isEmpty{
                                 serverIP = ip;
                             }
                         })
                         HStack{
                             Text("Port")
-                            TextField("15460", text: $serverPort)
+                            TextField("15460", text: $serverPort).onAppear(perform: {
+                                serverPort = String(networking.findFreePort())
+                            })
                         }
                     }
                 }
@@ -56,16 +62,20 @@ struct ConfigurationView: View {
                     }
                     .pickerStyle(DefaultPickerStyle())
                 }
-                VStack{
-                  
-                }
             }
             .padding()
             .frame(maxWidth: 500)
             
+            Button("Apply Settings and Restart Server"){
+                    swiftStartServer(serverIP: serverIP, serverPort: serverPort)
+            }.alert(isPresented: $showingAlert) {
+                Alert(title: Text("Important message"), message: Text(alertText), dismissButton: .default(Text("Got it!")))
+            }
         }
     }
 }
+
+
 
 struct ConfigurationView_Previews: PreviewProvider {
     static var previews: some View {
@@ -73,3 +83,4 @@ struct ConfigurationView_Previews: PreviewProvider {
             .frame(width: 300, height: 250)
     }
 }
+

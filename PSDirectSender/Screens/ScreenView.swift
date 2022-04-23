@@ -13,7 +13,7 @@ struct ScreenView: View {
     var body: some View {
         switch(screen){
         case .queue:
-            Text("Queue")
+            QueueView()
         case .configuration:
             ConfigurationView()
         case .logs:
