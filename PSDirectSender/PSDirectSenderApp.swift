@@ -38,6 +38,7 @@ extension String {
         return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }
 }
+
 extension Int {
     func isInRange(_ start: Int, _ end: Int) -> Bool{
         return self >= start && self <= end
@@ -56,6 +57,26 @@ extension Bundle {
     //public var appVersionShort: String { getInfo("CFBundleShortVersion") }
     
     fileprivate func getInfo(_ str: String) -> String { infoDictionary?[str] as? String ?? "⚠️" }
+}
+
+extension NSTableView {
+    open override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        
+        backgroundColor = NSColor.clear
+        if let esv = enclosingScrollView {
+            esv.drawsBackground = false
+        }
+    }
+}
+
+extension NSTabView{
+    open override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        
+        tabViewBorderType = .none
+        tabPosition = .none
+    }
 }
 
 func createTempDirPackageAlias(packageURL: URL) -> String?{

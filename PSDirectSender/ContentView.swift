@@ -47,12 +47,7 @@ struct ContentView: View {
                         .tag(screen)
                 }
             }
-            .introspectTabView{ property in
-                /* Using Introspect dependency
-                 to disable TabView stock styling */
-                property.tabPosition = .none
-                property.tabViewBorderType = .none
-            }
+
         }
     }
 }

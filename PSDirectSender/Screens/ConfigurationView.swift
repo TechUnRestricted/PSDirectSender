@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct ConfigurationView: View {
-    @State var serverIP : String = ""
-    @State var serverPort : String = "15460"
-    @State var consoleIP : String = ""
-    @State var consolePort : String = "12800"
+    @Binding var serverIP : String
+    @Binding var serverPort : String
+    @Binding var consoleIP : String
+    @Binding var consolePort : String
     
     @State var networkingPorts : [String] = []
-    @State var test = 1
     
     @State var showingAlert : Bool = false;
     @State var alertText : String = ""
@@ -79,7 +78,7 @@ struct ConfigurationView: View {
 
 struct ConfigurationView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfigurationView()
+        ConfigurationView(serverIP: .constant("192.168.100.9"), serverPort: .constant("19132"), consoleIP: .constant("192.168.100.128"), consolePort: .constant("12200"))
             .frame(width: 300, height: 250)
     }
 }
