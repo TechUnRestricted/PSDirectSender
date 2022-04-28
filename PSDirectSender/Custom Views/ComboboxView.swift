@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct VDKComboBox: NSViewRepresentable{
+struct ComboboxView: NSViewRepresentable{
     // The items that will show up in the pop-up menu:
     @Binding var items: [String]
     
@@ -48,13 +48,13 @@ struct VDKComboBox: NSViewRepresentable{
 // MARK: - Coordinator
 
 
-extension VDKComboBox {
+extension ComboboxView {
     
     class Coordinator: NSObject, NSComboBoxDelegate {
-        var parent: VDKComboBox
+        var parent: ComboboxView
         var ignoreSelectionChanges: Bool = false
         
-        init(_ parent: VDKComboBox) {
+        init(_ parent: ComboboxView) {
             self.parent = parent
         }
         
@@ -74,5 +74,11 @@ extension VDKComboBox {
                 parent.text = textField.stringValue
             }
         }
+    }
+}
+
+struct ComboboxView_Previews: PreviewProvider {
+    static var previews: some View {
+        ComboboxView(items: .constant(["One", "Two", "Three"]), text: .constant(""))
     }
 }

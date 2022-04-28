@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Introspect
 
 enum Screen: String, CaseIterable{
     case queue
@@ -16,12 +15,15 @@ enum Screen: String, CaseIterable{
 }
 
 struct ContentView: View {
-    @State var currentScreen : Screen? = .configuration
-    @State var currentTab : Screen = .configuration
+    @State var currentScreen : Screen? = .queue
+    @State var currentTab : Screen = .queue
     
     var body: some View {
         NavigationView(){
             List(selection: $currentScreen){
+                Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
+                    .opacity(0.8)
+                    .frame(maxWidth: .infinity)
                 Text("Navigation")
                     .font(.subheadline)
                 ForEach(Screen.allCases, id: \.self) { screen in
@@ -40,6 +42,7 @@ struct ContentView: View {
                     })
                 }
             }
+            .frame(minWidth: 180)
             
             TabView(selection: $currentTab){
                 ForEach(Screen.allCases, id: \.self) { screen in

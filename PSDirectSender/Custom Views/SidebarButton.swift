@@ -29,3 +29,9 @@ struct SidebarButton: View {
         }
     }
 }
+
+struct SidebarButton_Previews: PreviewProvider {
+    static var previews: some View {
+        SidebarButton(type: .configuration)
+    }
+}

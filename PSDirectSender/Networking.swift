@@ -90,12 +90,23 @@ class Networking{
         case invalidPort
     }
     
+    public func checkIfPortIsCorrect(port : String) -> Bool{
+        if let port = Int(port){
+            return port.isInRange(0, 65535)
+        }
+        return false
+    }
+    
+    public func checkIfIPIsCorrect(ip : String) -> Bool{
+        return ip.matches(#"^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"#)
+    }
+    
     public func buildServerBaseURL(ip: String, port: Int, ignoreChecks: Bool = false) throws -> String{
         if (!ignoreChecks){
-            guard (ip.matches(#"^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"#)) else {
+            guard (checkIfIPIsCorrect(ip: ip)) else {
                 throw BaseURLError.invalidIP
             }
-            guard (port.isInRange(0, 65535)) else {
+            guard (checkIfPortIsCorrect(port: String(port))) else {
                 throw BaseURLError.invalidPort
             }
         }

@@ -14,11 +14,12 @@ let tempDirectory = fileMgr.temporaryDirectory
 
 class ConnectionDetails: ObservableObject {
     @Published var serverIP : String = ""
-    @Published var serverPort : String = "15460"
+    @Published var serverPort : String = ""
     @Published var consoleIP : String = ""
     @Published var consolePort : String = "12800"
     @Published var connectionStatus : ServerStatus = .stopped
 }
+
 
 @main
 struct PSDirectSenderApp: App {
@@ -172,12 +173,16 @@ func checkIfServerIsWorking(serverIP : String, serverPort : String) -> ServerSta
     guard let url = URL(string: "http://\(serverIP):\(serverPort)") else {
         return .fail
     }
+    
+    let config = URLSessionConfiguration.default
+    config.requestCachePolicy = .reloadIgnoringLocalCacheData
+    config.urlCache = nil
+    
     var status : ServerStatus = .stopped
     
-    let request = URLRequest(url: url)
     let semaphore = DispatchSemaphore(value: 0)
-    
-    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+    let request = URLRequest(url: url, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 60.0)
+    URLSession.shared.dataTask(with: request) { (data, response, error) in
         if let httpResponse = response as? HTTPURLResponse,  let serverHeader = httpResponse.allHeaderFields["Server"] as? String {
             if serverHeader == "PSDirectSender/Mongoose"{
                 status = .success
@@ -187,10 +192,16 @@ func checkIfServerIsWorking(serverIP : String, serverPort : String) -> ServerSta
             }
         }
         semaphore.signal()
-    }
-    
-    task.resume()
+    }.resume()
+
     semaphore.wait()
     
     return status
+}
+
+func everythingIsTrue(_ bools: Bool...) -> Bool {
+    for bool in bools where bool == false{
+        return false
+    }
+    return true;
 }
