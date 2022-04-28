@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct ConfigurationView: View {
-    @Binding var serverIP : String
-    @Binding var serverPort : String
-    @Binding var consoleIP : String
-    @Binding var consolePort : String
+    @EnvironmentObject var connection: ConnectionDetails
     
-    @State var networkingPorts : [String] = []
+    @State var networkingIPs : [String] = []
     
     @State var showingAlert : Bool = false;
     @State var alertText : String = ""
+    
+    @State private var checked = true
     
     var body: some View {
         ScrollView(.vertical){
@@ -29,17 +28,21 @@ struct ConfigurationView: View {
                     Group{
                         HStack{
                             Text("IP Address")
-                            VDKComboBox(items: $networkingPorts, text: $serverIP)
+                            VDKComboBox(items: $networkingIPs, text: $connection.serverIP)
                         }.onAppear(perform: {
-                            networkingPorts = networking.getIPNetworkAddresses()
-                            if let ip = networkingPorts.first, serverIP.isEmpty{
-                                serverIP = ip;
+                            if connection.serverIP.isEmpty {
+                                networkingIPs = networking.getIPNetworkAddresses()
+                                if let ip = networkingIPs.first{
+                                    connection.serverIP = ip;
+                                }
                             }
                         })
                         HStack{
                             Text("Port")
-                            TextField("15460", text: $serverPort).onAppear(perform: {
-                                serverPort = String(networking.findFreePort())
+                            TextField("15460", text: $connection.serverPort).onAppear(perform: {
+                                if connection.serverPort.isEmpty{
+                                    connection.serverPort = String(networking.findFreePort())
+                                }
                             })
                         }
                     }
@@ -52,11 +55,11 @@ struct ConfigurationView: View {
                     Group{
                         HStack{
                             Text("Console IP Address")
-                            TextField("192.168.1.100 (example)", text: $consoleIP)
+                            TextField("192.168.1.100 (example)", text: $connection.consoleIP)
                         }
                         HStack{
                             Text("RPI Port")
-                            TextField("12800 (default)", text: $consolePort)
+                            TextField("12800 (default)", text: $connection.consolePort)
                         }
                     }
                     .pickerStyle(DefaultPickerStyle())
@@ -66,10 +69,23 @@ struct ConfigurationView: View {
             .frame(maxWidth: 500)
             
             Button("Apply Settings and Restart Server"){
-                    swiftStartServer(serverIP: serverIP, serverPort: serverPort)
+                swiftStartServer(serverIP: connection.serverIP, serverPort: connection.serverPort)
             }.alert(isPresented: $showingAlert) {
                 Alert(title: Text("Important message"), message: Text(alertText), dismissButton: .default(Text("Got it!")))
             }
+            ServerStatusView(serverStatus: $connection.connectionStatus)
+                .frame(height: 40)
+                .onAppear(perform: {
+                    DispatchQueue.global(qos: .background).async {
+                        while(true){
+                            let x = checkIfServerIsWorking(serverIP: connection.serverIP, serverPort: connection.serverPort)
+                            DispatchQueue.main.async {
+                                connection.connectionStatus = x
+                            }
+                            sleep(1)
+                        }
+                    }
+                })
         }
     }
 }
@@ -77,9 +93,11 @@ struct ConfigurationView: View {
 
 
 struct ConfigurationView_Previews: PreviewProvider {
+    @StateObject var currentTheme = ConnectionDetails()
+    
     static var previews: some View {
-        ConfigurationView(serverIP: .constant("192.168.100.9"), serverPort: .constant("19132"), consoleIP: .constant("192.168.100.128"), consolePort: .constant("12200"))
-            .frame(width: 300, height: 250)
+        ConfigurationView()
+            .environmentObject(ConnectionDetails())
     }
 }
 

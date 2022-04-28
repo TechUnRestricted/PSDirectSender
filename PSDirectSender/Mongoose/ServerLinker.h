@@ -8,7 +8,7 @@
 #ifndef ServerLinker_h
 #define ServerLinker_h
 
-@interface MyClass : NSObject{
+@interface MongooseBridge : NSObject{
 
 }
 - (void) setDirectoryPath:(NSString*)input;

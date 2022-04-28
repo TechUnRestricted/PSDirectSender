@@ -8,11 +8,7 @@
 import SwiftUI
 
 struct QueueView: View {
-    @Binding var serverIP : String
-    @Binding var serverPort : String
-    @Binding var consoleIP : String
-    @Binding var consolePort : String
-    
+    @EnvironmentObject var vm: ConnectionDetails
     @State var packageURLs: [URL] = []
 
     var body: some View {
@@ -35,7 +31,7 @@ struct QueueView: View {
                         Text("\(package.lastPathComponent)")
                     Divider()
 
-                }//.listStyle(InsetListStyle())
+                }
                 
             }
             
@@ -46,6 +42,6 @@ struct QueueView: View {
 
 struct QueueView_Previews: PreviewProvider {
     static var previews: some View {
-        QueueView(serverIP: .constant("192.168.100.9"), serverPort: .constant("19132"), consoleIP: .constant("192.168.100.128"), consolePort: .constant("12200"))
+        EmptyView()
     }
 }

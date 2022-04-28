@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct structPackageSender: Codable {
     let type: String
     let packages: [String]

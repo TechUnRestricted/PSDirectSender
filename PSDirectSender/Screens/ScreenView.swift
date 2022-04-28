@@ -7,30 +7,17 @@
 
 import SwiftUI
 
+
 struct ScreenView: View {
     let screen : Screen
-    
-    @State var serverIP : String = ""
-    @State var serverPort : String = "15460"
-    @State var consoleIP : String = ""
-    @State var consolePort : String = "12800"
+    @EnvironmentObject var vm: ConnectionDetails
     
     var body: some View {
         switch(screen){
         case .queue:
-            QueueView(
-                serverIP: $serverIP,
-                serverPort: $serverPort,
-                consoleIP: $consoleIP,
-                consolePort: $consolePort
-            )
+            QueueView()
         case .configuration:
-            ConfigurationView(
-                serverIP: $serverIP,
-                serverPort: $serverPort,
-                consoleIP: $consoleIP,
-                consolePort: $consolePort
-            )
+            ConfigurationView()
         case .logs:
             Text("Logs")
         case .info:

@@ -8,15 +8,26 @@
 import SwiftUI
 
 let networking = Networking()
-let server = MyClass()
+let server = MongooseBridge()
 let fileMgr = FileManager.default
 let tempDirectory = fileMgr.temporaryDirectory
 
+class ConnectionDetails: ObservableObject {
+    @Published var serverIP : String = ""
+    @Published var serverPort : String = "15460"
+    @Published var consoleIP : String = ""
+    @Published var consolePort : String = "12800"
+    @Published var connectionStatus : ServerStatus = .stopped
+}
+
 @main
 struct PSDirectSenderApp: App {
+    @StateObject var currentTheme = ConnectionDetails()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(currentTheme)
                 .frame(minWidth: 650,
                        idealWidth: 750,
                        maxWidth: .infinity,
@@ -46,11 +57,11 @@ extension Int {
 }
 
 extension Bundle {
-    public var appName: String { getInfo("CFBundleName")  }
-    public var displayName: String {getInfo("CFBundleDisplayName")}
-    public var language: String {getInfo("CFBundleDevelopmentRegion")}
-    public var identifier: String {getInfo("CFBundleIdentifier")}
-    public var copyright: String {getInfo("NSHumanReadableCopyright").replacingOccurrences(of: "\\\\n", with: "\n") }
+    public var appName: String { getInfo("CFBundleName") }
+    public var displayName: String { getInfo("CFBundleDisplayName") }
+    public var language: String { getInfo("CFBundleDevelopmentRegion") }
+    public var identifier: String { getInfo("CFBundleIdentifier") }
+    public var copyright: String { getInfo("NSHumanReadableCopyright").replacingOccurrences(of: "\\\\n", with: "\n") }
     
     public var appBuild: String { getInfo("CFBundleVersion") }
     public var appVersionLong: String { getInfo("CFBundleShortVersionString") }
@@ -139,6 +150,7 @@ func sendPackagesToConsole(urlsPKG : [String], consoleIP : String, consolePort :
         url: (URL(string: "http://\(consoleIP):\(consolePort)")?.appendingPathComponent("api").appendingPathComponent("install"))!,
                 cachePolicy: .reloadIgnoringLocalCacheData
     )
+    
     request.httpBody = jsonData
     request.httpMethod = "POST"
     request.addValue("PSDirectSender/\(Bundle.main.appVersionLong)", forHTTPHeaderField: "User-Agent")
@@ -154,4 +166,31 @@ func sendPackagesToConsole(urlsPKG : [String], consoleIP : String, consolePort :
     task.resume()
     
     return ""
+}
+
+func checkIfServerIsWorking(serverIP : String, serverPort : String) -> ServerStatus {
+    guard let url = URL(string: "http://\(serverIP):\(serverPort)") else {
+        return .fail
+    }
+    var status : ServerStatus = .stopped
+    
+    let request = URLRequest(url: url)
+    let semaphore = DispatchSemaphore(value: 0)
+    
+    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        if let httpResponse = response as? HTTPURLResponse,  let serverHeader = httpResponse.allHeaderFields["Server"] as? String {
+            if serverHeader == "PSDirectSender/Mongoose"{
+                status = .success
+                print("[DEBUG:] \(serverHeader)")
+            } else {
+                status = .fail
+            }
+        }
+        semaphore.signal()
+    }
+    
+    task.resume()
+    semaphore.wait()
+    
+    return status
 }

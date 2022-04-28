@@ -18,6 +18,7 @@
 		E29F5F9D28142C4C00A8EA81 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5F9C28142C4C00A8EA81 /* ConfigurationView.swift */; };
 		E29F5FBA2814367B00A8EA81 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5FB92814367B00A8EA81 /* Networking.swift */; };
 		E29F5FD128143EDC00A8EA81 /* ComboboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5FD028143EDC00A8EA81 /* ComboboxView.swift */; };
+		E2A069F6281AA717001FAFE1 /* ServerStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A069F5281AA717001FAFE1 /* ServerStatusView.swift */; };
 		E2C028B3281464D1009B94EC /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C028B2281464D1009B94EC /* QueueView.swift */; };
 		E2C028B528147089009B94EC /* JsonSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C028B428147089009B94EC /* JsonSend.swift */; };
 /* End PBXBuildFile section */
@@ -39,6 +40,8 @@
 		E29F5F9C28142C4C00A8EA81 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		E29F5FB92814367B00A8EA81 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		E29F5FD028143EDC00A8EA81 /* ComboboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboboxView.swift; sourceTree = "<group>"; };
+		E2A069F5281AA717001FAFE1 /* ServerStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStatusView.swift; sourceTree = "<group>"; };
+		E2A06A0B281ADDE8001FAFE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E2C028B2281464D1009B94EC /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
 		E2C028B428147089009B94EC /* JsonSend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSend.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,13 +76,12 @@
 		E26BC3B028134D8000D339B7 /* PSDirectSender */ = {
 			isa = PBXGroup;
 			children = (
+				E2A06A0B281ADDE8001FAFE1 /* Info.plist */,
+				E26BC3B128134D8000D339B7 /* PSDirectSenderApp.swift */,
 				E26BC3DE2813F7C700D339B7 /* Mongoose */,
 				E26BC3C32813508D00D339B7 /* Screens */,
-				E26BC3B128134D8000D339B7 /* PSDirectSenderApp.swift */,
+				E2A069F7281ACF51001FAFE1 /* Custom Views */,
 				E2C028B428147089009B94EC /* JsonSend.swift */,
-				E26BC3C6281350D500D339B7 /* SidebarButton.swift */,
-				E29F5FD028143EDC00A8EA81 /* ComboboxView.swift */,
-				E26BC3B328134D8000D339B7 /* ContentView.swift */,
 				E29F5FB92814367B00A8EA81 /* Networking.swift */,
 				E26BC3B528134D8100D339B7 /* Assets.xcassets */,
 				E26BC3BA28134D8100D339B7 /* PSDirectSender.entitlements */,
@@ -99,6 +101,7 @@
 		E26BC3C32813508D00D339B7 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				E26BC3B328134D8000D339B7 /* ContentView.swift */,
 				E26BC3C4281350A700D339B7 /* ScreenView.swift */,
 				E29F5F9C28142C4C00A8EA81 /* ConfigurationView.swift */,
 				E2C028B2281464D1009B94EC /* QueueView.swift */,
@@ -116,6 +119,16 @@
 				E26BC3DF2813F82F00D339B7 /* PSDirectSender-Bridging-Header.h */,
 			);
 			path = Mongoose;
+			sourceTree = "<group>";
+		};
+		E2A069F7281ACF51001FAFE1 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				E2A069F5281AA717001FAFE1 /* ServerStatusView.swift */,
+				E26BC3C6281350D500D339B7 /* SidebarButton.swift */,
+				E29F5FD028143EDC00A8EA81 /* ComboboxView.swift */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,7 +179,6 @@
 			);
 			mainGroup = E26BC3A528134D8000D339B7;
 			packageReferences = (
-				E26BC3C028134FB200D339B7 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = E26BC3AF28134D8000D339B7 /* Products */;
 			projectDirPath = "";
@@ -198,6 +210,7 @@
 				E2C028B528147089009B94EC /* JsonSend.swift in Sources */,
 				E29F5F9D28142C4C00A8EA81 /* ConfigurationView.swift in Sources */,
 				E26BC3C5281350A700D339B7 /* ScreenView.swift in Sources */,
+				E2A069F6281AA717001FAFE1 /* ServerStatusView.swift in Sources */,
 				E26BC3B428134D8000D339B7 /* ContentView.swift in Sources */,
 				E29F5F9A28142BAE00A8EA81 /* ServerLinker.m in Sources */,
 				E26BC3E52813F85300D339B7 /* mongoose.c in Sources */,
@@ -339,6 +352,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"PSDirectSender/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PSDirectSender/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -367,6 +381,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"PSDirectSender/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PSDirectSender/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -403,17 +418,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		E26BC3C028134FB200D339B7 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
-			requirement = {
-				kind = exactVersion;
-				version = 0.1.4;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = E26BC3A628134D8000D339B7 /* Project object */;
 }

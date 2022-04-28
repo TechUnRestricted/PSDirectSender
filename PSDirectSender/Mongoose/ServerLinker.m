@@ -9,11 +9,12 @@
 #include "mongoose.h"
 #import "ServerLinker.h"
 
-@implementation MyClass {
+@implementation MongooseBridge {
     
 }
 
 NSString* directoryPath;
+NSString* extraHeaders = @"Server: PSDirectSender/Mongoose\r\n";
 NSString* serverBaseURL;
 
 unsigned int pollRate = 1000;
@@ -21,12 +22,13 @@ bool serverIsTurnedOn;
 
 static void fn(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
     struct mg_http_serve_opts opts = {
-        .root_dir = [directoryPath UTF8String]
+        .root_dir = [directoryPath UTF8String],
+        .extra_headers = [extraHeaders UTF8String]
+
     };   // Serve local dir
     
     if (ev == MG_EV_HTTP_MSG) mg_http_serve_dir(c, (struct mg_http_message*)ev_data, &opts);
 }
-
 - (void) startServer {
     serverIsTurnedOn = true;
     struct mg_mgr mgr;

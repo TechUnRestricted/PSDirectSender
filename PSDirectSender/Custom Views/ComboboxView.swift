@@ -70,8 +70,7 @@ extension VDKComboBox {
         
         
         func controlTextDidEndEditing(_ obj: Notification){
-            if let textField = obj.object as? NSTextField
-            {
+            if let textField = obj.object as? NSTextField{
                 parent.text = textField.stringValue
             }
         }
