@@ -14,6 +14,9 @@ class ConnectionDetails: ObservableObject {
     @Published var consolePort : String = "12800"
     @Published var connectionStatus : ServerStatus = .stopped
     @Published var networkingIPs : [String] = []
+    
+    @Published var logLines : [String] = []
+    
     func generateServerDetails(){
         serverPort = String(networking.findFreePort())
         
@@ -21,5 +24,9 @@ class ConnectionDetails: ObservableObject {
         if let ip = networkingIPs.first{
             serverIP = ip;
         }
+    }
+    
+    func addLog(_ text: String){
+        logLines.append("[\(getStringDate())] \(text)")
     }
 }

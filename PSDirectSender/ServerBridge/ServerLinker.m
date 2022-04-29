@@ -6,10 +6,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#include "mongoose.h"
+#include "../Mongoose/mongoose.h"
 #import "ServerLinker.h"
 
-@implementation MongooseBridge {
+@implementation ServerBridge {
     
 }
 

@@ -32,13 +32,17 @@ struct QueueView: View {
                 ColorButton(text: "Send", color: .green, image: Image(systemName: "arrow.up.forward.app"), handler: {
                     var linkAliases: [String] = []
                     for packageURL in packageURLs{
-                        linkAliases.append(createTempDirPackageAlias(packageURL: packageURL.url)!)
+                        let alias = createTempDirPackageAlias(packageURL: packageURL.url)!
+                        linkAliases.append(alias)
+                        vm.addLog("Creating package alias (\"\(packageURL.url.path)\" -> \"\(tempDirectory.path)\(alias)\").")
                     }
+                    vm.addLog("Sending packages \(linkAliases) to the console (IP: \(vm.consoleIP), Port: \(vm.consolePort)")
+                    sendPackagesToConsole(urlsPKG: linkAliases, consoleIP: vm.consoleIP, consolePort: Int(vm.consolePort)!)
                 })
             
                 ColorButton(text: "Delete", color: .red, image: Image(systemName: "trash"), handler: {
                     deleteSelection()
-                }).keyboardShortcut(.delete, modifiers: [])
+                }).onDeleteCommand(perform: selection.isEmpty ? nil : deleteSelection)
             }.padding()
             
             List(selection: $selection){
@@ -51,15 +55,11 @@ struct QueueView: View {
                     .padding(10)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .swiftyListDivider()
-
-                    
                 }
-            }.onDeleteCommand(perform: selection.isEmpty ? nil : deleteSelection)
-            
-            
+            }
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.gray.opacity(0.5), lineWidth: 2)
+                        .stroke(Color.gray.opacity(0.4), lineWidth: 2)
                 )
             
         }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 let networking = Networking()
-let server = MongooseBridge()
+let server = ServerBridge()
 let fileMgr = FileManager.default
 let tempDirectory = fileMgr.temporaryDirectory
 
@@ -42,6 +42,7 @@ extension String {
     }
 }
 
+
 extension Int {
     func isInRange(_ start: Int, _ end: Int) -> Bool{
         return self >= start && self <= end
@@ -73,11 +74,11 @@ extension NSTableView {
         super.viewDidMoveToWindow()
         
         backgroundColor = NSColor.clear
-        
         if let esv = enclosingScrollView {
             esv.drawsBackground = false
         }
     }
+    
 }
 
 extension NSTabView{
@@ -89,6 +90,7 @@ extension NSTabView{
     }
 }
 
+
 func createTempDirPackageAlias(packageURL: URL) -> String?{
     let tempURL = tempDirectory
     let uuid = UUID().uuidString
@@ -99,7 +101,7 @@ func createTempDirPackageAlias(packageURL: URL) -> String?{
         try fileMgr.createSymbolicLink(atPath: atPath,
                                        withDestinationPath: withDestinationPath)
         print("Link successful: [\(atPath)] <-> [\(withDestinationPath)]")
-        return atPath
+        return uuid + ".pkg"
     } catch let error {
         print("Error: \(error.localizedDescription)")
     }
@@ -136,34 +138,35 @@ func swiftStartServer(serverIP : String, serverPort : String){
         }
         
     } catch {
-        print("[ERROR:] Can't start server.")
+        print("[ERROR:] Can't build correct url.")
     }
 }
 
+@discardableResult
 func sendPackagesToConsole(urlsPKG : [String], consoleIP : String, consolePort : Int) -> String{
     let urlSession = URLSession.shared
 
     let dataStructure = structPackageSender(type: "direct", packages: urlsPKG)
     let jsonData = try? JSONEncoder().encode(dataStructure)
     
+    let builtURL = URL(string: "http://\(consoleIP):\(consolePort)/api/install")
+    
     var request = URLRequest(
-        url: (URL(string: "http://\(consoleIP):\(consolePort)")?.appendingPathComponent("api").appendingPathComponent("install"))!,
+        url: (builtURL)!,
                 cachePolicy: .reloadIgnoringLocalCacheData
     )
-    print("[DEBUG:] \(request.url)")
-    
     request.httpBody = jsonData
     request.httpMethod = "POST"
     request.addValue("PSDirectSender/\(Bundle.main.appVersionLong)", forHTTPHeaderField: "User-Agent")
-    //request.addValue("PSDirectSender/Mongoose", forHTTPHeaderField: "Server")
+    request.addValue("PSDirectSender/Mongoose", forHTTPHeaderField: "Server")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-    let data = try! JSONSerialization.jsonObject(with: jsonData!, options: []) as? [String:AnyObject]
-    print(data)
     let task = urlSession.dataTask(
                 with: request,
                 completionHandler: { data, response, error in
-                    print(response ?? "Can't get response")
+                    print("[RESPONSE:] \(String(describing: response))")
+                    print("[DATA:] \(String(describing: data))")
+                    print("[_ERROR:] \(String(describing: error))")
                 }
             )
 
@@ -207,4 +210,10 @@ func everythingIsTrue(_ bools: Bool...) -> Bool {
         return false
     }
     return true;
+}
+
+func getStringDate() -> String {
+    let df = DateFormatter()
+    df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    return df.string(from: Date())
 }

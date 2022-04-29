@@ -19,9 +19,9 @@ struct ScreenView: View {
         case .configuration:
             ConfigurationView()
         case .logs:
-            Text("Logs")
+            LogsView()
         case .info:
-            Text("Info")
+            InfoView()
         }
     }
 }

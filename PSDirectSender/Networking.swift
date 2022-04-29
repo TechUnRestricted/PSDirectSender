@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SystemConfiguration
 
 class Networking{
     private enum AddressRequestType {
@@ -65,24 +66,14 @@ class Networking{
     }
     
     public func interfaceNames() -> [String] {
-        
-        let MAX_INTERFACES = 128;
-        
-        var interfaceNames = [String]()
-        let interfaceNamePtr = UnsafeMutablePointer<Int8>.allocate(capacity: Int(Int(IF_NAMESIZE)))
-        for interfaceIndex in 1...MAX_INTERFACES{
-            if (if_indextoname(UInt32(interfaceIndex), interfaceNamePtr) != nil){
-                let interfaceName = String(cString: interfaceNamePtr)
-                if (interfaceName.hasPrefix("en")){
-                    interfaceNames.append(interfaceName)
-                }
-            } else {
-                break
-            }
+        let storeRef = SCDynamicStoreCreate(nil, "FindCurrentInterfaceIpMac" as CFString, nil, nil)
+        let global = SCDynamicStoreCopyValue(storeRef, "State:/Network/Interface" as CFString)
+        let primaryInterfaces = (global as? [AnyHashable : Any])?["Interfaces"] as? [String]
+        if let primaryInterfaces = primaryInterfaces{
+            let filteredNames = primaryInterfaces.filter({ $0.hasPrefix("en") })
+            return filteredNames
         }
-        
-        interfaceNamePtr.deallocate()
-        return interfaceNames
+        return []
     }
     
     enum BaseURLError: Error {

@@ -22,7 +22,7 @@ struct ColorButton: View{
                 .scaledToFit()
                 .frame(width: 16, height: 16)
             Text(text).font(.title3)
-        }).buttonStyle(ColorButtonStyle(color: color.opacity(0.8)))
+        }).buttonStyle(ColorButtonStyle(color: color.opacity(0.7)))
             .frame(minWidth: 100, maxWidth: 200, maxHeight: 40)
     }
 }
@@ -55,6 +55,10 @@ struct ColorButton_Previews: PreviewProvider {
         }).buttonStyle(ColorButtonStyle(color: .red.opacity(0.5)))
             .frame(width: 200)
         
-        ColorButton(text: "Add", color: .orange, image:                 Image(systemName: "plus.rectangle.on.rectangle"), handler: {})
+        ColorButton(text: "Add", color: .orange, image:
+                        Image(systemName: "plus.rectangle.on.rectangle"), handler: {
+            
+        }
+        )
     }
 }
