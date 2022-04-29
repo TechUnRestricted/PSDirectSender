@@ -4,20 +4,23 @@
 //
 //  Created by Macintosh on 23.04.2022.
 //
-
+func placeOrder() { }
+  func adjustOrder() { }
+  func cancelOrder() { }
 import SwiftUI
 
 struct ConfigurationView: View {
     @EnvironmentObject var connection: ConnectionDetails
     @StateObject var inputConnectionData: ConnectionDetails = ConnectionDetails()
     
-    @State var networkingIPs : [String] = []
+    //@State var networkingIPs : [String] = []
     
     @State var showingAlert : Bool = false;
     @State var alertText : String = ""
     
     @State private var checked = true
-    
+    @State var sort = 1
+  
     var body: some View {
         ScrollView(.vertical){
             VStack(spacing: 25){
@@ -29,29 +32,35 @@ struct ConfigurationView: View {
                     Group{
                         HStack{
                             Text("IP Address")
-                            ComboboxView(items: $networkingIPs, text: $inputConnectionData.serverIP)
+                            ZStack{
+                            TextField("192.168.1.100", text: $inputConnectionData.serverIP)
+                                HStack(){
+                                    Spacer()
+                            Menu("") {
+                                ForEach(inputConnectionData.networkingIPs, id: \.self) {
+                                    networkingIP in
+                                    Button("\(networkingIP)"){
+                                        inputConnectionData.serverIP = networkingIP
+                                    }
+                                }
+                            }
+                            
+                            .menuStyle(BorderlessButtonMenuStyle())
+                                .frame(width: 20)
+                                }
+                                .padding(.trailing, 10.0)
+                                
+                            }
                             Button {
                                 print("Button was tapped")
                             } label: {
                                 Image(systemName: "questionmark.circle")
                             }
-                        }.onAppear(perform: {
-                            if inputConnectionData.serverIP.isEmpty {
-                                networkingIPs = networking.getIPNetworkAddresses()
-                                if let ip = networkingIPs.first{
-                                    inputConnectionData.serverIP = ip;
-                                    //connection.serverIP = inputConnectionData.serverIP
-                                }
-                            }
-                        })
+                            
+                        }
                         HStack{
                             Text("Port")
-                            TextField("15460", text: $inputConnectionData.serverPort).onAppear(perform: {
-                                if inputConnectionData.serverPort.isEmpty{
-                                    inputConnectionData.serverPort = String(networking.findFreePort())
-                                    //connection.serverPort = inputConnectionData.serverPort
-                                }
-                            })
+                            TextField("15460", text: $inputConnectionData.serverPort)
                             Button {
                                 print("Button was tapped")
                             } label: {
@@ -59,7 +68,11 @@ struct ConfigurationView: View {
                             }
                         }
                     }
-                }
+                }.onAppear(perform: {
+                    if (inputConnectionData.serverIP.isEmpty){
+                        inputConnectionData.generateServerDetails()
+                    }
+                })
                 
                 VStack{
                     Text("Remote Package Installer Configuration")

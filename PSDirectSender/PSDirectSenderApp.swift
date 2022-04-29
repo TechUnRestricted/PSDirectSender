@@ -12,15 +12,6 @@ let server = MongooseBridge()
 let fileMgr = FileManager.default
 let tempDirectory = fileMgr.temporaryDirectory
 
-class ConnectionDetails: ObservableObject {
-    @Published var serverIP : String = ""
-    @Published var serverPort : String = ""
-    @Published var consoleIP : String = ""
-    @Published var consolePort : String = "12800"
-    @Published var connectionStatus : ServerStatus = .stopped
-}
-
-
 @main
 struct PSDirectSenderApp: App {
     @StateObject var currentTheme = ConnectionDetails()
@@ -57,6 +48,12 @@ extension Int {
     }
 }
 
+extension View {
+    func swiftyListDivider() -> some View {
+        background(Divider().offset(y: 4.0), alignment: .bottom)
+    }
+}
+
 extension Bundle {
     public var appName: String { getInfo("CFBundleName") }
     public var displayName: String { getInfo("CFBundleDisplayName") }
@@ -76,6 +73,7 @@ extension NSTableView {
         super.viewDidMoveToWindow()
         
         backgroundColor = NSColor.clear
+        
         if let esv = enclosingScrollView {
             esv.drawsBackground = false
         }
@@ -145,18 +143,23 @@ func swiftStartServer(serverIP : String, serverPort : String){
 func sendPackagesToConsole(urlsPKG : [String], consoleIP : String, consolePort : Int) -> String{
     let urlSession = URLSession.shared
 
-    let datsStructure = structPackageSender(type: "direct", packages: urlsPKG)
-    let jsonData = try! JSONEncoder().encode(datsStructure)
+    let dataStructure = structPackageSender(type: "direct", packages: urlsPKG)
+    let jsonData = try? JSONEncoder().encode(dataStructure)
+    
     var request = URLRequest(
         url: (URL(string: "http://\(consoleIP):\(consolePort)")?.appendingPathComponent("api").appendingPathComponent("install"))!,
                 cachePolicy: .reloadIgnoringLocalCacheData
     )
+    print("[DEBUG:] \(request.url)")
     
     request.httpBody = jsonData
     request.httpMethod = "POST"
     request.addValue("PSDirectSender/\(Bundle.main.appVersionLong)", forHTTPHeaderField: "User-Agent")
+    //request.addValue("PSDirectSender/Mongoose", forHTTPHeaderField: "Server")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    
+
+    let data = try! JSONSerialization.jsonObject(with: jsonData!, options: []) as? [String:AnyObject]
+    print(data)
     let task = urlSession.dataTask(
                 with: request,
                 completionHandler: { data, response, error in
