@@ -13,13 +13,13 @@ struct LogsView: View {
     var body: some View {
         VStack{
             HStack(spacing: 25){
-            ColorButton(text: "Copy logs", color: .purple, image: Image(systemName: "doc.on.doc"), handler: {
+            ColorButton(text: "Copy logs", color: .purple, image: Image(systemName: "doc.on.doc"), action: {
                 let pasteboard = NSPasteboard.general
                 pasteboard.clearContents()
                 pasteboard.setString(connection.logLines.joined(separator: "\n"), forType: .string)
             })
             
-            ColorButton(text: "Clear logs", color: .red, image: Image(systemName: "trash"), handler: {
+            ColorButton(text: "Clear logs", color: .red, image: Image(systemName: "trash"), action: {
                 connection.logLines = []
             })
             }.padding()
@@ -31,7 +31,7 @@ struct LogsView: View {
                 }
             }.overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.gray.opacity(0.4), lineWidth: 2)
+                    .stroke(Color.gray.opacity(0.4), lineWidth: 1.5)
             )
         }.padding()
     }

@@ -11,11 +11,11 @@ struct ColorButton: View{
     let text : String
     let color : Color
     let image : Image
-    var handler: () -> ()
+    var action: () -> ()
     
     var body: some View {
         Button(action: {
-            handler()
+            action()
         }, label: {
             image
                 .resizable()
@@ -56,7 +56,7 @@ struct ColorButton_Previews: PreviewProvider {
             .frame(width: 200)
         
         ColorButton(text: "Add", color: .orange, image:
-                        Image(systemName: "plus.rectangle.on.rectangle"), handler: {
+                        Image(systemName: "plus.rectangle.on.rectangle"), action: {
             
         }
         )

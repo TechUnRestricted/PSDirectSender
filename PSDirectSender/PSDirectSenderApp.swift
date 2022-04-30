@@ -15,7 +15,7 @@ let tempDirectory = fileMgr.temporaryDirectory
 @main
 struct PSDirectSenderApp: App {
     @StateObject var currentTheme = ConnectionDetails()
-
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -28,6 +28,10 @@ struct PSDirectSenderApp: App {
                        maxHeight: .infinity
                 )
                 .navigationSubtitle("for Remote Package Installer")
+                .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification), perform: { _ in
+                    NSApp.mainWindow?.standardWindowButton(.zoomButton)?.isEnabled = false
+                }
+                )
         }
     }
 }
@@ -109,22 +113,22 @@ func createTempDirPackageAlias(packageURL: URL) -> String?{
 }
 
 func selectPackages() -> [URL?]{
-     let dialog = NSOpenPanel()
-
-     dialog.title                   = "Choose PKGs"
-     dialog.showsResizeIndicator    = true
-     dialog.showsHiddenFiles        = false
-     dialog.allowsMultipleSelection = true
-     dialog.canCreateDirectories    = true
-     dialog.allowedFileTypes = ["pkg"]
-     dialog.canChooseDirectories = false;
-
-     if (dialog.runModal() == NSApplication.ModalResponse.OK) {
-         return dialog.urls
-     }
-
-     return [nil]
- }
+    let dialog = NSOpenPanel()
+    
+    dialog.title                   = "Choose PKGs"
+    dialog.showsResizeIndicator    = true
+    dialog.showsHiddenFiles        = false
+    dialog.allowsMultipleSelection = true
+    dialog.canCreateDirectories    = true
+    dialog.allowedFileTypes = ["pkg"]
+    dialog.canChooseDirectories = false;
+    
+    if (dialog.runModal() == NSApplication.ModalResponse.OK) {
+        return dialog.urls
+    }
+    
+    return []
+}
 
 func swiftStartServer(serverIP : String, serverPort : String){
     do {
@@ -145,7 +149,7 @@ func swiftStartServer(serverIP : String, serverPort : String){
 @discardableResult
 func sendPackagesToConsole(urlsPKG : [String], consoleIP : String, consolePort : Int) -> String{
     let urlSession = URLSession.shared
-
+    
     let dataStructure = structPackageSender(type: "direct", packages: urlsPKG)
     let jsonData = try? JSONEncoder().encode(dataStructure)
     
@@ -153,23 +157,23 @@ func sendPackagesToConsole(urlsPKG : [String], consoleIP : String, consolePort :
     
     var request = URLRequest(
         url: (builtURL)!,
-                cachePolicy: .reloadIgnoringLocalCacheData
+        cachePolicy: .reloadIgnoringLocalCacheData
     )
     request.httpBody = jsonData
     request.httpMethod = "POST"
     request.addValue("PSDirectSender/\(Bundle.main.appVersionLong)", forHTTPHeaderField: "User-Agent")
     request.addValue("PSDirectSender/Mongoose", forHTTPHeaderField: "Server")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+    
     let task = urlSession.dataTask(
-                with: request,
-                completionHandler: { data, response, error in
-                    print("[RESPONSE:] \(String(describing: response))")
-                    print("[DATA:] \(String(describing: data))")
-                    print("[_ERROR:] \(String(describing: error))")
-                }
-            )
-
+        with: request,
+        completionHandler: { data, response, error in
+            print("[RESPONSE:] \(String(describing: response))")
+            print("[DATA:] \(String(describing: data))")
+            print("[_ERROR:] \(String(describing: error))")
+        }
+    )
+    
     task.resume()
     
     return ""
@@ -199,7 +203,7 @@ func checkIfServerIsWorking(serverIP : String, serverPort : String) -> ServerSta
         }
         semaphore.signal()
     }.resume()
-
+    
     semaphore.wait()
     
     return status

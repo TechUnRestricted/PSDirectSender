@@ -30,13 +30,18 @@ struct InfoView: View {
             }
             VStack(alignment: .leading, spacing: 10){
                 Text("This software is distributed under the Apache License, Version 2.0.")
-                Text("This software contains a third-party library \"Mongoose - Embedded Web Server\" which is distributed under the GNU General Public License, version 2")
+                Text("This software contains a third-party library \"Mongoose - Embedded Web Server\" which is distributed under the GNU General Public License, Version 2.0")
             }.font(.caption2)
                 .opacity(0.5)
                 .padding()
+            VStack(spacing: 10){
+                Link("View Source Code on GitHub",
+                     destination: URL(string: "https://github.com/TechUnRestricted/PSDirectSender")!)
+            }
             Button("View Open Source Licenses"){
                 showingPopover.toggle()
             }.buttonStyle(LinkButtonStyle())
+                .font(.footnote)
                 .popover(isPresented: $showingPopover) {
                     Text("""
 Mongoose - Embedded Web Server (https://github.com/cesanta/mongoose)
@@ -57,9 +62,11 @@ See the GNU General Public License for more details.
 
 Alternatively, you can license this software under a commercial
 license, as set out in <https://mongoose.ws/licensing/>.
-""").padding()
+""")
+                        .padding()
                 }
         }.frame(width: 400, height: 280)
+        
     }
 }
 
