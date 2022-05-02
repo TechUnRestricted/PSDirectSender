@@ -8,14 +8,14 @@
 import Foundation
 
 class ConnectionDetails: ObservableObject {
-    @Published var serverIP : String = ""
-    @Published var serverPort : String = ""
-    @Published var consoleIP : String = ""
-    @Published var consolePort : String = "12800"
-    @Published var connectionStatus : ServerStatus = .stopped
-    @Published var networkingIPs : [String] = []
+    @Published var serverIP: String = ""
+    @Published var serverPort: String = ""
+    @Published var consoleIP: String = ""
+    @Published var consolePort: String = "12800"
+    @Published var connectionStatus: ServerStatus = .stopped
+    @Published var networkingIPs: [String] = []
     
-    @Published var logLines : [String] = []
+    @Published var logLines: [String] = []
     
     func generateServerDetails(){
         serverPort = String(networking.findFreePort())

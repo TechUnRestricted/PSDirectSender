@@ -9,12 +9,12 @@ import SwiftUI
 
 struct packageURL{
     var id = UUID()
-    var url : URL
+    var url: URL
 }
 
 fileprivate class AlertState: ObservableObject {
-    @Published var showCantGetServerConfiguration : Bool = false
-    @Published var showCantGetConsoleConfiguration : Bool = false
+    @Published var showCantGetServerConfiguration: Bool = false
+    @Published var showCantGetConsoleConfiguration: Bool = false
     
     let messageCantGetServerConfiguration = """
 Network connection was not detected.
@@ -31,14 +31,21 @@ Go to the Configuration section and correctly fill in the text fields.
 
 struct QueueView: View {
     @EnvironmentObject var vm: ConnectionDetails
-    @StateObject fileprivate var alertState : AlertState = AlertState()
+    @StateObject fileprivate var alertState: AlertState = AlertState()
     @State var packageURLs: [packageURL] = []
     @State private var selection: Set<UUID> = []
     
-    @State var isInDropArea : Bool = false
+    @State var isInDropArea: Bool = false
     
     var body: some View {
         VStack{
+            VStack{}.alert(isPresented: $alertState.showCantGetConsoleConfiguration) {
+                Alert(title: Text("Important message"), message: Text(alertState.messageCantGetConsoleConfiguration), dismissButton: .default(Text("Got it!")))
+            }
+            VStack{}.alert(isPresented: $alertState.showCantGetServerConfiguration) {
+                Alert(title: Text("Important message"), message: Text(alertState.messageCantGetServerConfiguration), dismissButton: .default(Text("Got it!")))
+            }
+            
             HStack(spacing: 15){
                 ColorButton(text: "Add", color: .orange, image: Image(systemName: "plus.rectangle.on.rectangle"), action: {
                     let packages = selectPackages()
@@ -66,28 +73,21 @@ struct QueueView: View {
                         return
                     }
                     
-                    var linkAliases: [String] = []
-                    for packageURL in packageURLs{
+                    for packageURL in packageURLs {
                         let alias = createTempDirPackageAlias(packageURL: packageURL.url)!
-                        linkAliases.append(alias)
                         vm.addLog("Creating package alias (\"\(packageURL.url.path)\" -> \"\(tempDirectory.path)\(alias)\").")
+                        vm.addLog("Sending package \"\(alias)\" to the console (IP: \(vm.consoleIP), Port: \(vm.consolePort))")
+                        sendPackagesToConsole(packageFilename: alias, consoleIP: vm.consoleIP, consolePort: Int(vm.consolePort)!, serverIP: vm.serverIP, serverPort: Int(vm.serverPort)!)
                     }
-                    vm.addLog("Sending packages \(linkAliases) to the console (IP: \(vm.consoleIP), Port: \(vm.consolePort)")
-                    sendPackagesToConsole(urlsPKG: linkAliases, consoleIP: vm.consoleIP, consolePort: Int(vm.consolePort)!)
+                    
                 })
-                    .alert(isPresented: $alertState.showCantGetConsoleConfiguration) {
-                        Alert(title: Text("Important message"), message: Text(alertState.messageCantGetConsoleConfiguration), dismissButton: .default(Text("Got it!")))
-                    }
+                    
                 
                 ColorButton(text: "Delete", color: .red, image: Image(systemName: "trash"), action: {
                     deleteSelection()
-                }).onDeleteCommand(perform: selection.isEmpty ? nil : deleteSelection)
+                }).onDeleteCommand(perform: selection.isEmpty ? nil: deleteSelection)
                 
             }.padding()
-                .alert(isPresented: $alertState.showCantGetServerConfiguration) {
-                    Alert(title: Text("Important message"), message: Text(alertState.messageCantGetServerConfiguration), dismissButton: .default(Text("Got it!")))
-                }
-            
             
             List(selection: $selection){
                 ForEach(packageURLs, id: \.id){ package in

@@ -22,7 +22,7 @@ class Networking{
     }
     
     // Macro to create read/write IOrequest
-    private func _IOWR (_ group: Character , _ num : UInt32, _ size: UInt32) -> UInt32 {
+    private func _IOWR (_ group: Character , _ num: UInt32, _ size: UInt32) -> UInt32 {
         return _IOC(IOC_INOUT, UInt32 (group.asciiValue!), num, size)
     }
     
@@ -68,7 +68,7 @@ class Networking{
     public func interfaceNames() -> [String] {
         let storeRef = SCDynamicStoreCreate(nil, "FindCurrentInterfaceIpMac" as CFString, nil, nil)
         let global = SCDynamicStoreCopyValue(storeRef, "State:/Network/Interface" as CFString)
-        let primaryInterfaces = (global as? [AnyHashable : Any])?["Interfaces"] as? [String]
+        let primaryInterfaces = (global as? [AnyHashable: Any])?["Interfaces"] as? [String]
         if let primaryInterfaces = primaryInterfaces{
             let filteredNames = primaryInterfaces.filter({ $0.hasPrefix("en") })
             return filteredNames
@@ -81,14 +81,14 @@ class Networking{
         case invalidPort
     }
     
-    public func checkIfPortIsCorrect(port : String) -> Bool{
+    public func checkIfPortIsCorrect(port: String) -> Bool{
         if let port = Int(port){
             return port.isInRange(0, 65535)
         }
         return false
     }
     
-    public func checkIfIPIsCorrect(ip : String) -> Bool{
+    public func checkIfIPIsCorrect(ip: String) -> Bool{
         return ip.matches(#"^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$"#)
     }
     

@@ -26,7 +26,8 @@ struct LogsView: View {
             List(){
                 ForEach(connection.logLines, id: \.self) { logLine in
                     Text(logLine)
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .lineLimit(3)
                         .swiftyListDivider()
                 }
             }.overlay(
@@ -38,7 +39,17 @@ struct LogsView: View {
 }
 
 struct LogsView_Previews: PreviewProvider {
+
     static var previews: some View {
+        
         LogsView()
+            .environmentObject({ () -> ConnectionDetails in
+                let vm = ConnectionDetails()
+                vm.addLog("Can't get server configuration.")
+                vm.addLog("Can't get console configuration.")
+                vm.addLog("Creating package alias \(#""/Volumes/Macintosh HD/game.pkg""#) -> \"\(tempDirectory.path)\(UUID().uuidString).pkg\"")
+                
+                return vm
+            }())
     }
 }

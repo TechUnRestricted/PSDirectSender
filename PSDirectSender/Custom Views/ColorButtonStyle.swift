@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ColorButton: View{
-    let text : String
-    let color : Color
-    let image : Image
+    let text: String
+    let color: Color
+    let image: Image
     var action: () -> ()
     
     var body: some View {
@@ -28,19 +28,19 @@ struct ColorButton: View{
 }
 
 struct ColorButtonStyle: ButtonStyle {
-    var color : Color
+    var color: Color
     @Environment(\.colorScheme) var colorScheme
     
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             Spacer()
-            configuration.label.foregroundColor(colorScheme == .light ? .black : .white).opacity(0.8)
+            configuration.label.foregroundColor(colorScheme == .light ? .black: .white).opacity(0.8)
             Spacer()
         }
         .ignoresSafeArea()
         .padding()
         .background(color.cornerRadius(15))
-        .scaleEffect(configuration.isPressed ? 0.95 : 1)
+        .scaleEffect(configuration.isPressed ? 0.95: 1)
         //.animation(.easeInOut, value: configuration.isPressed)
     }
 }

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SidebarButton: View {
-    let type : Screen
+    let type: Screen
     var body: some View {
-        let imageWidth : CGFloat = 15
+        let imageWidth: CGFloat = 15
         HStack{
             switch (type){
             case .queue:

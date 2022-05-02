@@ -15,8 +15,8 @@ enum Screen: String, CaseIterable{
 }
 
 struct ContentView: View {
-    @State var currentScreen : Screen? = .queue
-    @State var currentTab : Screen = .queue
+    @State var currentScreen: Screen? = .queue
+    @State var currentTab: Screen = .queue
     
     var body: some View {
         NavigationView(){

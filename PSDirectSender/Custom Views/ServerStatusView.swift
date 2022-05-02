@@ -14,7 +14,7 @@ enum ServerStatus{
 }
 
 struct ServerStatusView: View {
-    @Binding var serverStatus : ServerStatus
+    @Binding var serverStatus: ServerStatus
     
     var colorToShow: Color {
         switch serverStatus {

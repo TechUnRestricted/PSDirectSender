@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct ScreenView: View {
-    let screen : Screen
+    let screen: Screen
     @EnvironmentObject var vm: ConnectionDetails
     
     var body: some View {

@@ -8,11 +8,11 @@
 import SwiftUI
 
 fileprivate class HelpShow: ObservableObject {
-    @Published var serverIP : Bool = false
-    @Published var serverPort : Bool = false
+    @Published var serverIP: Bool = false
+    @Published var serverPort: Bool = false
     
-    @Published var consoleIP : Bool = false
-    @Published var consolePort : Bool = false
+    @Published var consoleIP: Bool = false
+    @Published var consolePort: Bool = false
     
     let messageServerIP = """
 This field is usually filled in automatically by the program.
@@ -51,9 +51,9 @@ struct ConfigurationView: View {
     @EnvironmentObject var connection: ConnectionDetails
     @StateObject var inputConnectionData: ConnectionDetails = ConnectionDetails()
     
-    @StateObject fileprivate var helpShow : HelpShow = HelpShow()
-    @State var showingAlert : Bool = false;
-    @State var alertText : String = ""
+    @StateObject fileprivate var helpShow: HelpShow = HelpShow()
+    @State var showingAlert: Bool = false;
+    @State var alertText: String = ""
     
     var body: some View {
         ScrollView(.vertical){

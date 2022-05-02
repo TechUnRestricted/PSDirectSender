@@ -130,7 +130,7 @@ func selectPackages() -> [URL?]{
     return []
 }
 
-func swiftStartServer(serverIP : String, serverPort : String){
+func swiftStartServer(serverIP: String, serverPort: String){
     do {
         server.setDirectoryPath(tempDirectory.path)
         server.setServerBaseURL(try networking.buildServerBaseURL(ip: serverIP, port: Int(serverPort) ?? -1))
@@ -147,14 +147,13 @@ func swiftStartServer(serverIP : String, serverPort : String){
 }
 
 @discardableResult
-func sendPackagesToConsole(urlsPKG : [String], consoleIP : String, consolePort : Int) -> String{
+func sendPackagesToConsole(packageFilename: String, consoleIP: String, consolePort: Int, serverIP: String, serverPort: Int) -> String{
     let urlSession = URLSession.shared
-    
-    let dataStructure = structPackageSender(type: "direct", packages: urlsPKG)
+
+    let dataStructure = structPackageSender(type: "direct", packages: ["http://\(serverIP):\(serverPort)/\(packageFilename)"])
     let jsonData = try? JSONEncoder().encode(dataStructure)
     
     let builtURL = URL(string: "http://\(consoleIP):\(consolePort)/api/install")
-    
     var request = URLRequest(
         url: (builtURL)!,
         cachePolicy: .reloadIgnoringLocalCacheData
@@ -164,7 +163,6 @@ func sendPackagesToConsole(urlsPKG : [String], consoleIP : String, consolePort :
     request.addValue("PSDirectSender/\(Bundle.main.appVersionLong)", forHTTPHeaderField: "User-Agent")
     request.addValue("PSDirectSender/Mongoose", forHTTPHeaderField: "Server")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    
     let task = urlSession.dataTask(
         with: request,
         completionHandler: { data, response, error in
@@ -179,7 +177,7 @@ func sendPackagesToConsole(urlsPKG : [String], consoleIP : String, consolePort :
     return ""
 }
 
-func checkIfServerIsWorking(serverIP : String, serverPort : String) -> ServerStatus {
+func checkIfServerIsWorking(serverIP: String, serverPort: String) -> ServerStatus {
     guard let url = URL(string: "http://\(serverIP):\(serverPort)") else {
         return .fail
     }
@@ -188,7 +186,7 @@ func checkIfServerIsWorking(serverIP : String, serverPort : String) -> ServerSta
     config.requestCachePolicy = .reloadIgnoringLocalCacheData
     config.urlCache = nil
     
-    var status : ServerStatus = .stopped
+    var status: ServerStatus = .stopped
     
     let semaphore = DispatchSemaphore(value: 0)
     let request = URLRequest(url: url, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 60.0)
