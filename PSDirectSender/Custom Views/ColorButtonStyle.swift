@@ -34,13 +34,13 @@ struct ColorButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             Spacer()
-            configuration.label.foregroundColor(colorScheme == .light ? .black: .white).opacity(0.8)
+            configuration.label.foregroundColor(colorScheme == .light ? .black : .white).opacity(0.8)
             Spacer()
         }
         .ignoresSafeArea()
         .padding()
         .background(color.cornerRadius(15))
-        .scaleEffect(configuration.isPressed ? 0.95: 1)
+        .scaleEffect(configuration.isPressed ? 0.95 : 1)
         //.animation(.easeInOut, value: configuration.isPressed)
     }
 }

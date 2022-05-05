@@ -9,8 +9,8 @@ import SwiftUI
 
 let networking = Networking()
 let server = ServerBridge()
-let fileMgr = FileManager.default
-let tempDirectory = fileMgr.temporaryDirectory
+let fileMgr: FileManager = FileManager.default
+let tempDirectory: URL = fileMgr.temporaryDirectory.appendingPathComponent("PSDirectSenderLinks")
 
 @main
 struct PSDirectSenderApp: App {
@@ -73,6 +73,28 @@ extension Bundle {
     fileprivate func getInfo(_ str: String) -> String { infoDictionary?[str] as? String ?? "⚠️" }
 }
 
+extension URLSession {
+    func synchronousDataTask(with url: URLRequest) -> (Data?, URLResponse?, Error?) {
+        var data: Data?
+        var response: URLResponse?
+        var error: Error?
+
+        let semaphore = DispatchSemaphore(value: 0)
+
+        let dataTask = self.dataTask(with: url) {
+            data = $0
+            response = $1
+            error = $2
+            semaphore.signal()
+        }
+        dataTask.resume()
+
+        _ = semaphore.wait(timeout: .distantFuture)
+
+        return (data, response, error)
+    }
+}
+
 extension NSTableView {
     open override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
@@ -85,7 +107,7 @@ extension NSTableView {
     
 }
 
-extension NSTabView{
+extension NSTabView {
     open override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
         
@@ -94,21 +116,46 @@ extension NSTabView{
     }
 }
 
+extension View {
+    func hidden(_ shouldHide: Bool) -> some View {
+        opacity(shouldHide ? 0 : 1)
+    }
+}
 
-func createTempDirPackageAlias(packageURL: URL) -> String?{
-    let tempURL = tempDirectory
-    let uuid = UUID().uuidString
+/*extension FileManager {
+    func fileExists(_ atPath: String) -> Bool {
+        var isDirectory: ObjCBool = false
+        let exists = fileExists(atPath: atPath, isDirectory:&isDirectory)
+        return exists && !isDirectory.boolValue
+    }
+}*/
+
+func createTempDirPackageAlias(package: packageURL) -> String?{
+    
     do {
-        let atPath = tempURL.appendingPathComponent(uuid).appendingPathExtension("pkg").path
-        let withDestinationPath = packageURL.path
-        print(atPath, withDestinationPath)
-        try fileMgr.createSymbolicLink(atPath: atPath,
-                                       withDestinationPath: withDestinationPath)
-        print("Link successful: [\(atPath)] <-> [\(withDestinationPath)]")
-        return uuid + ".pkg"
+        try FileManager.default.createDirectory(at: tempDirectory, withIntermediateDirectories: true, attributes: nil)
+    } catch {
+        print(error)
+    }
+    
+    do {
+        let symlinkPackageLocation = tempDirectory.appendingPathComponent(package.id.uuidString).appendingPathExtension("pkg")
+        let packageURL = package.url
+        
+        if !(FileManager.default.fileExists(atPath: symlinkPackageLocation.path)) {
+            try fileMgr.createSymbolicLink(atPath: symlinkPackageLocation.path,
+                                           withDestinationPath: packageURL.path)
+            print("Link successful: [\(symlinkPackageLocation.path)] <-> [\(packageURL.path)]")
+        } else {
+            print("Symlink already exists.")
+        }
+        
+        return package.id.uuidString + ".pkg"
+        
     } catch let error {
         print("Error: \(error.localizedDescription)")
     }
+    
     return nil
 }
 
@@ -147,34 +194,37 @@ func swiftStartServer(serverIP: String, serverPort: String){
 }
 
 @discardableResult
-func sendPackagesToConsole(packageFilename: String, consoleIP: String, consolePort: Int, serverIP: String, serverPort: Int) -> String{
-    let urlSession = URLSession.shared
+func sendPackagesToConsole(packageFilename: String, consoleIP: String, consolePort: Int, serverIP: String, serverPort: Int) -> Any?{
 
     let dataStructure = structPackageSender(type: "direct", packages: ["http://\(serverIP):\(serverPort)/\(packageFilename)"])
     let jsonData = try? JSONEncoder().encode(dataStructure)
     
     let builtURL = URL(string: "http://\(consoleIP):\(consolePort)/api/install")
+    
     var request = URLRequest(
         url: (builtURL)!,
         cachePolicy: .reloadIgnoringLocalCacheData
     )
+    
     request.httpBody = jsonData
     request.httpMethod = "POST"
     request.addValue("PSDirectSender/\(Bundle.main.appVersionLong)", forHTTPHeaderField: "User-Agent")
     request.addValue("PSDirectSender/Mongoose", forHTTPHeaderField: "Server")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    let task = urlSession.dataTask(
-        with: request,
-        completionHandler: { data, response, error in
-            print("[RESPONSE:] \(String(describing: response))")
-            print("[DATA:] \(String(describing: data))")
-            print("[_ERROR:] \(String(describing: error))")
+    
+    let (data, _/*response*/, _/*error*/) = URLSession.shared.synchronousDataTask(with: request)
+
+    if let data = data {
+        if let json = try? JSONDecoder().decode(structSendSuccess.self, from: data){
+            return json
+        } else if let json = try? JSONDecoder().decode(structSendFailure.self, from: data){
+            return json
+        } else {
+            return String(decoding: data, as: UTF8.self)
         }
-    )
+    }
     
-    task.resume()
-    
-    return ""
+    return nil
 }
 
 func checkIfServerIsWorking(serverIP: String, serverPort: String) -> ServerStatus {

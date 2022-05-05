@@ -167,7 +167,11 @@ struct ConfigurationView: View {
                 
                 connection.consoleIP = inputConnectionData.consoleIP
                 connection.consolePort = inputConnectionData.consolePort
-                
+                connection.addLog("""
+Staring web server:
+[SERVER] IP: \(connection.serverIP) Port: \(connection.serverPort)
+[CONSOLE] IP: \(connection.consoleIP) Port: \(connection.consolePort)
+""")
                 swiftStartServer(serverIP: connection.serverIP, serverPort: connection.serverPort)
             }.alert(isPresented: $showingAlert) {
                 Alert(title: Text("Important message"), message: Text(alertText), dismissButton: .default(Text("Got it!")))
