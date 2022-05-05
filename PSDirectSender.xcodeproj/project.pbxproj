@@ -84,6 +84,7 @@
 		E26BC3A528134D8000D339B7 = {
 			isa = PBXGroup;
 			children = (
+				E2100C002824276600F02D9D /* README.md */,
 				E26BC3B028134D8000D339B7 /* PSDirectSender */,
 				E26BC3AF28134D8000D339B7 /* Products */,
 			);
@@ -112,7 +113,6 @@
 				E26BC3BA28134D8100D339B7 /* PSDirectSender.entitlements */,
 				E26BC3B728134D8100D339B7 /* Preview Content */,
 				E2A06A0B281ADDE8001FAFE1 /* Info.plist */,
-				E2100C002824276600F02D9D /* README.md */,
 			);
 			path = PSDirectSender;
 			sourceTree = "<group>";
