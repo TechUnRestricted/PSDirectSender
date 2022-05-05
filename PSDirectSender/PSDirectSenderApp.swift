@@ -231,29 +231,28 @@ func checkIfServerIsWorking(serverIP: String, serverPort: String) -> ServerStatu
     guard let url = URL(string: "http://\(serverIP):\(serverPort)") else {
         return .fail
     }
-    
-    let config = URLSessionConfiguration.default
-    config.requestCachePolicy = .reloadIgnoringLocalCacheData
-    config.urlCache = nil
-    
     var status: ServerStatus = .stopped
+
+    var request = URLRequest(
+        url: url,
+        cachePolicy: .reloadIgnoringLocalCacheData
+    )
+    request.httpMethod = "HEAD"
+    request.timeoutInterval = 3
     
-    let semaphore = DispatchSemaphore(value: 0)
-    let request = URLRequest(url: url, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalCacheData, timeoutInterval: 60.0)
-    URLSession.shared.dataTask(with: request) { (data, response, error) in
-        if let httpResponse = response as? HTTPURLResponse,  let serverHeader = httpResponse.allHeaderFields["Server"] as? String {
-            if serverHeader == "PSDirectSender/Mongoose"{
-                status = .success
-                print("[DEBUG:] \(serverHeader)")
-            } else {
-                status = .fail
-            }
+    let (_/*data*/, response, _/*error*/) = URLSession.shared.synchronousDataTask(with: request)
+    
+    if let httpResponse = response as? HTTPURLResponse,  let serverHeader = httpResponse.allHeaderFields["Server"] as? String {
+        if serverHeader == "PSDirectSender/Mongoose"{
+            status = .success
+            print("[DEBUG:] \(serverHeader)")
+        } else {
+            status = .fail
         }
-        semaphore.signal()
-    }.resume()
-    
-    semaphore.wait()
-    
+    } else {
+        status = .fail
+    }
+
     return status
 }
 

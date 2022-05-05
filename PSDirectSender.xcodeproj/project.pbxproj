@@ -20,7 +20,6 @@
 		E29F5F9A28142BAE00A8EA81 /* ServerLinker.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F5F9928142BAE00A8EA81 /* ServerLinker.m */; };
 		E29F5F9D28142C4C00A8EA81 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5F9C28142C4C00A8EA81 /* ConfigurationView.swift */; };
 		E29F5FBA2814367B00A8EA81 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5FB92814367B00A8EA81 /* Networking.swift */; };
-		E29F5FD128143EDC00A8EA81 /* ComboboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5FD028143EDC00A8EA81 /* ComboboxView.swift */; };
 		E2A069F6281AA717001FAFE1 /* ServerStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A069F5281AA717001FAFE1 /* ServerStatusView.swift */; };
 		E2A06A0D281B359D001FAFE1 /* ConnectionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A0C281B359D001FAFE1 /* ConnectionDetails.swift */; };
 		E2A06A0F281C3DC4001FAFE1 /* ColorButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A0E281C3DC4001FAFE1 /* ColorButtonStyle.swift */; };
@@ -31,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E2100C002824276600F02D9D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E2525386281FF89B009055A9 /* JsonSuccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSuccess.swift; sourceTree = "<group>"; };
 		E2525388281FF916009055A9 /* JsonFailure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonFailure.swift; sourceTree = "<group>"; };
 		E26BC3AE28134D8000D339B7 /* PSDirectSender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSDirectSender.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,7 +49,6 @@
 		E29F5F9B28142BC000A8EA81 /* ServerLinker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerLinker.h; sourceTree = "<group>"; };
 		E29F5F9C28142C4C00A8EA81 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		E29F5FB92814367B00A8EA81 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		E29F5FD028143EDC00A8EA81 /* ComboboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboboxView.swift; sourceTree = "<group>"; };
 		E2A069F5281AA717001FAFE1 /* ServerStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStatusView.swift; sourceTree = "<group>"; };
 		E2A06A0B281ADDE8001FAFE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2A06A0C281B359D001FAFE1 /* ConnectionDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDetails.swift; sourceTree = "<group>"; };
@@ -113,6 +112,7 @@
 				E26BC3BA28134D8100D339B7 /* PSDirectSender.entitlements */,
 				E26BC3B728134D8100D339B7 /* Preview Content */,
 				E2A06A0B281ADDE8001FAFE1 /* Info.plist */,
+				E2100C002824276600F02D9D /* README.md */,
 			);
 			path = PSDirectSender;
 			sourceTree = "<group>";
@@ -153,7 +153,6 @@
 			children = (
 				E2A069F5281AA717001FAFE1 /* ServerStatusView.swift */,
 				E26BC3C6281350D500D339B7 /* SidebarButton.swift */,
-				E29F5FD028143EDC00A8EA81 /* ComboboxView.swift */,
 				E2A06A0E281C3DC4001FAFE1 /* ColorButtonStyle.swift */,
 				E286805628204A850036E0C5 /* VisualEffectBlur.swift */,
 			);
@@ -259,7 +258,6 @@
 				E29F5F9A28142BAE00A8EA81 /* ServerLinker.m in Sources */,
 				E26BC3E52813F85300D339B7 /* mongoose.c in Sources */,
 				E29F5FBA2814367B00A8EA81 /* Networking.swift in Sources */,
-				E29F5FD128143EDC00A8EA81 /* ComboboxView.swift in Sources */,
 				E2A06A0D281B359D001FAFE1 /* ConnectionDetails.swift in Sources */,
 				E2C028B3281464D1009B94EC /* QueueView.swift in Sources */,
 				E2A06A11281C5D47001FAFE1 /* LogsView.swift in Sources */,

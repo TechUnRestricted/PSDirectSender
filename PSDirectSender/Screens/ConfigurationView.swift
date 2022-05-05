@@ -42,7 +42,7 @@ This value set by default and should not be changed without special reason.
     
 Points to the port used by the Remote Package Installer application on your console.
 """
-
+    
 }
 
 
@@ -52,8 +52,11 @@ struct ConfigurationView: View {
     @StateObject var inputConnectionData: ConnectionDetails = ConnectionDetails()
     
     @StateObject fileprivate var helpShow: HelpShow = HelpShow()
-    @State var showingAlert: Bool = false;
+    @State var showingAlert: Bool = false
+    @State var showingConnectionStatus: Bool = false
+
     @State var alertText: String = ""
+    @State var connectionStatusLoaded: Bool = false
     
     var body: some View {
         ScrollView(.vertical){
@@ -176,23 +179,32 @@ Staring web server:
             }.alert(isPresented: $showingAlert) {
                 Alert(title: Text("Important message"), message: Text(alertText), dismissButton: .default(Text("Got it!")))
             }
-            
-            /*ServerStatusView(serverStatus: $connection.connectionStatus)
-             .frame(height: 40)
-             .onAppear(perform: {
-             DispatchQueue.global(qos: .background).async {
-             while(true){
-             autoreleasepool{
-             let status = checkIfServerIsWorking(serverIP: connection.serverIP, serverPort: connection.serverPort)
-             DispatchQueue.main.async {
-             connection.connectionStatus = status
-             }
-             }
-             sleep(2)
-             
-             }
-             }
-             })*/
+            Button("Check Server status"){
+                showingConnectionStatus.toggle()
+            }.popover(isPresented: $showingConnectionStatus, content: {
+                VStack{
+                    if !connectionStatusLoaded {
+                        ProgressView()
+                    } else {
+                        ServerStatusView(serverStatus: $connection.connectionStatus)
+                            .frame(height: 40)
+                    }
+                }
+                    .frame(minWidth: 200)
+                    .padding()
+                    .onAppear(perform: {
+                        connectionStatusLoaded = false
+
+                        DispatchQueue.global(qos: .background).async {
+                            sleep(1)
+                            let status = checkIfServerIsWorking(serverIP: connection.serverIP, serverPort: connection.serverPort)
+                            DispatchQueue.main.async {
+                                connection.connectionStatus = status
+                                connectionStatusLoaded = true
+                            }
+                        }
+                    })
+            })
         }
     }
 }
