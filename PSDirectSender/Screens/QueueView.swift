@@ -117,6 +117,9 @@ struct QueueView: View {
                         loadingScreenIsShown = true
                         DispatchQueue.global(qos: .background).async {
                         loop: for index in packageURLs.indices {
+                            if (packageURLs[index].state == .sendSuccess) {
+                                continue
+                            }
                             let alias = createTempDirPackageAlias(package: packageURLs[index])!
                             DispatchQueue.main.async {
                                 vm.addLog("Creating package alias (\"\(packageURLs[index].url.path)\" -> \"\(tempDirectory.path)/\(alias)\").")
@@ -125,8 +128,8 @@ struct QueueView: View {
                             let response = sendPackagesToConsole(packageFilename: alias, consoleIP: vm.consoleIP, consolePort: Int(vm.consolePort)!, serverIP: vm.serverIP, serverPort: Int(vm.serverPort)!)
                             
                             if (response == nil || response as? String == ""){
-                                //vm.addLog("Can't get response from console ([Console] IP: \(vm.consoleIP), Port: \(vm.consolePort))")
                                 DispatchQueue.main.async {
+                                    vm.addLog("Can't get response from console ([Console] IP: \(vm.consoleIP), Port: \(vm.consolePort))")
                                     if loadingScreenIsShown {
                                         alertState.showCantGetResponseFromConsole = true
                                     }
