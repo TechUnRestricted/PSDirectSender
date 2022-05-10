@@ -31,16 +31,25 @@ struct InfoView: View {
             VStack(alignment: .leading, spacing: 10){
                 Text("This software is distributed under the Apache License, Version 2.0.")
                 Text("This software contains a third-party library \"Mongoose - Embedded Web Server\" which is distributed under the GNU General Public License, Version 2.0")
-            }.font(.caption2)
+            }
+            
+            .font(.caption2)
                 .opacity(0.5)
                 .padding()
             VStack(spacing: 10){
                 Link("View Source Code on GitHub",
                      destination: URL(string: "https://github.com/TechUnRestricted/PSDirectSender")!)
             }
-            Button("View Open Source Licenses"){
+            Button(action: {
                 showingPopover.toggle()
-            }.buttonStyle(LinkButtonStyle())
+            }, label: {
+                Text("View Open Source Licenses")
+                    .frame(width: 400)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            )
+            .buttonStyle(LinkButtonStyle())
                 .font(.footnote)
                 .popover(isPresented: $showingPopover) {
                     Text("""
@@ -72,7 +81,9 @@ license, as set out in <https://mongoose.ws/licensing/>.
 
 struct InfoView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoView()
-            .frame(width: 400, height: 280)
+        let view = InfoView()
+        view
+        view
+            .environment(\.locale, .init(identifier: "Russian"))
     }
 }

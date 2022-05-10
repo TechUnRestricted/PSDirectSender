@@ -1,0 +1,108 @@
+/* No comment provided by engineer. */
+"192.168.1.100 (example)" = "192.168.1.100 (пример)";
+
+/* No comment provided by engineer. */
+"12800 (default)" = "12800 (по умолчанию)";
+
+/* No comment provided by engineer. */
+"Add" = "Добавить";
+
+/* No comment provided by engineer. */
+"Apply Settings and Restart Server" = "Применить настройки и перезапустить сервер";
+
+/* No comment provided by engineer. */
+"Cancel" = "Отменить";
+
+/* No comment provided by engineer. */
+"Check Server status" = "Проверить статус сервера";
+
+/* No comment provided by engineer. */
+"Clear logs" = "Очистить";
+
+/* No comment provided by engineer. */
+"Configuration" = "Конфигурация";
+
+/* No comment provided by engineer. */
+"Console connection configuration data is missing.\n\nGo to the Configuration section and correctly fill in the text fields." = "Отсутствуют данные конфигурации для подключения к консоли.\n\nПерейдите в раздел Конфигурация и заполните текстовые поля данные корректными данными.";
+
+/* No comment provided by engineer. */
+"Copy logs" = "Скопировать";
+
+/* No comment provided by engineer. */
+"Delete" = "Удалить";
+
+/* No comment provided by engineer. */
+"for Remote Package Installer" = "для Remote Package Installer";
+
+/* No comment provided by engineer. */
+"Got it!" = "Понятно";
+
+/* No comment provided by engineer. */
+"Important message" = "Важное сообщение";
+
+/* No comment provided by engineer. */
+"Info" = "Информация";
+
+/* No comment provided by engineer. */
+"IP Address" = "IP Адрес";
+
+/* No comment provided by engineer. */
+"Logs" = "Логи";
+
+/* No comment provided by engineer. */
+"Navigation" = "Навигация";
+
+/* No comment provided by engineer. */
+"Network connection was not detected.\n\nIf there is a connection, then specify the IP address of your network card and any port in the Configuration section." = "Подключение к сети не было обнаружено.\n\nЕсли же подключение к сети имеется, перейдите в раздел Конфигурация, введите вручную IP адрес вашей сетевой карты и любой порт.";
+
+/* No comment provided by engineer. */
+"No response received from Remote Package Installer.\n\nMake sure the data you entered in the Configuration section is correct and the Remote Package Installer application is active.\nAs a last resort, restart your console and try sending again." = "Не получен ответ от Remote Package Installer.\n\nУбедитесь, что данные, которые Вы ввели в раздел Конфигурация, являются корректными, и приложение Remote Package Installer запущено на Вашей консоли.\nВ крайнем случае, попробуйте перезапустить консоль и повторить отправку повторно.";
+
+/* No comment provided by engineer. */
+"Port" = "Порт";
+
+/* No comment provided by engineer. */
+"Queue" = "Очередь";
+
+/* No comment provided by engineer. */
+"Remote Package Installer Configuration" = "Конфигурация Remote Package Installer";
+
+/* No comment provided by engineer. */
+"RPI Port" = "Порт RPI";
+
+/* No comment provided by engineer. */
+"Send" = "Отправить";
+
+/* No comment provided by engineer. */
+"Sending packages..." = "Отправка пакетов...";
+
+/* No comment provided by engineer. */
+"Server Configuration" = "Конфигурация сервера";
+
+/* No comment provided by engineer. */
+"This field is usually filled in automatically by the program.\nIf this field was not filled in automatically, make sure that your computer is connected to the local network.\n\nYou can specify any value between 0 and 65536, however, some ports may be busy/reserved for other applications." = "Данное поле обычно заполняется приложением автоматически.\nЕсли данное поле не было заполнено автоматически, убедитесь, что Ваш компьютер подключен к локальной сети.\n\nВы можете указать любое значение в диапазоне от 0 до 65536. Однако, некоторые порты могут быть заняты/зарезервированы для других приложений.";
+
+/* No comment provided by engineer. */
+"This field is usually filled in automatically by the program.\nIt specifies the IP address of one of your network cards (Wi-Fi, Ethernet) on your Mac.\n\nIf this field was not filled in automatically, make sure that your computer is connected to the local network.\nYou can select the IP address of one of your network cards by clicking on the down arrow in the text field.\nThe IP address can also be found by going to [System Preferences -> Network -> (Device) -> IP Address]" = "Данное поле обычно заполняется приложением автоматически.\nВ данное поле вводится IP адрес одной из ваших сетевых карт (Wi-FI, Ethernet) компьютера Mac.\n\nЕсли данное поле не было заполнено автоматически, убедитесь, что Ваш компьютер подключен к локальной сети.\nВы можете выбрать нужный IP адрес из списка, нажав на стрелку вниз на данном текстовом поле.\nТакже IP адрес можно узнать перейдя в [Настройки системы -> Сеть -> (Устройство) -> IP Адрес]";
+
+/* No comment provided by engineer. */
+"This field must be filled in manually.\n\nOn your console go to the [Settings -> Network -> View Connection Status].\nFind the IP Address entry and enter it into this field." = "Данное поле должно быть заполнено вручную.\n\nНа Вашей консоли перейдите в раздел [Настройки -> Сеть -> Посмотреть статус сетевого подключения].\nНайдите пункт IP Адрес и введите в данное поле.";
+
+/* No comment provided by engineer. */
+"This software contains a third-party library \"Mongoose - Embedded Web Server\" which is distributed under the GNU General Public License, Version 2.0" = "Данное программное обеспечение содержит стороннюю библиотеку \"Mongoose - Embedded Web Server\" распространяемую под лицензией GNU General Public License, Version 2.0";
+
+/* No comment provided by engineer. */
+"This software is distributed under the Apache License, Version 2.0." = "Данное программное обеспечение распространяется под лицензией Apache License, Version 2.0.";
+
+/* No comment provided by engineer. */
+"This value set by default and should not be changed without special reason.\n    \nPoints to the port used by the Remote Package Installer application on your console." = "Данное значение установлено по умолчанию и не требует изменения без особой причины.\n\nОно обозначает порт, использующийся приложением Remote Package Installer на Вашей консоли.";
+
+/* No comment provided by engineer. */
+"Version: %@" = "Версия: %@";
+
+/* No comment provided by engineer. */
+"View Open Source Licenses" = "Посмотреть лицензии программного обеспечения с открытым исходным кодом";
+
+/* No comment provided by engineer. */
+"View Source Code on GitHub" = "Посмотреть исходный код на GitHub";
+

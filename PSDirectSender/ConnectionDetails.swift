@@ -27,6 +27,8 @@ class ConnectionDetails: ObservableObject {
     }
     
     func addLog(_ text: String){
-        logLines.append("[\(getStringDate())] \(text)")
+        DispatchQueue.main.async {
+            self.logLines.append("[\(getStringDate())] \(text)")
+        }
     }
 }

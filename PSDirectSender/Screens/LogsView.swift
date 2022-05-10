@@ -20,12 +20,12 @@ struct LogsView: View {
             })
             
             ColorButton(text: "Clear logs", color: .red, image: Image(systemName: "trash"), action: {
-                connection.logLines = []
+                connection.logLines.removeAll()
             })
             }.padding()
             List(){
                 ForEach(connection.logLines, id: \.self) { logLine in
-                    Text(logLine)
+                    Text(LocalizedStringKey(logLine))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .lineLimit(3)
                         .swiftyListDivider()
@@ -41,8 +41,7 @@ struct LogsView: View {
 struct LogsView_Previews: PreviewProvider {
 
     static var previews: some View {
-        
-        LogsView()
+        let view = LogsView()
             .environmentObject({ () -> ConnectionDetails in
                 let vm = ConnectionDetails()
                 vm.addLog("Can't get server configuration.")
@@ -51,5 +50,9 @@ struct LogsView_Previews: PreviewProvider {
                 
                 return vm
             }())
+        view
+        view
+            .environment(\.locale, .init(identifier: "Russian"))
+
     }
 }

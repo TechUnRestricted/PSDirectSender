@@ -25,6 +25,7 @@
 		E2A06A0F281C3DC4001FAFE1 /* ColorButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A0E281C3DC4001FAFE1 /* ColorButtonStyle.swift */; };
 		E2A06A11281C5D47001FAFE1 /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A10281C5D47001FAFE1 /* LogsView.swift */; };
 		E2A06A13281C6145001FAFE1 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A12281C6145001FAFE1 /* InfoView.swift */; };
+		E2B25E6F282AB4EA00B9E42B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2B25E71282AB4EA00B9E42B /* Localizable.strings */; };
 		E2C028B3281464D1009B94EC /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C028B2281464D1009B94EC /* QueueView.swift */; };
 		E2C028B528147089009B94EC /* JsonSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C028B428147089009B94EC /* JsonSend.swift */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,8 @@
 		E2A06A10281C5D47001FAFE1 /* LogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsView.swift; sourceTree = "<group>"; };
 		E2A06A12281C6145001FAFE1 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		E2A06A14281C6596001FAFE1 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		E2B25E70282AB4EA00B9E42B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2B25E72282AB4ED00B9E42B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E2C028B2281464D1009B94EC /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
 		E2C028B428147089009B94EC /* JsonSend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSend.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +116,7 @@
 				E26BC3BA28134D8100D339B7 /* PSDirectSender.entitlements */,
 				E26BC3B728134D8100D339B7 /* Preview Content */,
 				E2A06A0B281ADDE8001FAFE1 /* Info.plist */,
+				E2B25E71282AB4EA00B9E42B /* Localizable.strings */,
 			);
 			path = PSDirectSender;
 			sourceTree = "<group>";
@@ -213,7 +217,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				ru,
 			);
 			mainGroup = E26BC3A528134D8000D339B7;
 			packageReferences = (
@@ -233,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E26BC3B928134D8100D339B7 /* Preview Assets.xcassets in Resources */,
+				E2B25E6F282AB4EA00B9E42B /* Localizable.strings in Resources */,
 				E26BC3B628134D8100D339B7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,6 +271,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E2B25E71282AB4EA00B9E42B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E2B25E70282AB4EA00B9E42B /* en */,
+				E2B25E72282AB4ED00B9E42B /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E26BC3BB28134D8100D339B7 /* Debug */ = {
@@ -319,12 +336,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -374,11 +393,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;

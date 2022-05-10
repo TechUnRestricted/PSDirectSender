@@ -39,19 +39,19 @@ fileprivate class AlertState: ObservableObject {
     @Published var showCantGetConsoleConfiguration: Bool = false
     @Published var showCantGetResponseFromConsole: Bool = false
     
-    let messageCantGetServerConfiguration = """
+    let messageCantGetServerConfiguration: LocalizedStringKey = """
 Network connection was not detected.
 
 If there is a connection, then specify the IP address of your network card and any port in the Configuration section.
 """
     
-    let messageCantGetConsoleConfiguration = """
+    let messageCantGetConsoleConfiguration: LocalizedStringKey = """
 Console connection configuration data is missing.
 
 Go to the Configuration section and correctly fill in the text fields.
 """
     
-    let messageCantGetResponseFromConsole = """
+    let messageCantGetResponseFromConsole: LocalizedStringKey = """
 No response received from Remote Package Installer.
 
 Make sure the data you entered in the Configuration section is correct and the Remote Package Installer application is active.
@@ -121,29 +121,29 @@ struct QueueView: View {
                                 continue
                             }
                             let alias = createTempDirPackageAlias(package: packageURLs[index])!
-                            DispatchQueue.main.async {
-                                vm.addLog("Creating package alias (\"\(packageURLs[index].url.path)\" -> \"\(tempDirectory.path)/\(alias)\").")
-                                vm.addLog("Sending package \"\(alias)\" to the console (IP: \(vm.consoleIP), Port: \(vm.consolePort))")
-                            }
+                            
+                            vm.addLog("Creating package alias (\"\(packageURLs[index].url.path)\" -> \"\(tempDirectory.path)/\(alias)\").")
+                            vm.addLog("Sending package \"\(alias)\" to the console (IP: \(vm.consoleIP), Port: \(vm.consolePort))")
+                            
                             let response = sendPackagesToConsole(packageFilename: alias, consoleIP: vm.consoleIP, consolePort: Int(vm.consolePort)!, serverIP: vm.serverIP, serverPort: Int(vm.serverPort)!)
                             
                             if (response == nil || response as? String == ""){
+                                vm.addLog("Can't get response from console ([Console] IP: \(vm.consoleIP), Port: \(vm.consolePort))")
                                 DispatchQueue.main.async {
-                                    vm.addLog("Can't get response from console ([Console] IP: \(vm.consoleIP), Port: \(vm.consolePort))")
                                     if loadingScreenIsShown {
                                         alertState.showCantGetResponseFromConsole = true
                                     }
                                 }
                                 break
                             } else if let x = response as? structSendSuccess {
+                                vm.addLog("Successfully sent \(packageURLs[index].url) [Package Link: \"\(packageURLs[index].id).pkg\", id: \(x.taskID), title: \"\(x.title)\"]")
                                 DispatchQueue.main.async {
                                     packageURLs[index].state = .sendSuccess
-                                    vm.addLog("Successfully sent \(packageURLs[index].url) [Package Link: \"\(packageURLs[index].id).pkg\", id: \(x.taskID), title: \"\(x.title)\"]")
                                 }
                             } else if let x = response as? structSendFailure {
+                                vm.addLog("An error occurred while sending \(packageURLs[index].url) [\(packageURLs[index].id).pkg] {ERROR: \(x.error)}")
                                 DispatchQueue.main.async {
                                     packageURLs[index].state = .sendFailure
-                                    vm.addLog("An error occurred while sending \(packageURLs[index].url) [\(packageURLs[index].id).pkg] {ERROR: \(x.error)}")
                                 }
                                 break
                             }
@@ -231,10 +231,15 @@ struct QueueView_Previews: PreviewProvider {
     @EnvironmentObject var vm: ConnectionDetails
     
     static var previews: some View {
-        QueueView(packageURLs: [
+        let view = QueueView(packageURLs: [
             packageURL(url: URL(string: "https://example.com/game.pkg")!),
             packageURL(url: URL(string: "https://example.com/dlc.pkg")!, state: .sendSuccess),
             packageURL(url: URL(string: "https://example.com/dlc.pkg")!, state: .sendFailure)
-        ]/*, blurOpacity: 100*/).environmentObject(ConnectionDetails())
+        ]).environmentObject(ConnectionDetails())
+        
+        view
+        view
+            .environment(\.locale, .init(identifier: "Russian"))
+
     }
 }

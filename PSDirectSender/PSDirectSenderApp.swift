@@ -46,7 +46,6 @@ extension String {
     }
 }
 
-
 extension Int {
     func isInRange(_ start: Int, _ end: Int) -> Bool{
         return self >= start && self <= end
@@ -122,22 +121,7 @@ extension View {
     }
 }
 
-/*extension FileManager {
-    func fileExists(_ atPath: String) -> Bool {
-        var isDirectory: ObjCBool = false
-        let exists = fileExists(atPath: atPath, isDirectory:&isDirectory)
-        return exists && !isDirectory.boolValue
-    }
-}*/
-
 func createTempDirPackageAlias(package: packageURL) -> String?{
-    
-    do {
-        try FileManager.default.createDirectory(at: tempDirectory, withIntermediateDirectories: true, attributes: nil)
-    } catch {
-        print(error)
-    }
-    
     do {
         let symlinkPackageLocation = tempDirectory.appendingPathComponent(package.id.uuidString).appendingPathExtension("pkg")
         let packageURL = package.url
@@ -167,8 +151,8 @@ func selectPackages() -> [URL?]{
     dialog.showsHiddenFiles        = false
     dialog.allowsMultipleSelection = true
     dialog.canCreateDirectories    = true
-    dialog.allowedFileTypes = ["pkg"]
-    dialog.canChooseDirectories = false;
+    dialog.allowedFileTypes        = ["pkg"]
+    dialog.canChooseDirectories    = false;
     
     if (dialog.runModal() == NSApplication.ModalResponse.OK) {
         return dialog.urls
@@ -179,6 +163,8 @@ func selectPackages() -> [URL?]{
 
 func swiftStartServer(serverIP: String, serverPort: String){
     do {
+        try FileManager.default.createDirectory(at: tempDirectory, withIntermediateDirectories: true, attributes: nil)
+        
         server.setDirectoryPath(tempDirectory.path)
         server.setServerBaseURL(try networking.buildServerBaseURL(ip: serverIP, port: Int(serverPort) ?? -1))
         

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ColorButton: View{
-    let text: String
+    let text: LocalizedStringKey
     let color: Color
     let image: Image
     var action: () -> ()

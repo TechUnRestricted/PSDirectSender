@@ -14,7 +14,7 @@ fileprivate class HelpShow: ObservableObject {
     @Published var consoleIP: Bool = false
     @Published var consolePort: Bool = false
     
-    let messageServerIP = """
+    let messageServerIP: LocalizedStringKey = """
 This field is usually filled in automatically by the program.
 It specifies the IP address of one of your network cards (Wi-Fi, Ethernet) on your Mac.
 
@@ -23,21 +23,21 @@ You can select the IP address of one of your network cards by clicking on the do
 The IP address can also be found by going to [System Preferences -> Network -> (Device) -> IP Address]
 """
     
-    let messageServerPort = """
+    let messageServerPort: LocalizedStringKey = """
 This field is usually filled in automatically by the program.
 If this field was not filled in automatically, make sure that your computer is connected to the local network.
 
 You can specify any value between 0 and 65536, however, some ports may be busy/reserved for other applications.
 """
     
-    let messageConsoleIP = """
+    let messageConsoleIP: LocalizedStringKey = """
 This field must be filled in manually.
 
 On your console go to the [Settings -> Network -> View Connection Status].
 Find the IP Address entry and enter it into this field.
 """
     
-    let messageConsolePort = """
+    let messageConsolePort: LocalizedStringKey = """
 This value set by default and should not be changed without special reason.
     
 Points to the port used by the Remote Package Installer application on your console.
@@ -122,7 +122,7 @@ struct ConfigurationView: View {
                         .opacity(0.6)
                     Group{
                         HStack{
-                            Text("Console IP Address")
+                            Text("IP Address")
                             TextField("192.168.1.100 (example)", text: $inputConnectionData.consoleIP)
                             Button {
                                 helpShow.consoleIP.toggle()
@@ -213,8 +213,12 @@ Staring web server:
 
 struct ConfigurationView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfigurationView()
+        let view = ConfigurationView()
             .environmentObject(ConnectionDetails())
+        view
+        view
+            .environment(\.locale, .init(identifier: "Russian"))
+
     }
 }
 

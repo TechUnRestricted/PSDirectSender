@@ -28,6 +28,9 @@ struct ScreenView: View {
 
 struct ScreenView_Previews: PreviewProvider {
     static var previews: some View {
-        ScreenView(screen: .info)
+        let view = ScreenView(screen: .info)
+        view
+        view
+            .environment(\.locale, .init(identifier: "Russian"))
     }
 }

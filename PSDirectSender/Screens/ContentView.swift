@@ -57,6 +57,9 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(ConnectionDetails())
+        let view = ContentView().environmentObject(ConnectionDetails())
+        view
+        view
+            .environment(\.locale, .init(identifier: "Russian"))
     }
 }
