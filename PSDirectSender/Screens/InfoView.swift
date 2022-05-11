@@ -34,8 +34,8 @@ struct InfoView: View {
             }
             
             .font(.caption2)
-                .opacity(0.5)
-                .padding()
+            .opacity(0.5)
+            .padding()
             VStack(spacing: 10){
                 Link("View Source Code on GitHub",
                      destination: URL(string: "https://github.com/TechUnRestricted/PSDirectSender")!)
@@ -49,7 +49,7 @@ struct InfoView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             )
-            .buttonStyle(LinkButtonStyle())
+                .buttonStyle(LinkButtonStyle())
                 .font(.footnote)
                 .popover(isPresented: $showingPopover) {
                     Text("""

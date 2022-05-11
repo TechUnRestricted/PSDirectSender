@@ -23,7 +23,7 @@
 "Configuration" = "Конфигурация";
 
 /* No comment provided by engineer. */
-"Console connection configuration data is missing.\n\nGo to the Configuration section and correctly fill in the text fields." = "Отсутствуют данные конфигурации для подключения к консоли.\n\nПерейдите в раздел Конфигурация и заполните текстовые поля данные корректными данными.";
+"Console connection configuration data is missing.\n\nGo to the Configuration section and correctly fill in the text fields." = "Отсутствуют данные конфигурации для подключения к консоли.\n\nПерейдите в раздел Конфигурация и заполните текстовые поля корректными данными.";
 
 /* No comment provided by engineer. */
 "Copy logs" = "Скопировать";
@@ -106,3 +106,10 @@
 /* No comment provided by engineer. */
 "View Source Code on GitHub" = "Посмотреть исходный код на GitHub";
 
+"Success" = "Запущен";
+
+"Failed" = "Ошибка";
+
+"Stopped" = "Остановлен";
+
+"Invalid configuration data" = "Неверные данные конфигурации";

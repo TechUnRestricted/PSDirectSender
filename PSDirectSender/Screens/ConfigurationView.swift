@@ -13,39 +13,7 @@ fileprivate class HelpShow: ObservableObject {
     
     @Published var consoleIP: Bool = false
     @Published var consolePort: Bool = false
-    
-    let messageServerIP: LocalizedStringKey = """
-This field is usually filled in automatically by the program.
-It specifies the IP address of one of your network cards (Wi-Fi, Ethernet) on your Mac.
-
-If this field was not filled in automatically, make sure that your computer is connected to the local network.
-You can select the IP address of one of your network cards by clicking on the down arrow in the text field.
-The IP address can also be found by going to [System Preferences -> Network -> (Device) -> IP Address]
-"""
-    
-    let messageServerPort: LocalizedStringKey = """
-This field is usually filled in automatically by the program.
-If this field was not filled in automatically, make sure that your computer is connected to the local network.
-
-You can specify any value between 0 and 65536, however, some ports may be busy/reserved for other applications.
-"""
-    
-    let messageConsoleIP: LocalizedStringKey = """
-This field must be filled in manually.
-
-On your console go to the [Settings -> Network -> View Connection Status].
-Find the IP Address entry and enter it into this field.
-"""
-    
-    let messageConsolePort: LocalizedStringKey = """
-This value set by default and should not be changed without special reason.
-    
-Points to the port used by the Remote Package Installer application on your console.
-"""
-    
 }
-
-
 
 struct ConfigurationView: View {
     @EnvironmentObject var connection: ConnectionDetails
@@ -54,9 +22,11 @@ struct ConfigurationView: View {
     @StateObject fileprivate var helpShow: HelpShow = HelpShow()
     @State var showingAlert: Bool = false
     @State var showingConnectionStatus: Bool = false
-
-    @State var alertText: String = ""
+    
     @State var connectionStatusLoaded: Bool = false
+    
+    @State var nonLocalizedPopover: Bool = false
+    @State var localizedPopover: Bool = false
     
     var body: some View {
         ScrollView(.vertical){
@@ -92,7 +62,7 @@ struct ConfigurationView: View {
                             } label: {
                                 Image(systemName: "questionmark.circle")
                             }.popover(isPresented: $helpShow.serverIP) {
-                                Text(helpShow.messageServerIP)
+                                Text(message.serverIPHelp)
                                     .padding()
                             }
                             
@@ -105,7 +75,7 @@ struct ConfigurationView: View {
                             } label: {
                                 Image(systemName: "questionmark.circle")
                             }.popover(isPresented: $helpShow.serverPort) {
-                                Text(helpShow.messageServerPort)
+                                Text(message.serverPortHelp)
                                     .padding()
                             }
                         }
@@ -129,7 +99,7 @@ struct ConfigurationView: View {
                             } label: {
                                 Image(systemName: "questionmark.circle")
                             }.popover(isPresented: $helpShow.consoleIP) {
-                                Text(helpShow.messageConsoleIP)
+                                Text(message.consoleIPHelp)
                                     .padding()
                             }
                         }
@@ -141,7 +111,7 @@ struct ConfigurationView: View {
                             } label: {
                                 Image(systemName: "questionmark.circle")
                             }.popover(isPresented: $helpShow.consolePort) {
-                                Text(helpShow.messageConsolePort)
+                                Text(message.consolePortHelp)
                                     .padding()
                             }
                         }
@@ -160,7 +130,6 @@ struct ConfigurationView: View {
                 let b2 = networking.checkIfPortIsCorrect(port: inputConnectionData.consolePort)
                 
                 if !everythingIsTrue(a1, a2, b1, b2){
-                    alertText = "Invalid configuration data"
                     showingAlert = true
                     return
                 }
@@ -170,6 +139,7 @@ struct ConfigurationView: View {
                 
                 connection.consoleIP = inputConnectionData.consoleIP
                 connection.consolePort = inputConnectionData.consolePort
+                
                 connection.addLog("""
 Staring web server:
 [SERVER] IP: \(connection.serverIP) Port: \(connection.serverPort)
@@ -177,11 +147,13 @@ Staring web server:
 """)
                 swiftStartServer(serverIP: connection.serverIP, serverPort: connection.serverPort)
             }.alert(isPresented: $showingAlert) {
-                Alert(title: Text("Important message"), message: Text(alertText), dismissButton: .default(Text("Got it!")))
+                Alert(title: Text("Important message"), message: Text("Invalid configuration data"), dismissButton: .default(Text("Got it!")))
             }
+            
             Button("Check Server status"){
                 showingConnectionStatus.toggle()
             }.popover(isPresented: $showingConnectionStatus, content: {
+                
                 VStack{
                     if !connectionStatusLoaded {
                         ProgressView()
@@ -190,20 +162,25 @@ Staring web server:
                             .frame(height: 40)
                     }
                 }
-                    .frame(minWidth: 200)
-                    .padding()
-                    .onAppear(perform: {
-                        connectionStatusLoaded = false
-
-                        DispatchQueue.global(qos: .background).async {
-                            sleep(1)
-                            let status = checkIfServerIsWorking(serverIP: connection.serverIP, serverPort: connection.serverPort)
-                            DispatchQueue.main.async {
-                                connection.connectionStatus = status
-                                connectionStatusLoaded = true
-                            }
+                .frame(minWidth: 200)
+                .padding()
+                .onAppear(perform: {
+                    connectionStatusLoaded = false
+                    DispatchQueue.global(qos: .background).async {
+                        sleep(1)
+                        
+                        if !server.serverIsRunning() {
+                            connectionStatusLoaded = true
+                            return
                         }
-                    })
+                        
+                        let status = checkIfServerIsWorking(serverIP: connection.serverIP, serverPort: connection.serverPort)
+                        DispatchQueue.main.async {
+                            connection.connectionStatus = status
+                            connectionStatusLoaded = true
+                        }
+                    }
+                })
             })
         }
     }
@@ -218,7 +195,7 @@ struct ConfigurationView_Previews: PreviewProvider {
         view
         view
             .environment(\.locale, .init(identifier: "Russian"))
-
+        
     }
 }
 

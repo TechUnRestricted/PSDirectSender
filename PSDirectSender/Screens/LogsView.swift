@@ -13,15 +13,15 @@ struct LogsView: View {
     var body: some View {
         VStack{
             HStack(spacing: 25){
-            ColorButton(text: "Copy logs", color: .purple, image: Image(systemName: "doc.on.doc"), action: {
-                let pasteboard = NSPasteboard.general
-                pasteboard.clearContents()
-                pasteboard.setString(connection.logLines.joined(separator: "\n"), forType: .string)
-            })
-            
-            ColorButton(text: "Clear logs", color: .red, image: Image(systemName: "trash"), action: {
-                connection.logLines.removeAll()
-            })
+                ColorButton(text: "Copy logs", color: .purple, image: Image(systemName: "doc.on.doc"), action: {
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(connection.logLines.joined(separator: "\n"), forType: .string)
+                })
+                
+                ColorButton(text: "Clear logs", color: .red, image: Image(systemName: "trash"), action: {
+                    connection.logLines.removeAll()
+                })
             }.padding()
             List(){
                 ForEach(connection.logLines, id: \.self) { logLine in
@@ -39,7 +39,7 @@ struct LogsView: View {
 }
 
 struct LogsView_Previews: PreviewProvider {
-
+    
     static var previews: some View {
         let view = LogsView()
             .environmentObject({ () -> ConnectionDetails in
@@ -53,6 +53,6 @@ struct LogsView_Previews: PreviewProvider {
         view
         view
             .environment(\.locale, .init(identifier: "Russian"))
-
+        
     }
 }

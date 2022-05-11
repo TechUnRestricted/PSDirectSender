@@ -26,6 +26,7 @@
 		E2A06A11281C5D47001FAFE1 /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A10281C5D47001FAFE1 /* LogsView.swift */; };
 		E2A06A13281C6145001FAFE1 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A12281C6145001FAFE1 /* InfoView.swift */; };
 		E2B25E6F282AB4EA00B9E42B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2B25E71282AB4EA00B9E42B /* Localizable.strings */; };
+		E2B25E74282BE77400B9E42B /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B25E73282BE77400B9E42B /* Strings.swift */; };
 		E2C028B3281464D1009B94EC /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C028B2281464D1009B94EC /* QueueView.swift */; };
 		E2C028B528147089009B94EC /* JsonSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C028B428147089009B94EC /* JsonSend.swift */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		E2A06A14281C6596001FAFE1 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		E2B25E70282AB4EA00B9E42B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E2B25E72282AB4ED00B9E42B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E2B25E73282BE77400B9E42B /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		E2C028B2281464D1009B94EC /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
 		E2C028B428147089009B94EC /* JsonSend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonSend.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +119,7 @@
 				E26BC3B728134D8100D339B7 /* Preview Content */,
 				E2A06A0B281ADDE8001FAFE1 /* Info.plist */,
 				E2B25E71282AB4EA00B9E42B /* Localizable.strings */,
+				E2B25E73282BE77400B9E42B /* Strings.swift */,
 			);
 			path = PSDirectSender;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				E2525389281FF916009055A9 /* JsonFailure.swift in Sources */,
 				E26BC3C7281350D500D339B7 /* SidebarButton.swift in Sources */,
 				E286805728204A850036E0C5 /* VisualEffectBlur.swift in Sources */,
+				E2B25E74282BE77400B9E42B /* Strings.swift in Sources */,
 				E2C028B528147089009B94EC /* JsonSend.swift in Sources */,
 				E29F5F9D28142C4C00A8EA81 /* ConfigurationView.swift in Sources */,
 				E2A06A0F281C3DC4001FAFE1 /* ColorButtonStyle.swift in Sources */,

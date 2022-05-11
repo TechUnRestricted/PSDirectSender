@@ -11,6 +11,7 @@ let networking = Networking()
 let server = ServerBridge()
 let fileMgr: FileManager = FileManager.default
 let tempDirectory: URL = fileMgr.temporaryDirectory.appendingPathComponent("PSDirectSenderLinks")
+let message: MessageCollection = .init()
 
 @main
 struct PSDirectSenderApp: App {

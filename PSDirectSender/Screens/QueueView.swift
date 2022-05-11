@@ -34,34 +34,33 @@ struct packageURL{
     var state: packageState = .sendNotInitiated
 }
 
-fileprivate class AlertState: ObservableObject {
-    @Published var showCantGetServerConfiguration: Bool = false
-    @Published var showCantGetConsoleConfiguration: Bool = false
-    @Published var showCantGetResponseFromConsole: Bool = false
-    
-    let messageCantGetServerConfiguration: LocalizedStringKey = """
-Network connection was not detected.
+fileprivate struct AlertIdentifier: Identifiable {
+  enum ActiveAlert {
+    case cantGetServerConfiguration
+    case cantGetConsoleConfiguration
+    case cantGetResponseFromConsole
 
-If there is a connection, then specify the IP address of your network card and any port in the Configuration section.
-"""
-    
-    let messageCantGetConsoleConfiguration: LocalizedStringKey = """
-Console connection configuration data is missing.
+    var alertView: Alert {
+      switch self {
+      case .cantGetServerConfiguration:
+          return Alert(title: Text("Important message"), message: Text(message.cantGetServerConfiguration))
+          
+      case .cantGetConsoleConfiguration:
+          return Alert(title: Text("Important message"), message: Text(message.cantGetConsoleConfiguration))
+          
+      case .cantGetResponseFromConsole:
+          return Alert(title: Text("Important message"), message: Text(message.cantGetResponseFromConsole))
+          
+      }
+    }
+  }
 
-Go to the Configuration section and correctly fill in the text fields.
-"""
-    
-    let messageCantGetResponseFromConsole: LocalizedStringKey = """
-No response received from Remote Package Installer.
-
-Make sure the data you entered in the Configuration section is correct and the Remote Package Installer application is active.
-As a last resort, restart your console and try sending again.
-"""
+  var id: ActiveAlert
 }
 
 struct QueueView: View {
     @EnvironmentObject var vm: ConnectionDetails
-    @StateObject fileprivate var alertState: AlertState = AlertState()
+    @State fileprivate var alert: AlertIdentifier?
     @State var packageURLs: [packageURL] = []
     @State private var selection: Set<UUID> = []
     
@@ -72,18 +71,7 @@ struct QueueView: View {
     
     var body: some View {
         ZStack {
-            
             VStack{
-                VStack{}.alert(isPresented: $alertState.showCantGetConsoleConfiguration) {
-                    Alert(title: Text("Important message"), message: Text(alertState.messageCantGetConsoleConfiguration), dismissButton: .default(Text("Got it!")))
-                }
-                VStack{}.alert(isPresented: $alertState.showCantGetServerConfiguration) {
-                    Alert(title: Text("Important message"), message: Text(alertState.messageCantGetServerConfiguration), dismissButton: .default(Text("Got it!")))
-                }
-                VStack{}.alert(isPresented: $alertState.showCantGetResponseFromConsole) {
-                    Alert(title: Text("Important message"), message: Text(alertState.messageCantGetResponseFromConsole), dismissButton: .default(Text("Got it!")))
-                }
-                
                 HStack(spacing: 15){
                     ColorButton(text: "Add", color: .orange, image: Image(systemName: "plus.rectangle.on.rectangle"), action: {
                         let packages = selectPackages()
@@ -104,13 +92,13 @@ struct QueueView: View {
                         
                         if (vm.serverIP.isEmpty || vm.serverPort.isEmpty){
                             vm.addLog("Can't get server configuration.")
-                            alertState.showCantGetServerConfiguration = true
+                            alert = AlertIdentifier(id: .cantGetServerConfiguration)
                             return
                         }
                         
                         if (vm.consoleIP.isEmpty || vm.consolePort.isEmpty){
                             vm.addLog("Can't get console configuration.")
-                            alertState.showCantGetConsoleConfiguration = true
+                            alert = AlertIdentifier(id: .cantGetConsoleConfiguration)
                             return
                         }
                         
@@ -131,7 +119,7 @@ struct QueueView: View {
                                 vm.addLog("Can't get response from console ([Console] IP: \(vm.consoleIP), Port: \(vm.consolePort))")
                                 DispatchQueue.main.async {
                                     if loadingScreenIsShown {
-                                        alertState.showCantGetResponseFromConsole = true
+                                        alert = AlertIdentifier(id: .cantGetResponseFromConsole)
                                     }
                                 }
                                 break
@@ -193,8 +181,10 @@ struct QueueView: View {
                 )
                 
             }
-            
             .padding()
+            .alert(item: $alert) {
+                  $0.id.alertView
+            }
             
             ZStack{
                 VisualEffectView(material: .fullScreenUI, blendingMode: .withinWindow)

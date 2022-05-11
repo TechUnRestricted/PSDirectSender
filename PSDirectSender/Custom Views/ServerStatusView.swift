@@ -27,7 +27,7 @@ struct ServerStatusView: View {
         }
     }
     
-    var textToShow: String {
+    var textToShow: LocalizedStringKey {
         switch serverStatus {
         case .success:
             return "Success"
