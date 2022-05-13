@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct ColorButton: View{
+struct ColorButton: View {
     let text: LocalizedStringKey
     let color: Color
     let image: Image
-    var action: () -> ()
+    var action: () -> Void
     
     var body: some View {
         Button(action: {
@@ -41,14 +41,14 @@ struct ColorButtonStyle: ButtonStyle {
         .padding()
         .background(color.cornerRadius(15))
         .scaleEffect(configuration.isPressed ? 0.95 : 1)
-        //.animation(.easeInOut, value: configuration.isPressed)
+        // .animation(.easeInOut, value: configuration.isPressed)
     }
 }
 
 struct ColorButton_Previews: PreviewProvider {
     static var previews: some View {
         Button(action: {}, label: {
-            HStack{
+            HStack {
                 Image(systemName: "trash")
                 Text("Delete")
             }.font(.title2)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Screen: String, CaseIterable{
+enum Screen: String, CaseIterable {
     case queue
     case configuration
     case logs
@@ -19,8 +19,8 @@ struct ContentView: View {
     @State var currentTab: Screen = .queue
     
     var body: some View {
-        NavigationView(){
-            List(selection: $currentScreen){
+        NavigationView {
+            List(selection: $currentScreen) {
                 Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
                     .opacity(0.8)
                     .frame(maxWidth: .infinity)
@@ -29,7 +29,7 @@ struct ContentView: View {
                 ForEach(Screen.allCases, id: \.self) { screen in
                     SidebarButton(type: screen)
                 }
-            }.onChange(of: currentScreen!){ action in
+            }.onChange(of: currentScreen!) { action in
                 currentTab = action
             }
             .listStyle(SidebarListStyle())
@@ -44,7 +44,7 @@ struct ContentView: View {
             }
             .frame(minWidth: 180)
             
-            TabView(selection: $currentTab){
+            TabView(selection: $currentTab) {
                 ForEach(Screen.allCases, id: \.self) { screen in
                     ScreenView(screen: screen)
                         .tag(screen)

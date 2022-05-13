@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct structSendFailure: Codable {
+struct SendFailure: Codable {
     let status, error: String
 }

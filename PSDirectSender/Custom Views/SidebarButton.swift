@@ -11,8 +11,8 @@ struct SidebarButton: View {
     let type: Screen
     var body: some View {
         let imageWidth: CGFloat = 15
-        HStack{
-            switch (type){
+        HStack {
+            switch type {
             case .queue:
                 Image(systemName: "square.and.pencil").frame(width: imageWidth, alignment: .center)
                 Text("Queue")

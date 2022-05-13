@@ -11,8 +11,8 @@ struct LogsView: View {
     @EnvironmentObject var connection: ConnectionDetails
     
     var body: some View {
-        VStack{
-            HStack(spacing: 25){
+        VStack {
+            HStack(spacing: 25) {
                 ColorButton(text: "Copy logs", color: .purple, image: Image(systemName: "doc.on.doc"), action: {
                     let pasteboard = NSPasteboard.general
                     pasteboard.clearContents()
@@ -23,7 +23,7 @@ struct LogsView: View {
                     connection.logLines.removeAll()
                 })
             }.padding()
-            List(){
+            List {
                 ForEach(connection.logLines, id: \.self) { logLine in
                     Text(LocalizedStringKey(logLine))
                         .frame(maxWidth: .infinity, alignment: .leading)

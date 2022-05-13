@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct structPackageSender: Codable {
+struct PackageSenderData: Codable {
     let type: String
     let packages: [String]
 }

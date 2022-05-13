@@ -11,12 +11,12 @@ struct InfoView: View {
     @State private var showingPopover = false
     
     var body: some View {
-        VStack{
-            HStack{
+        VStack {
+            HStack {
                 Image(nsImage: NSImage(named: "AppIcon") ?? NSImage())
                     .resizable()
                     .frame(width: 80, height: 80)
-                VStack(alignment: .leading){
+                VStack(alignment: .leading) {
                     Text("PSDirectSender")
                         .font(.title)
                         .opacity(0.9)
@@ -28,7 +28,7 @@ struct InfoView: View {
                         .font(.footnote)
                 }
             }
-            VStack(alignment: .leading, spacing: 10){
+            VStack(alignment: .leading, spacing: 10) {
                 Text("This software is distributed under the Apache License, Version 2.0.")
                 Text("This software contains a third-party library \"Mongoose - Embedded Web Server\" which is distributed under the GNU General Public License, Version 2.0")
             }
@@ -36,7 +36,7 @@ struct InfoView: View {
             .font(.caption2)
             .opacity(0.5)
             .padding()
-            VStack(spacing: 10){
+            VStack(spacing: 10) {
                 Link("View Source Code on GitHub",
                      destination: URL(string: "https://github.com/TechUnRestricted/PSDirectSender")!)
             }

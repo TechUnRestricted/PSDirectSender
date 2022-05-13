@@ -29,24 +29,23 @@ struct ConfigurationView: View {
     @State var localizedPopover: Bool = false
     
     var body: some View {
-        ScrollView(.vertical){
-            VStack(spacing: 25){
+        ScrollView(.vertical) {
+            VStack(spacing: 25) {
                 
-                VStack(){
+                VStack {
                     Text("Server Configuration")
                         .font(.title3)
                         .opacity(0.6)
-                    Group{
-                        HStack{
+                    Group {
+                        HStack {
                             Text("IP Address")
-                            ZStack{
+                            ZStack {
                                 TextField("192.168.1.100", text: $inputConnectionData.serverIP)
-                                HStack(){
+                                HStack {
                                     Spacer()
                                     Menu("") {
-                                        ForEach(inputConnectionData.networkingIPs, id: \.self) {
-                                            networkingIP in
-                                            Button("\(networkingIP)"){
+                                        ForEach(inputConnectionData.networkingIPs, id: \.self) { networkingIP in
+                                            Button("\(networkingIP)") {
                                                 inputConnectionData.serverIP = networkingIP
                                             }
                                         }
@@ -67,7 +66,7 @@ struct ConfigurationView: View {
                             }
                             
                         }
-                        HStack{
+                        HStack {
                             Text("Port")
                             TextField("15460", text: $inputConnectionData.serverPort)
                             Button {
@@ -81,17 +80,17 @@ struct ConfigurationView: View {
                         }
                     }
                 }.onAppear(perform: {
-                    if (inputConnectionData.serverIP.isEmpty){
+                    if inputConnectionData.serverIP.isEmpty {
                         inputConnectionData.generateServerDetails()
                     }
                 })
                 
-                VStack{
+                VStack {
                     Text("Remote Package Installer Configuration")
                         .font(.title3)
                         .opacity(0.6)
-                    Group{
-                        HStack{
+                    Group {
+                        HStack {
                             Text("IP Address")
                             TextField("192.168.1.100 (example)", text: $inputConnectionData.consoleIP)
                             Button {
@@ -103,7 +102,7 @@ struct ConfigurationView: View {
                                     .padding()
                             }
                         }
-                        HStack{
+                        HStack {
                             Text("RPI Port")
                             TextField("12800 (default)", text: $inputConnectionData.consolePort)
                             Button {
@@ -122,14 +121,14 @@ struct ConfigurationView: View {
             .padding()
             .frame(maxWidth: 500)
             
-            Button("Apply Settings and Restart Server"){
+            Button("Apply Settings and Restart Server") {
                 let a1 = networking.checkIfIPIsCorrect(ip: inputConnectionData.serverIP)
                 let a2 = networking.checkIfPortIsCorrect(port: inputConnectionData.serverPort)
                 
                 let b1 = networking.checkIfIPIsCorrect(ip: inputConnectionData.consoleIP)
                 let b2 = networking.checkIfPortIsCorrect(port: inputConnectionData.consolePort)
                 
-                if !everythingIsTrue(a1, a2, b1, b2){
+                if !everythingIsTrue(a1, a2, b1, b2) {
                     showingAlert = true
                     return
                 }
@@ -150,11 +149,11 @@ Staring web server:
                 Alert(title: Text("Important message"), message: Text("Invalid configuration data"), dismissButton: .default(Text("Got it!")))
             }
             
-            Button("Check Server status"){
+            Button("Check Server status") {
                 showingConnectionStatus.toggle()
             }.popover(isPresented: $showingConnectionStatus, content: {
                 
-                VStack{
+                VStack {
                     if !connectionStatusLoaded {
                         ProgressView()
                     } else {
@@ -186,8 +185,6 @@ Staring web server:
     }
 }
 
-
-
 struct ConfigurationView_Previews: PreviewProvider {
     static var previews: some View {
         let view = ConfigurationView()
@@ -198,4 +195,3 @@ struct ConfigurationView_Previews: PreviewProvider {
         
     }
 }
-

@@ -28,7 +28,6 @@ Make sure the data you entered in the Configuration section is correct and the R
 As a last resort, restart your console and try sending again.
 """
     
-    
     let serverIPHelp: LocalizedStringKey = """
 This field is usually filled in automatically by the program.
 It specifies the IP address of one of your network cards (Wi-Fi, Ethernet) on your Mac.

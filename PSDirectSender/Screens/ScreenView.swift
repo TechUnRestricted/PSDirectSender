@@ -7,13 +7,12 @@
 
 import SwiftUI
 
-
 struct ScreenView: View {
     let screen: Screen
-    @EnvironmentObject var vm: ConnectionDetails
+    @EnvironmentObject var connection: ConnectionDetails
     
     var body: some View {
-        switch(screen){
+        switch screen {
         case .queue:
             QueueView()
         case .configuration:

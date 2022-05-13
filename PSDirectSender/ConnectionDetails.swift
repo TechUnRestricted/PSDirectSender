@@ -17,16 +17,16 @@ class ConnectionDetails: ObservableObject {
     
     @Published var logLines: [String] = []
     
-    func generateServerDetails(){
+    func generateServerDetails() {
         serverPort = String(networking.findFreePort())
         
         networkingIPs = networking.getIPNetworkAddresses()
-        if let ip = networkingIPs.first{
-            serverIP = ip;
+        if let ip = networkingIPs.first {
+            serverIP = ip
         }
     }
     
-    func addLog(_ text: String){
+    func addLog(_ text: String) {
         DispatchQueue.main.async {
             self.logLines.append("[\(getStringDate())] \(text)")
         }

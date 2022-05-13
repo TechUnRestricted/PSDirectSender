@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ServerStatus{
+enum ServerStatus {
     case success
     case fail
     case stopped
@@ -39,7 +39,7 @@ struct ServerStatusView: View {
     }
     
     var body: some View {
-        HStack(spacing: 5){
+        HStack(spacing: 5) {
             Circle()
                 .strokeBorder(
                     Color.black.opacity(0.5),

@@ -48,7 +48,7 @@ extension String {
 }
 
 extension Int {
-    func isInRange(_ start: Int, _ end: Int) -> Bool{
+    func isInRange(_ start: Int, _ end: Int) -> Bool {
         return self >= start && self <= end
     }
 }
@@ -68,7 +68,7 @@ extension Bundle {
     
     public var appBuild: String { getInfo("CFBundleVersion") }
     public var appVersionLong: String { getInfo("CFBundleShortVersionString") }
-    //public var appVersionShort: String { getInfo("CFBundleShortVersion") }
+    // public var appVersionShort: String { getInfo("CFBundleShortVersion") }
     
     fileprivate func getInfo(_ str: String) -> String { infoDictionary?[str] as? String ?? "⚠️" }
 }
@@ -122,7 +122,7 @@ extension View {
     }
 }
 
-func createTempDirPackageAlias(package: packageURL) -> String?{
+func createTempDirPackageAlias(package: Package) -> String? {
     do {
         let symlinkPackageLocation = tempDirectory.appendingPathComponent(package.id.uuidString).appendingPathExtension("pkg")
         let packageURL = package.url
@@ -144,7 +144,7 @@ func createTempDirPackageAlias(package: packageURL) -> String?{
     return nil
 }
 
-func selectPackages() -> [URL?]{
+func selectPackages() -> [URL?] {
     let dialog = NSOpenPanel()
     
     dialog.title                   = "Choose PKGs"
@@ -153,16 +153,16 @@ func selectPackages() -> [URL?]{
     dialog.allowsMultipleSelection = true
     dialog.canCreateDirectories    = true
     dialog.allowedFileTypes        = ["pkg"]
-    dialog.canChooseDirectories    = false;
+    dialog.canChooseDirectories    = false
     
-    if (dialog.runModal() == NSApplication.ModalResponse.OK) {
+    if dialog.runModal() == NSApplication.ModalResponse.OK {
         return dialog.urls
     }
     
     return []
 }
 
-func swiftStartServer(serverIP: String, serverPort: String){
+func swiftStartServer(serverIP: String, serverPort: String) {
     do {
         try FileManager.default.createDirectory(at: tempDirectory, withIntermediateDirectories: true, attributes: nil)
         
@@ -181,9 +181,9 @@ func swiftStartServer(serverIP: String, serverPort: String){
 }
 
 @discardableResult
-func sendPackagesToConsole(packageFilename: String, consoleIP: String, consolePort: Int, serverIP: String, serverPort: Int) -> Any?{
+func sendPackagesToConsole(packageFilename: String, consoleIP: String, consolePort: Int, serverIP: String, serverPort: Int) -> Any? {
 
-    let dataStructure = structPackageSender(type: "direct", packages: ["http://\(serverIP):\(serverPort)/\(packageFilename)"])
+    let dataStructure = PackageSenderData(type: "direct", packages: ["http://\(serverIP):\(serverPort)/\(packageFilename)"])
     let jsonData = try? JSONEncoder().encode(dataStructure)
     
     let builtURL = URL(string: "http://\(consoleIP):\(consolePort)/api/install")
@@ -202,9 +202,9 @@ func sendPackagesToConsole(packageFilename: String, consoleIP: String, consolePo
     let (data, _/*response*/, _/*error*/) = URLSession.shared.synchronousDataTask(with: request)
 
     if let data = data {
-        if let json = try? JSONDecoder().decode(structSendSuccess.self, from: data){
+        if let json = try? JSONDecoder().decode(SendSuccess.self, from: data) {
             return json
-        } else if let json = try? JSONDecoder().decode(structSendFailure.self, from: data){
+        } else if let json = try? JSONDecoder().decode(SendFailure.self, from: data) {
             return json
         } else {
             return String(decoding: data, as: UTF8.self)
@@ -229,7 +229,7 @@ func checkIfServerIsWorking(serverIP: String, serverPort: String) -> ServerStatu
     
     let (_/*data*/, response, _/*error*/) = URLSession.shared.synchronousDataTask(with: request)
     
-    if let httpResponse = response as? HTTPURLResponse,  let serverHeader = httpResponse.allHeaderFields["Server"] as? String {
+    if let httpResponse = response as? HTTPURLResponse, let serverHeader = httpResponse.allHeaderFields["Server"] as? String {
         if serverHeader == "PSDirectSender/Mongoose"{
             status = .success
             print("[DEBUG:] \(serverHeader)")
@@ -244,10 +244,10 @@ func checkIfServerIsWorking(serverIP: String, serverPort: String) -> ServerStatu
 }
 
 func everythingIsTrue(_ bools: Bool...) -> Bool {
-    for bool in bools where bool == false{
+    for bool in bools where bool == false {
         return false
     }
-    return true;
+    return true
 }
 
 func getStringDate() -> String {

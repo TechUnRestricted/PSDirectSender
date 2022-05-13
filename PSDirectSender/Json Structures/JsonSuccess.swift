@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct structSendSuccess: Codable {
+struct SendSuccess: Codable {
     let status: String
     let taskID: Int
     let title: String
