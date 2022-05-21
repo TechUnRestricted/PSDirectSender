@@ -1,14 +1,14 @@
 //
-//  ServerLinker.h
+//  ServerBridge.h
 //  PSDirectSender
 //
 //  Created by Macintosh on 23.04.2022.
 //
 
-#ifndef ServerLinker_h
-#define ServerLinker_h
+#ifndef ServerBridge_h
+#define ServerBridge_h
 
-@interface ServerBridge : NSObject{
+@interface ServerBridge: NSObject{
 
 }
 - (void) setDirectoryPath:(NSString*)input;
@@ -20,4 +20,4 @@
 
 @end
 
-#endif /* ServerLinker_h */
+#endif /* ServerBridge_h */

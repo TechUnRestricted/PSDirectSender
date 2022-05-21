@@ -29,6 +29,7 @@ extension PackageState {
 struct Package {
     let id = UUID()
     let url: URL
+    var task_id: Int?
     var state: PackageState = .sendNotInitiated
 }
 
@@ -120,13 +121,14 @@ struct QueueView: View {
                                         }
                                     }
                                     break
-                                } else if let x = response as? SendSuccess {
-                                    connection.addLog("Successfully sent \(packageURLs[index].url) [Package Link: \"\(packageURLs[index].id).pkg\", id: \(x.taskID), title: \"\(x.title)\"]")
+                                } else if let response = response as? SendSuccess {
+                                    connection.addLog("Successfully sent \(packageURLs[index].url) [Package Link: \"\(packageURLs[index].id).pkg\", id: \(response.taskID), title: \"\(response.title)\"]")
                                     DispatchQueue.main.async {
                                         packageURLs[index].state = .sendSuccess
+                                        packageURLs[index].task_id = response.taskID
                                     }
-                                } else if let x = response as? SendFailure {
-                                    connection.addLog("An error occurred while sending \(packageURLs[index].url) [\(packageURLs[index].id).pkg] {ERROR: \(x.error)}")
+                                } else if let response = response as? SendFailure {
+                                    connection.addLog("An error occurred while sending \(packageURLs[index].url) [\(packageURLs[index].id).pkg] {ERROR: \(response.error)}")
                                     DispatchQueue.main.async {
                                         packageURLs[index].state = .sendFailure
                                     }
@@ -205,10 +207,12 @@ struct QueueView: View {
         }
         
     }
+    
     private func deleteSelection() {
         packageURLs.removeAll { selection.contains($0.id) }
         selection.removeAll()
     }
+    
 }
 
 struct QueueView_Previews: PreviewProvider {

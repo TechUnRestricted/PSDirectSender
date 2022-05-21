@@ -17,7 +17,7 @@
 		E26BC3C7281350D500D339B7 /* SidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26BC3C6281350D500D339B7 /* SidebarButton.swift */; };
 		E26BC3E52813F85300D339B7 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = E26BC3E42813F85300D339B7 /* mongoose.c */; };
 		E286805728204A850036E0C5 /* VisualEffectBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = E286805628204A850036E0C5 /* VisualEffectBlur.swift */; };
-		E29F5F9A28142BAE00A8EA81 /* ServerLinker.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F5F9928142BAE00A8EA81 /* ServerLinker.m */; };
+		E29F5F9A28142BAE00A8EA81 /* ServerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F5F9928142BAE00A8EA81 /* ServerBridge.m */; };
 		E29F5F9D28142C4C00A8EA81 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5F9C28142C4C00A8EA81 /* ConfigurationView.swift */; };
 		E29F5FBA2814367B00A8EA81 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5FB92814367B00A8EA81 /* Networking.swift */; };
 		E2A069F6281AA717001FAFE1 /* ServerStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A069F5281AA717001FAFE1 /* ServerStatusView.swift */; };
@@ -25,6 +25,7 @@
 		E2A06A0F281C3DC4001FAFE1 /* ColorButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A0E281C3DC4001FAFE1 /* ColorButtonStyle.swift */; };
 		E2A06A11281C5D47001FAFE1 /* LogsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A10281C5D47001FAFE1 /* LogsView.swift */; };
 		E2A06A13281C6145001FAFE1 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A06A12281C6145001FAFE1 /* InfoView.swift */; };
+		E2AF6A4E2839877400436942 /* SFOExplorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AF6A4D2839877400436942 /* SFOExplorer.swift */; };
 		E2B25E6F282AB4EA00B9E42B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2B25E71282AB4EA00B9E42B /* Localizable.strings */; };
 		E2B25E74282BE77400B9E42B /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B25E73282BE77400B9E42B /* Strings.swift */; };
 		E2C028B3281464D1009B94EC /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C028B2281464D1009B94EC /* QueueView.swift */; };
@@ -47,8 +48,8 @@
 		E26BC3E32813F85300D339B7 /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mongoose.h; sourceTree = "<group>"; };
 		E26BC3E42813F85300D339B7 /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mongoose.c; sourceTree = "<group>"; };
 		E286805628204A850036E0C5 /* VisualEffectBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBlur.swift; sourceTree = "<group>"; };
-		E29F5F9928142BAE00A8EA81 /* ServerLinker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServerLinker.m; sourceTree = "<group>"; };
-		E29F5F9B28142BC000A8EA81 /* ServerLinker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerLinker.h; sourceTree = "<group>"; };
+		E29F5F9928142BAE00A8EA81 /* ServerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServerBridge.m; sourceTree = "<group>"; };
+		E29F5F9B28142BC000A8EA81 /* ServerBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerBridge.h; sourceTree = "<group>"; };
 		E29F5F9C28142C4C00A8EA81 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		E29F5FB92814367B00A8EA81 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		E2A069F5281AA717001FAFE1 /* ServerStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStatusView.swift; sourceTree = "<group>"; };
@@ -58,6 +59,7 @@
 		E2A06A10281C5D47001FAFE1 /* LogsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsView.swift; sourceTree = "<group>"; };
 		E2A06A12281C6145001FAFE1 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		E2A06A14281C6596001FAFE1 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		E2AF6A4D2839877400436942 /* SFOExplorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SFOExplorer.swift; sourceTree = "<group>"; };
 		E2B25E70282AB4EA00B9E42B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E2B25E72282AB4ED00B9E42B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E2B25E73282BE77400B9E42B /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -107,13 +109,13 @@
 			isa = PBXGroup;
 			children = (
 				E26BC3B128134D8000D339B7 /* PSDirectSenderApp.swift */,
-				E26BC3DE2813F7C700D339B7 /* Mongoose */,
-				E2A06A15281C65C4001FAFE1 /* ServerBridge */,
+				E283DFC4282EC3370070FA1A /* Server */,
 				E26BC3C32813508D00D339B7 /* Screens */,
 				E2A069F7281ACF51001FAFE1 /* Custom Views */,
 				E2525385281FF882009055A9 /* Json Structures */,
 				E2A06A0C281B359D001FAFE1 /* ConnectionDetails.swift */,
 				E29F5FB92814367B00A8EA81 /* Networking.swift */,
+				E2AF6A4D2839877400436942 /* SFOExplorer.swift */,
 				E26BC3B528134D8100D339B7 /* Assets.xcassets */,
 				E26BC3BA28134D8100D339B7 /* PSDirectSender.entitlements */,
 				E26BC3B728134D8100D339B7 /* Preview Content */,
@@ -155,6 +157,15 @@
 			path = Mongoose;
 			sourceTree = "<group>";
 		};
+		E283DFC4282EC3370070FA1A /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				E26BC3DE2813F7C700D339B7 /* Mongoose */,
+				E2A06A15281C65C4001FAFE1 /* Bridge */,
+			);
+			path = Server;
+			sourceTree = "<group>";
+		};
 		E2A069F7281ACF51001FAFE1 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,14 +177,14 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
-		E2A06A15281C65C4001FAFE1 /* ServerBridge */ = {
+		E2A06A15281C65C4001FAFE1 /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
-				E29F5F9928142BAE00A8EA81 /* ServerLinker.m */,
-				E29F5F9B28142BC000A8EA81 /* ServerLinker.h */,
+				E29F5F9928142BAE00A8EA81 /* ServerBridge.m */,
+				E29F5F9B28142BC000A8EA81 /* ServerBridge.h */,
 				E26BC3DF2813F82F00D339B7 /* PSDirectSender-Bridging-Header.h */,
 			);
-			path = ServerBridge;
+			path = Bridge;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +286,7 @@
 			files = (
 				E2A06A13281C6145001FAFE1 /* InfoView.swift in Sources */,
 				E2525387281FF89B009055A9 /* JsonSuccess.swift in Sources */,
+				E2AF6A4E2839877400436942 /* SFOExplorer.swift in Sources */,
 				E2525389281FF916009055A9 /* JsonFailure.swift in Sources */,
 				E26BC3C7281350D500D339B7 /* SidebarButton.swift in Sources */,
 				E286805728204A850036E0C5 /* VisualEffectBlur.swift in Sources */,
@@ -285,7 +297,7 @@
 				E26BC3C5281350A700D339B7 /* ScreenView.swift in Sources */,
 				E2A069F6281AA717001FAFE1 /* ServerStatusView.swift in Sources */,
 				E26BC3B428134D8000D339B7 /* ContentView.swift in Sources */,
-				E29F5F9A28142BAE00A8EA81 /* ServerLinker.m in Sources */,
+				E29F5F9A28142BAE00A8EA81 /* ServerBridge.m in Sources */,
 				E26BC3E52813F85300D339B7 /* mongoose.c in Sources */,
 				E29F5FBA2814367B00A8EA81 /* Networking.swift in Sources */,
 				E2A06A0D281B359D001FAFE1 /* ConnectionDetails.swift in Sources */,
@@ -452,7 +464,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.techunrestricted.PSDirectSender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "PSDirectSender/ServerBridge/PSDirectSender-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "PSDirectSender/Server/Bridge/PSDirectSender-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -481,7 +493,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.techunrestricted.PSDirectSender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "PSDirectSender/ServerBridge/PSDirectSender-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "PSDirectSender/Server/Bridge/PSDirectSender-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

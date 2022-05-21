@@ -29,7 +29,7 @@
 
 # Usage
   <ol>
-    <li>Open *PSDirectSender*</li>
+    <li>Open <b>PSDirectSender</b></li>
     <li>Go to the Configuration section</li>
     <li>Fill the Console Configuration. (Server configuration should be generated automatically)</li>
     <li>Press "Apply settings and Restart Server"</li>
