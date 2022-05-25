@@ -15,12 +15,14 @@ let message: MessageCollection = .init()
 
 @main
 struct PSDirectSenderApp: App {
-    @StateObject var currentTheme = ConnectionDetails()
-    
+    @StateObject var connectionDetails = ConnectionDetails()
+    @StateObject var logsCollector = LogsCollector()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(currentTheme)
+                .environmentObject(connectionDetails)
+                .environmentObject(logsCollector)
                 .frame(minWidth: 650,
                        idealWidth: 750,
                        maxWidth: .infinity,
@@ -181,12 +183,14 @@ func swiftStartServer(serverIP: String, serverPort: String) {
 }
 
 @discardableResult
-func sendPackagesToConsole(packageFilename: String, consoleIP: String, consolePort: Int, serverIP: String, serverPort: Int) -> Any? {
+func sendPackagesToConsole(packageFilename: String, connection: ConnectionDetails) -> Any? {
 
-    let dataStructure = PackageSenderData(type: "direct", packages: ["http://\(serverIP):\(serverPort)/\(packageFilename)"])
+    let dataStructure = PackageSenderData(type: "direct",
+                                          packages: ["http://\(connection.serverIP):\(connection.serverPort)/\(packageFilename)"]
+    )
     let jsonData = try? JSONEncoder().encode(dataStructure)
     
-    let builtURL = URL(string: "http://\(consoleIP):\(consolePort)/api/install")
+    let builtURL = URL(string: "http://\(connection.consoleIP):\(connection.consolePort)/api/install")
     
     var request = URLRequest(
         url: (builtURL)!,
@@ -214,8 +218,8 @@ func sendPackagesToConsole(packageFilename: String, consoleIP: String, consolePo
     return nil
 }
 
-func checkIfServerIsWorking(serverIP: String, serverPort: String) -> ServerStatus {
-    guard let url = URL(string: "http://\(serverIP):\(serverPort)") else {
+func checkIfServerIsWorking(connection: ConnectionDetails) -> ServerStatus {
+    guard let url = URL(string: "http://\(connection.serverIP):\(connection.serverPort)") else {
         return .fail
     }
     var status: ServerStatus = .stopped

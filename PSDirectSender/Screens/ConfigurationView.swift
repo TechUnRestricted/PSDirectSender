@@ -17,6 +17,8 @@ fileprivate class HelpShow: ObservableObject {
 
 struct ConfigurationView: View {
     @EnvironmentObject var connection: ConnectionDetails
+    @EnvironmentObject var logsCollector: LogsCollector
+
     @StateObject var inputConnectionData: ConnectionDetails = ConnectionDetails()
     
     @StateObject fileprivate var helpShow: HelpShow = HelpShow()
@@ -139,7 +141,7 @@ struct ConfigurationView: View {
                 connection.consoleIP = inputConnectionData.consoleIP
                 connection.consolePort = inputConnectionData.consolePort
                 
-                connection.addLog("""
+                logsCollector.addLog("""
 Staring web server:
 [SERVER] IP: \(connection.serverIP) Port: \(connection.serverPort)
 [CONSOLE] IP: \(connection.consoleIP) Port: \(connection.consolePort)
@@ -173,7 +175,7 @@ Staring web server:
                             return
                         }
                         
-                        let status = checkIfServerIsWorking(serverIP: connection.serverIP, serverPort: connection.serverPort)
+                        let status = checkIfServerIsWorking(connection: connection)
                         DispatchQueue.main.async {
                             connection.connectionStatus = status
                             connectionStatusLoaded = true

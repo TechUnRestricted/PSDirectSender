@@ -7,6 +7,15 @@
 
 import Foundation
 
+class LogsCollector: ObservableObject {
+    @Published var logLines: [String] = []
+    func addLog(_ text: String) {
+        DispatchQueue.main.async {
+            self.logLines.append("[\(getStringDate())] \(text)")
+        }
+    }
+}
+
 class ConnectionDetails: ObservableObject {
     @Published var serverIP: String = ""
     @Published var serverPort: String = ""
@@ -15,20 +24,12 @@ class ConnectionDetails: ObservableObject {
     @Published var connectionStatus: ServerStatus = .stopped
     @Published var networkingIPs: [String] = []
     
-    @Published var logLines: [String] = []
-    
     func generateServerDetails() {
         serverPort = String(networking.findFreePort())
         
         networkingIPs = networking.getIPNetworkAddresses()
         if let ip = networkingIPs.first {
             serverIP = ip
-        }
-    }
-    
-    func addLog(_ text: String) {
-        DispatchQueue.main.async {
-            self.logLines.append("[\(getStringDate())] \(text)")
         }
     }
 }

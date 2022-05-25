@@ -10,7 +10,8 @@ import SwiftUI
 struct ScreenView: View {
     let screen: Screen
     @EnvironmentObject var connection: ConnectionDetails
-    
+    @EnvironmentObject var logsCollector: ConnectionDetails
+
     var body: some View {
         switch screen {
         case .queue:

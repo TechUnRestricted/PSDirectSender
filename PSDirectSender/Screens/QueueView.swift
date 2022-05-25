@@ -30,6 +30,7 @@ struct Package {
     let id = UUID()
     let url: URL
     var task_id: Int?
+    var title_id: String?
     var state: PackageState = .sendNotInitiated
 }
 
@@ -59,6 +60,8 @@ private struct AlertIdentifier: Identifiable {
 
 struct QueueView: View {
     @EnvironmentObject var connection: ConnectionDetails
+    @EnvironmentObject var logsCollector: LogsCollector
+    
     @State fileprivate var alert: AlertIdentifier?
     @State var packageURLs: [Package] = []
     @State private var selection: Set<UUID> = []
@@ -72,108 +75,68 @@ struct QueueView: View {
         ZStack {
             VStack {
                 HStack(spacing: 15) {
-                    ColorButton(text: "Add", color: .orange, image: Image(systemName: "plus.rectangle.on.rectangle"), action: {
-                        let packages = selectPackages()
-                        for package in packages {
-                            if let package = package {
-                                packageURLs.append(Package(url: package))
-                            }
-                        }
-                    })
+                    AddButton()
+                    SendButton()
+                    DeleteButton()
+                        .onDeleteCommand(perform: selection.isEmpty ? nil: deleteSelection)
                     
-                    ColorButton(text: "Send", color: .green, image: Image(systemName: "arrow.up.forward.app"), action: {
-                        if packageURLs.isEmpty { return }
-                        
-                        if connection.serverIP.isEmpty || connection.serverPort.isEmpty {
-                            connection.generateServerDetails()
-                        }
-                        
-                        if connection.serverIP.isEmpty || connection.serverPort.isEmpty {
-                            connection.addLog("Can't get server configuration.")
-                            alert = AlertIdentifier(id: .cantGetServerConfiguration)
-                            return
-                        }
-                        
-                        if connection.consoleIP.isEmpty || connection.consolePort.isEmpty {
-                            connection.addLog("Can't get console configuration.")
-                            alert = AlertIdentifier(id: .cantGetConsoleConfiguration)
-                            return
-                        }
-                        
-                        loadingScreenIsShown = true
-                        DispatchQueue.global(qos: .background).async {
-                            for index in packageURLs.indices {
-                                if packageURLs[index].state == .sendSuccess {
-                                    continue
-                                }
-                                let alias = createTempDirPackageAlias(package: packageURLs[index])!
-                                
-                                connection.addLog("Creating package alias (\"\(packageURLs[index].url.path)\" -> \"\(tempDirectory.path)/\(alias)\").")
-                                connection.addLog("Sending package \"\(alias)\" to the console (IP: \(connection.consoleIP), Port: \(connection.consolePort))")
-                                
-                                let response = sendPackagesToConsole(packageFilename: alias, consoleIP: connection.consoleIP, consolePort: Int(connection.consolePort)!, serverIP: connection.serverIP, serverPort: Int(connection.serverPort)!)
-                                
-                                if response == nil || response as? String == "" {
-                                    connection.addLog("Can't get response from console ([Console] IP: \(connection.consoleIP), Port: \(connection.consolePort))")
-                                    DispatchQueue.main.async {
-                                        if loadingScreenIsShown {
-                                            alert = AlertIdentifier(id: .cantGetResponseFromConsole)
-                                        }
-                                    }
-                                    break
-                                } else if let response = response as? SendSuccess {
-                                    connection.addLog("Successfully sent \(packageURLs[index].url) [Package Link: \"\(packageURLs[index].id).pkg\", id: \(response.taskID), title: \"\(response.title)\"]")
-                                    DispatchQueue.main.async {
-                                        packageURLs[index].state = .sendSuccess
-                                        packageURLs[index].task_id = response.taskID
-                                    }
-                                } else if let response = response as? SendFailure {
-                                    connection.addLog("An error occurred while sending \(packageURLs[index].url) [\(packageURLs[index].id).pkg] {ERROR: \(response.error)}")
-                                    DispatchQueue.main.async {
-                                        packageURLs[index].state = .sendFailure
-                                    }
-                                    break
-                                }
-                            }
-                            DispatchQueue.main.async {
-                                loadingScreenIsShown = false
-                            }
-                            
-                        }
-                        
-                    })
-                    
-                    ColorButton(text: "Delete", color: .red, image: Image(systemName: "trash"), action: {
-                        deleteSelection()
-                    }).onDeleteCommand(perform: selection.isEmpty ? nil: deleteSelection)
                 }.padding()
                 
                 List(selection: $selection) {
                     ForEach(packageURLs, id: \.id) { package in
                         HStack {
                             Image(systemName: "shippingbox")
-                            Text("\(package.url.lastPathComponent)")
+                            Text("\(package.title_id ?? package.url.lastPathComponent)")
                         }
                         .font(.title3)
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(package.state.color.opacity(0.5).cornerRadius(5))
                         .swiftyListDivider()
+                        .contextMenu(menuItems: {
+                            Button("Remove item from queue") {
+                                deleteSelection()
+                            }
+                        })
                     }
                 }
-                .onDrop(of: [.fileURL], isTargeted: $isInDropArea, perform: { providers in
+                .onDrop(of: [.fileURL], isTargeted: $isInDropArea) { providers in
                     for provider in providers {
                         _ = provider.loadObject(ofClass: URL.self) { object, _ in
                             if let url = object, url.pathExtension == "pkg"{
-                                packageURLs.append(Package(url: url))
+                                let packageDetails = SFOExplorer().getParamSFOData(url: url)
+                                var title: String?
+                                if let packageDetails = packageDetails {
+                                    title = packageDetails["TITLE"]
+                                }
+                                packageURLs.append(Package(url: url, title_id: title))
                             }
                         }
                     }
                     return true
-                })
+                }
                 .overlay(
+                    ZStack {
+                    ZStack {
+                        VisualEffectView(material: .fullScreenUI, blendingMode: .withinWindow)
+                        VStack {
+                            Image(systemName: "shippingbox")
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                            Text(#"Drop ".pkg" files"#)
+                                .font(.title)
+                        }
+                        .opacity(0.5)
+                    }
+                    .cornerRadius(16)
+                    .hidden(!isInDropArea)
+                        
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.gray.opacity(0.4), lineWidth: 1.5)
+                        .stroke(
+                            Color.gray.opacity(0.4),
+                            lineWidth: 1.5
+                        )
+                    }
                 )
                 
             }
@@ -213,6 +176,91 @@ struct QueueView: View {
         selection.removeAll()
     }
     
+    fileprivate func AddButton() -> ColorButton {
+        return ColorButton(text: "Add", color: .orange, image: Image(systemName: "plus.rectangle.on.rectangle"), action: {
+            let packages = selectPackages()
+            for package in packages {
+                if let package = package {
+                    let packageDetails = SFOExplorer().getParamSFOData(url: package)
+                    var title: String?
+                    if let packageDetails = packageDetails {
+                        title = packageDetails["TITLE"]
+                    }
+                    packageURLs.append(Package(url: package, title_id: title))
+                }
+            }
+        })
+    }
+    
+    fileprivate func SendButton() -> ColorButton {
+        return ColorButton(text: "Send", color: .green, image: Image(systemName: "arrow.up.forward.app"), action: {
+            if packageURLs.isEmpty { return }
+            
+            if connection.serverIP.isEmpty || connection.serverPort.isEmpty {
+                connection.generateServerDetails()
+            }
+            
+            if connection.serverIP.isEmpty || connection.serverPort.isEmpty {
+                logsCollector.addLog("Can't get server configuration.")
+                alert = AlertIdentifier(id: .cantGetServerConfiguration)
+                return
+            }
+            
+            if connection.consoleIP.isEmpty || connection.consolePort.isEmpty {
+                logsCollector.addLog("Can't get console configuration.")
+                alert = AlertIdentifier(id: .cantGetConsoleConfiguration)
+                return
+            }
+            
+            loadingScreenIsShown = true
+            DispatchQueue.global(qos: .background).async {
+                for index in packageURLs.indices {
+                    if packageURLs[index].state == .sendSuccess {
+                        continue
+                    }
+                    let alias = createTempDirPackageAlias(package: packageURLs[index])!
+                    
+                    logsCollector.addLog("Creating package alias (\"\(packageURLs[index].url.path)\" -> \"\(tempDirectory.path)/\(alias)\").")
+                    logsCollector.addLog("Sending package \"\(alias)\" to the console (IP: \(connection.consoleIP), Port: \(connection.consolePort))")
+                    
+                    let response = sendPackagesToConsole(packageFilename: alias, connection: connection)
+                    
+                    if response == nil || response as? String == "" {
+                        logsCollector.addLog("Can't get response from console ([Console] IP: \(connection.consoleIP), Port: \(connection.consolePort))")
+                        DispatchQueue.main.async {
+                            if loadingScreenIsShown {
+                                alert = AlertIdentifier(id: .cantGetResponseFromConsole)
+                            }
+                        }
+                        break
+                    } else if let response = response as? SendSuccess {
+                        logsCollector.addLog("Successfully sent \(packageURLs[index].url) [Package Link: \"\(packageURLs[index].id).pkg\", id: \(response.taskID), title: \"\(response.title)\"]")
+                        DispatchQueue.main.async {
+                            packageURLs[index].state = .sendSuccess
+                            packageURLs[index].task_id = response.taskID
+                        }
+                    } else if let response = response as? SendFailure {
+                        logsCollector.addLog("An error occurred while sending \(packageURLs[index].url) [\(packageURLs[index].id).pkg] {ERROR: \(response.error)}")
+                        DispatchQueue.main.async {
+                            packageURLs[index].state = .sendFailure
+                        }
+                        break
+                    }
+                }
+                DispatchQueue.main.async {
+                    loadingScreenIsShown = false
+                }
+                
+            }
+            
+        })
+    }
+    
+    fileprivate func DeleteButton() -> ColorButton {
+        return ColorButton(text: "Delete", color: .red, image: Image(systemName: "trash"), action: {
+            deleteSelection()
+        })
+    }
 }
 
 struct QueueView_Previews: PreviewProvider {

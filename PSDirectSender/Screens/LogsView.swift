@@ -9,22 +9,23 @@ import SwiftUI
 
 struct LogsView: View {
     @EnvironmentObject var connection: ConnectionDetails
-    
+    @EnvironmentObject var logsCollector: LogsCollector
+
     var body: some View {
         VStack {
             HStack(spacing: 25) {
                 ColorButton(text: "Copy logs", color: .purple, image: Image(systemName: "doc.on.doc"), action: {
                     let pasteboard = NSPasteboard.general
                     pasteboard.clearContents()
-                    pasteboard.setString(connection.logLines.joined(separator: "\n"), forType: .string)
+                    pasteboard.setString(logsCollector.logLines.joined(separator: "\n"), forType: .string)
                 })
                 
                 ColorButton(text: "Clear logs", color: .red, image: Image(systemName: "trash"), action: {
-                    connection.logLines.removeAll()
+                    logsCollector.logLines.removeAll()
                 })
             }.padding()
             List {
-                ForEach(connection.logLines, id: \.self) { logLine in
+                ForEach(logsCollector.logLines, id: \.self) { logLine in
                     Text(LocalizedStringKey(logLine))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .lineLimit(3)
@@ -42,13 +43,12 @@ struct LogsView_Previews: PreviewProvider {
     
     static var previews: some View {
         let view = LogsView()
-            .environmentObject({ () -> ConnectionDetails in
-                let vm = ConnectionDetails()
-                vm.addLog("Can't get server configuration.")
-                vm.addLog("Can't get console configuration.")
-                vm.addLog("Creating package alias \(#""/Volumes/Macintosh HD/game.pkg""#) -> \"\(tempDirectory.path)\(UUID().uuidString).pkg\"")
-                
-                return vm
+            .environmentObject({ () -> LogsCollector in
+                let logsCollector = LogsCollector()
+                logsCollector.addLog("Can't get server configuration.")
+                logsCollector.addLog("Can't get console configuration.")
+                logsCollector.addLog("Creating package alias \(#""/Volumes/Macintosh HD/game.pkg""#) -> \"\(tempDirectory.path)\(UUID().uuidString).pkg\"")
+                return logsCollector
             }())
         view
         view

@@ -104,13 +104,23 @@ class SFOExplorer {
         return nil
     }
     
+    func getParamSFOData(url: URL) -> [String: String]? {
+        do {
+            let fileHandler: FileHandle = try .init(forReadingFrom: url)
+            return getParamSFOData(fileHandler: fileHandler)
+        } catch { }
+        return nil
+    }
+    
     func getParamSFOData(fileHandler: FileHandle) -> [String: String] {
         /// MAGIC
-        /*let magic: Int32*/ _ = loadFileDataBlocks(
+        /*
+         let magic: Int32 = loadFileDataBlocks(
             from: 0,
             bytesCount: 4,
             fileHandler: fileHandler
         ).integerRepresentation
+        */
         
         /// PARAM.SFO
         guard let offset32: UInt32 = getParamSFOOffset(fileHandler: fileHandler) else {
@@ -171,16 +181,3 @@ class SFOExplorer {
         return paramSFOData
     }
 }
-/*printTimeElapsedWhenRunningCode(title: "Main", operation: {
- let pkgPath: String = "/Users/macintosh/0000000000000000000.pkg"
- 
- guard let fileHandler: FileHandle = .init(forReadingAtPath: pkgPath) else {
- return
- }
- 
- let data = getParamSFOData(fileHandler: fileHandler)
- for (key, value) in data {
- print("\(key)=\(value)")
- }
- try? fileHandler.close()
- })*/
