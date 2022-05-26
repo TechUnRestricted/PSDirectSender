@@ -5,9 +5,11 @@
 ## Current features
   * Sending local .pkg files
   * Drag'n'drop support
+  * Automatic .pkg title detection 
   * Creating aliases for files for correct sending .pkg containing spaces in the name.
   * Advanced logging system
   * Automatic appropriate data generation for the server (IP, Port)
+  * English / Russian language support
 
 <img width="998" alt="image" src="https://user-images.githubusercontent.com/83237609/166961465-36cb0ac6-00b1-405e-b28a-da6b4b8b6b9e.png">
 
@@ -27,7 +29,7 @@
   * Wired or wireless connection to the same network as PS4
   * Local PS4-compatible .pkg files
 
-# Usage
+## Usage
   <ol>
     <li>Open <b>PSDirectSender</b></li>
     <li>Go to the Configuration section</li>

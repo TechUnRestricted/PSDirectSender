@@ -113,3 +113,5 @@
 "Stopped" = "Остановлен";
 
 "Invalid configuration data" = "Неверные данные конфигурации";
+
+"Drop .pkg files" = "Перетащите файлы .pkg";

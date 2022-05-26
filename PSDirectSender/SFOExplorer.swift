@@ -8,12 +8,15 @@
 import Foundation
 
 fileprivate extension Data {
-    var integerRepresentation: Int32 {
-        return self.withUnsafeBytes({(pointer: UnsafeRawBufferPointer) -> Int32 in
-            return pointer.load(as: Int32.self)
-        })
+    var integerRepresentation: Int32? {
+        if self.count < MemoryLayout<Int32>.size {
+            return nil
+        } else {
+            return self.withUnsafeBytes({(pointer: UnsafeRawBufferPointer) -> Int32 in
+                return pointer.load(as: Int32.self)
+            })
+        }
     }
-    
     var stringRepresentation: String {
         return String(decoding: self, as: UTF8.self)
     }
@@ -74,22 +77,24 @@ class SFOExplorer {
     }
     
     private func getParamSFOOffset(fileHandler: FileHandle) -> UInt32? {
-        let filesCount = loadFileDataBlocks(from: 0x00C,
-                                            bytesCount: 4,
-                                            fileHandler: fileHandler)
-            .integerRepresentation
-            .bigEndian
+        guard let filesCount = loadFileDataBlocks(from: 0x00C,
+                                                  bytesCount: 4,
+                                                  fileHandler: fileHandler)
+                .integerRepresentation?
+                .bigEndian
+        else { return nil }
         
         if filesCount >= 256 {
             print("[ERROR:] Files count >= 256 (current: \(filesCount)). It's can't be real.")
             return nil
         }
         
-        let tableOffset = loadFileDataBlocks(from: 0x018,
-                                             bytesCount: 4,
-                                             fileHandler: fileHandler)
-            .integerRepresentation
-            .bigEndian
+        guard let tableOffset = loadFileDataBlocks(from: 0x018,
+                                                   bytesCount: 4,
+                                                   fileHandler: fileHandler)
+                .integerRepresentation?
+                .bigEndian
+        else { return nil }
         
         let tableData = loadFileDataBlocks(
             from: UInt64(tableOffset),
@@ -101,6 +106,7 @@ class SFOExplorer {
         for table in tableStruct where table.id == 1048576 {
             return table.offset
         }
+        
         return nil
     }
     
@@ -116,11 +122,11 @@ class SFOExplorer {
         /// MAGIC
         /*
          let magic: Int32 = loadFileDataBlocks(
-            from: 0,
-            bytesCount: 4,
-            fileHandler: fileHandler
-        ).integerRepresentation
-        */
+         from: 0,
+         bytesCount: 4,
+         fileHandler: fileHandler
+         ).integerRepresentation
+         */
         
         /// PARAM.SFO
         guard let offset32: UInt32 = getParamSFOOffset(fileHandler: fileHandler) else {
@@ -171,7 +177,7 @@ class SFOExplorer {
                 values.append(entryData.stringRepresentation.replacingOccurrences(of: "\0", with: ""))
             case 1028:
                 /* Integer */
-                values.append(String(entryData.integerRepresentation))
+                values.append(String(entryData.integerRepresentation ?? -1))
             default:
                 break
             }
