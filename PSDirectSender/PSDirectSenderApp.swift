@@ -185,9 +185,11 @@ func swiftStartServer(serverIP: String, serverPort: String) {
 @discardableResult
 func sendPackagesToConsole(packageFilename: String, connection: ConnectionDetails) -> Any? {
 
-    let dataStructure = PackageSenderData(type: "direct",
-                                          packages: ["http://\(connection.serverIP):\(connection.serverPort)/\(packageFilename)"]
+    let dataStructure = PackageSenderData(
+        type: "direct",
+        packages: ["http://\(connection.serverIP):\(connection.serverPort)/\(packageFilename)"]
     )
+    
     let jsonData = try? JSONEncoder().encode(dataStructure)
     
     let builtURL = URL(string: "http://\(connection.consoleIP):\(connection.consolePort)/api/install")

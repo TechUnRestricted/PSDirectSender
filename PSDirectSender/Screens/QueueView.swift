@@ -104,10 +104,10 @@ struct QueueView: View {
                     for provider in providers {
                         _ = provider.loadObject(ofClass: URL.self) { object, _ in
                             if let url = object, url.pathExtension == "pkg"{
-                                let packageDetails = SFOExplorer().getParamSFOData(url: url)
+                                let packageDetails = PackageExplorer(fileURL: url)
                                 var title: String?
                                 
-                                if let packageDetails = packageDetails {
+                                if let packageDetails = packageDetails.packageContents?.paramSFOData {
                                     title = packageDetails["TITLE"]
                                     if let title = title {
                                         logsCollector.addLog("Package name defined: \"\(title)\" (\"\(url)\")")
@@ -115,6 +115,14 @@ struct QueueView: View {
                                         logsCollector.addLog("Package name for (\"\(url)\") is undefined. Maybe the package is damaged or not compatible with the PS4 system.")
                                     }
                                 }
+                                /*if let packageDetails = packageDetails {
+                                    title = packageDetails["TITLE"]
+                                    if let title = title {
+                                        logsCollector.addLog("Package name defined: \"\(title)\" (\"\(url)\")")
+                                    } else {
+                                        logsCollector.addLog("Package name for (\"\(url)\") is undefined. Maybe the package is damaged or not compatible with the PS4 system.")
+                                    }
+                                }*/
                                 
                                 packages.append(Package(url: url, title_id: title))
                             }
@@ -188,9 +196,9 @@ struct QueueView: View {
             let selectedPackages = selectPackages()
             for package in selectedPackages {
                 if let package = package {
-                    let packageDetails = SFOExplorer().getParamSFOData(url: package)
+                    let packageDetails = PackageExplorer(fileURL: package)
                     var title: String?
-                    if let packageDetails = packageDetails {
+                    if let packageDetails = packageDetails.packageContents?.paramSFOData {
                         title = packageDetails["TITLE"]
                     }
                     packages.append(Package(url: package, title_id: title))
