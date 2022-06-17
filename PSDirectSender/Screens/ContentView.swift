@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-enum Screen: String, CaseIterable {
-    case queue
-    case configuration
-    case logs
-    case info
+enum Screen: /* String, */ CaseIterable {
+    case queue // = "list.bullet"
+    case configuration // = "gearshape"
+    case logs // = "contextualmenu.and.cursorarrow"
+    case info // = "info.circle"
 }
 
 struct ContentView: View {

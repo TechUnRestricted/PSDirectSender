@@ -17,6 +17,7 @@
 		E26BC3C7281350D500D339B7 /* SidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26BC3C6281350D500D339B7 /* SidebarButton.swift */; };
 		E26BC3E52813F85300D339B7 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = E26BC3E42813F85300D339B7 /* mongoose.c */; };
 		E286805728204A850036E0C5 /* VisualEffectBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = E286805628204A850036E0C5 /* VisualEffectBlur.swift */; };
+		E29CD1BA285B9F5E009476FC /* PackageImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CD1B9285B9F5E009476FC /* PackageImage.swift */; };
 		E29F5F9A28142BAE00A8EA81 /* ServerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E29F5F9928142BAE00A8EA81 /* ServerBridge.m */; };
 		E29F5F9D28142C4C00A8EA81 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5F9C28142C4C00A8EA81 /* ConfigurationView.swift */; };
 		E29F5FBA2814367B00A8EA81 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F5FB92814367B00A8EA81 /* Networking.swift */; };
@@ -48,6 +49,7 @@
 		E26BC3E32813F85300D339B7 /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mongoose.h; sourceTree = "<group>"; };
 		E26BC3E42813F85300D339B7 /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mongoose.c; sourceTree = "<group>"; };
 		E286805628204A850036E0C5 /* VisualEffectBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBlur.swift; sourceTree = "<group>"; };
+		E29CD1B9285B9F5E009476FC /* PackageImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageImage.swift; sourceTree = "<group>"; };
 		E29F5F9928142BAE00A8EA81 /* ServerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServerBridge.m; sourceTree = "<group>"; };
 		E29F5F9B28142BC000A8EA81 /* ServerBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerBridge.h; sourceTree = "<group>"; };
 		E29F5F9C28142C4C00A8EA81 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				E26BC3C6281350D500D339B7 /* SidebarButton.swift */,
 				E2A06A0E281C3DC4001FAFE1 /* ColorButtonStyle.swift */,
 				E286805628204A850036E0C5 /* VisualEffectBlur.swift */,
+				E29CD1B9285B9F5E009476FC /* PackageImage.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				E2A06A13281C6145001FAFE1 /* InfoView.swift in Sources */,
 				E2525387281FF89B009055A9 /* JsonSuccess.swift in Sources */,
 				E2AF6A4E2839877400436942 /* PackageExplorer.swift in Sources */,
+				E29CD1BA285B9F5E009476FC /* PackageImage.swift in Sources */,
 				E2525389281FF916009055A9 /* JsonFailure.swift in Sources */,
 				E26BC3C7281350D500D339B7 /* SidebarButton.swift in Sources */,
 				E286805728204A850036E0C5 /* VisualEffectBlur.swift in Sources */,

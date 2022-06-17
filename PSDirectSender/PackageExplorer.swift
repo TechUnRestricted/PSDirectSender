@@ -48,18 +48,14 @@ fileprivate let packageFileNamesMap: [UInt32: String] = [
 
 class PackageExplorer {
     
-    private func loadFileDataBlocks(from offset: UInt64, bytesCount: Int, fileHandler: FileHandle) -> Data {
-        //TODO: Improve error handling
-        
-        var data: Data = .init()
-        
+    private func loadFileDataBlocks(from offset: UInt64, bytesCount: Int, fileHandler: FileHandle) -> Data? {
         do {
             try fileHandler.seek(toOffset: offset)
-            data = fileHandler.readData(ofLength: bytesCount)
+            return fileHandler.readData(ofLength: bytesCount)
         } catch {
-            return Data()
+            print("[ERROR:] Can't load file data blocks")
         }
-        return data
+        return nil
     }
     
     struct PackageContents {
@@ -157,7 +153,7 @@ class PackageExplorer {
         }
         return nil
     }
-    
+        
     private func getTableData() -> [PKGTableEntryLittleEndian]? {
         guard let fileHandler = fileHandler else {
             return nil
@@ -165,7 +161,7 @@ class PackageExplorer {
         
         guard let entriesCount = loadFileDataBlocks(from: 0x10,
                                                     bytesCount: 4,
-                                                    fileHandler: fileHandler)
+                                                    fileHandler: fileHandler)?
                 .integerRepresentation?
                 .bigEndian
         else { return nil }
@@ -177,7 +173,7 @@ class PackageExplorer {
         
         guard let tableOffset = loadFileDataBlocks(from: 0x018,
                                                    bytesCount: 4,
-                                                   fileHandler: fileHandler)
+                                                   fileHandler: fileHandler)?
                 .integerRepresentation?
                 .bigEndian
         else { return nil }
@@ -187,9 +183,11 @@ class PackageExplorer {
             bytesCount: MemoryLayout<PKGTableEntryLittleEndian>.size * Int(entriesCount),
             fileHandler: fileHandler)
         
-        let tableStruct = decodePackageTableEntry(data: tableData)
+        if let tableData = tableData {
+            return decodePackageTableEntry(data: tableData)
+        }
         
-        return tableStruct
+        return nil
     }
     
     func packageIsValid() -> Bool {
@@ -199,7 +197,7 @@ class PackageExplorer {
         
         let magic = loadFileDataBlocks(from: 0x0,
                                        bytesCount: 4,
-                                       fileHandler: fileHandler)
+                                       fileHandler: fileHandler)?
             .integerRepresentation
         
         return magic?.bigEndian == 0x7F434E54
@@ -242,25 +240,29 @@ class PackageExplorer {
         return PackageContents(files: packageEntries, paramSFOData: paramSFOData)
     }
     
-    private func getParamSFOData(paramSFOOffset: UInt32) -> [String: String] {
+    private func getParamSFOData(paramSFOOffset: UInt32) -> [String: String]? {
         
         guard let fileHandler = fileHandler else {
-            return [:]
+            return nil
         }
         
         var offset: UInt64 = UInt64(paramSFOOffset)
         
         /// HEADER
-        let headerData = loadFileDataBlocks(
+        guard let headerData = loadFileDataBlocks(
             from: UInt64(offset),
-            bytesCount: MemoryLayout<Header>.size, fileHandler: fileHandler)
+            bytesCount: MemoryLayout<Header>.size, fileHandler: fileHandler) else {
+                return nil
+            }
         let headerVariable = decodeHeader(data: headerData)
         
         offset += UInt64(MemoryLayout<Header>.size)
         
         /// ENTRIES
         let entriesSize: UInt32 = UInt32(MemoryLayout<IndexTableEntry>.size) * headerVariable.entriesCount
-        let entriesData = loadFileDataBlocks(from: offset, bytesCount: Int(entriesSize), fileHandler: fileHandler)
+        guard let entriesData = loadFileDataBlocks(from: offset, bytesCount: Int(entriesSize), fileHandler: fileHandler) else {
+            return nil
+        }
         let entriesVariable = decodeEntries(data: entriesData)
         
         offset += UInt64(entriesSize)
@@ -272,14 +274,20 @@ class PackageExplorer {
         offset += UInt64(tableSize)
         
         /// Сonnecting parameters to data
+        guard let tableData = tableData else {
+            return nil
+        }
+        
         let parameters: [String] = tableData.stringRepresentation.components(separatedBy: "\0")
         var values: [String] = .init()
         
         for entry in entriesVariable {
-            let entryData = loadFileDataBlocks(
+            guard let entryData = loadFileDataBlocks(
                 from: offset + UInt64(entry.dataOffset),
                 bytesCount: Int(entry.paramLen),
-                fileHandler: fileHandler)
+                fileHandler: fileHandler) else {
+                    continue
+                }
             
             switch entry.paramFmt {
             case 516, 1024:

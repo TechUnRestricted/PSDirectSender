@@ -31,6 +31,7 @@ struct Package {
     let url: URL
     var task_id: Int?
     var title_id: String?
+    var imageData: Data?
     var state: PackageState = .sendNotInitiated
 }
 
@@ -78,20 +79,23 @@ struct QueueView: View {
                     AddButton()
                     SendButton()
                     DeleteButton()
-                        .onDeleteCommand(perform: selection.isEmpty ? nil: deleteSelection)
+                        .onDeleteCommand(perform: selection.isEmpty ? nil : deleteSelection)
                     
                 }.padding()
                 
                 List(selection: $selection) {
                     ForEach(packages, id: \.id) { package in
-                        HStack {
-                            Image(systemName: "shippingbox")
+                        HStack(spacing: 10) {
+                            PackageImage(imageData: package.imageData)
+                                .font(.title3)
+
                             Text("\(package.title_id ?? package.url.lastPathComponent)")
+                                .font(.title2)
                         }
-                        .font(.title3)
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(package.state.color.opacity(0.5).cornerRadius(5))
+                        //.opacity(0.95)
                         .swiftyListDivider()
                         .contextMenu(menuItems: {
                             Button("Remove item from queue") {
@@ -104,27 +108,7 @@ struct QueueView: View {
                     for provider in providers {
                         _ = provider.loadObject(ofClass: URL.self) { object, _ in
                             if let url = object, url.pathExtension == "pkg"{
-                                let packageDetails = PackageExplorer(fileURL: url)
-                                var title: String?
-                                
-                                if let packageDetails = packageDetails.packageContents?.paramSFOData {
-                                    title = packageDetails["TITLE"]
-                                    if let title = title {
-                                        logsCollector.addLog("Package name defined: \"\(title)\" (\"\(url)\")")
-                                    } else {
-                                        logsCollector.addLog("Package name for (\"\(url)\") is undefined. Maybe the package is damaged or not compatible with the PS4 system.")
-                                    }
-                                }
-                                /*if let packageDetails = packageDetails {
-                                    title = packageDetails["TITLE"]
-                                    if let title = title {
-                                        logsCollector.addLog("Package name defined: \"\(title)\" (\"\(url)\")")
-                                    } else {
-                                        logsCollector.addLog("Package name for (\"\(url)\") is undefined. Maybe the package is damaged or not compatible with the PS4 system.")
-                                    }
-                                }*/
-                                
-                                packages.append(Package(url: url, title_id: title))
+                                addPackage(url: url)
                             }
                         }
                     }
@@ -132,25 +116,25 @@ struct QueueView: View {
                 }
                 .overlay(
                     ZStack {
-                    ZStack {
-                        VisualEffectView(material: .fullScreenUI, blendingMode: .withinWindow)
-                        VStack {
-                            Image(systemName: "shippingbox")
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                            Text("Drop .pkg files")
-                                .font(.title)
+                        ZStack {
+                            VisualEffectView(material: .fullScreenUI, blendingMode: .withinWindow)
+                            VStack {
+                                Image(systemName: "shippingbox")
+                                    .resizable()
+                                    .frame(width: 100, height: 100)
+                                Text("Drop .pkg files")
+                                    .font(.title)
+                            }
+                            .opacity(0.5)
                         }
-                        .opacity(0.5)
-                    }
-                    .cornerRadius(16)
-                    .hidden(!isInDropArea)
+                        .cornerRadius(16)
+                        .hidden(!isInDropArea)
                         
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(
-                            Color.gray.opacity(0.4),
-                            lineWidth: 1.5
-                        )
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(
+                                Color.gray.opacity(0.4),
+                                lineWidth: 1.5
+                            )
                     }
                 )
                 
@@ -187,22 +171,45 @@ struct QueueView: View {
     }
     
     private func deleteSelection() {
+        //TODO: Free memory after removing packages from list
         packages.removeAll { selection.contains($0.id) }
         selection.removeAll()
+    }
+    
+    fileprivate func addPackage(url: URL?) {
+        guard let url = url else {
+            return
+        }
+        
+        let packageDetails = PackageExplorer(fileURL: url)
+        var title: String?
+        var imageData: Data?
+        
+        if let packageParamSFO = packageDetails.packageContents?.paramSFOData {
+            title = packageParamSFO["TITLE"]
+            if let title = title {
+                logsCollector.addLog("Package name defined: \"\(title)\" (\"\(url.path)\")")
+            } else {
+                logsCollector.addLog("Package name for (\"\(url.path)\") is undefined. Maybe the package is damaged or not compatible with the PS4 system.")
+            }
+        }
+        
+        if let packageFiles = packageDetails.packageContents?.files {
+            for packageFile in packageFiles where packageFile.filename == "icon0.png" {
+
+                imageData = packageDetails.getData(entry: packageFile)
+            }
+        }
+        
+        packages.append(Package(url: url, title_id: title, imageData: imageData))
+        
     }
     
     fileprivate func AddButton() -> ColorButton {
         return ColorButton(text: "Add", color: .orange, image: Image(systemName: "plus.rectangle.on.rectangle"), action: {
             let selectedPackages = selectPackages()
             for package in selectedPackages {
-                if let package = package {
-                    let packageDetails = PackageExplorer(fileURL: package)
-                    var title: String?
-                    if let packageDetails = packageDetails.packageContents?.paramSFOData {
-                        title = packageDetails["TITLE"]
-                    }
-                    packages.append(Package(url: package, title_id: title))
-                }
+                addPackage(url: package)
             }
         })
     }
@@ -249,13 +256,13 @@ struct QueueView: View {
                         }
                         break
                     } else if let response = response as? SendSuccess {
-                        logsCollector.addLog("Successfully sent \(packages[index].url) [Package Link: \"\(packages[index].id).pkg\", id: \(response.taskID), title: \"\(response.title)\"]")
+                        logsCollector.addLog("Successfully sent \(packages[index].url.path) [Package Link: \"\(packages[index].id).pkg\", id: \(response.taskID), title: \"\(response.title)\"]")
                         DispatchQueue.main.async {
                             packages[index].state = .sendSuccess
                             packages[index].task_id = response.taskID
                         }
                     } else if let response = response as? SendFailure {
-                        logsCollector.addLog("An error occurred while sending \(packages[index].url) [\(packages[index].id).pkg] {ERROR: \(response.error)}")
+                        logsCollector.addLog("An error occurred while sending \(packages[index].url.path) [\(packages[index].id).pkg] {ERROR: \(response.error)}")
                         DispatchQueue.main.async {
                             packages[index].state = .sendFailure
                         }
@@ -289,6 +296,7 @@ struct QueueView_Previews: PreviewProvider {
         ]).environmentObject(ConnectionDetails())
         
         view
+            .environment(\.locale, .init(identifier: "English"))
         view
             .environment(\.locale, .init(identifier: "Russian"))
         
