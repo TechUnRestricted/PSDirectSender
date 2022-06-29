@@ -13,27 +13,6 @@ struct TableScreen {
     let image: NSImage
 }
 
-extension Collection {
-    
-    subscript(optional i: Index) -> Iterator.Element? {
-        return self.indices.contains(i) ? self[i] : nil
-    }
-    
-}
-
-extension NSImage.Name {
-    static let appIcon = NSImage.Name("AppIcon")
-
-    static let queue = NSImage.Name("Queue")
-    static let configuration = NSImage.Name("Configuration")
-    static let logs = NSImage.Name("Logs")
-    static let info = NSImage.Name("Info")
-    
-    
-    static let temp = NSImage.Name("Temp")
-    
-}
-
 let tableScreens = [
     TableScreen(text: "Queue", image: NSImage(named: .queue) ?? NSImage()),
     TableScreen(text: "Configuration", image: NSImage(named: .configuration) ?? NSImage()),
@@ -72,7 +51,7 @@ class TableViewController: NSViewController, NSTableViewDelegate, NSTableViewDat
             initialized = true
             setupView()
             setupTableView()
-            tableView.selectRowIndexes(NSIndexSet(index: 0) as IndexSet, byExtendingSelection: false)
+            tableView.selectRowIndexes(NSIndexSet(index: 1) as IndexSet, byExtendingSelection: false)
         }
     }
     

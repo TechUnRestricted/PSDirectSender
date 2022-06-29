@@ -1,14 +1,14 @@
 //
-//  SecondView.swift
+//  InfoViewController.swift
 //  PSDirectSender
 //
-//  Created by Macintosh on 25.06.2022.
+//  Created by Macintosh on 29.06.2022.
 //
 
 import Foundation
 import Cocoa
 
-class SecondView: NSViewController {
+class InfoViewController: NSViewController {
         
     init() {
         print("Initialized \(#function): \(arc4random())")

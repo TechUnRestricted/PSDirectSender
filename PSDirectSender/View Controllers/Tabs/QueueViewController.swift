@@ -1,5 +1,5 @@
 //
-//  FirstView.swift
+//  QueueViewController.swift
 //  PSDirectSender
 //
 //  Created by Macintosh on 25.06.2022.
@@ -10,7 +10,7 @@ import Cocoa
 
 
 
-class FirstView: NSViewController {
+class QueueViewController: NSViewController {
     
     
     override func loadView() {

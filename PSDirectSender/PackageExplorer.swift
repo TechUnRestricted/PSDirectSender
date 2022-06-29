@@ -50,7 +50,11 @@ class PackageExplorer {
     
     private func loadFileDataBlocks(from offset: UInt64, bytesCount: Int, fileHandler: FileHandle) -> Data? {
         do {
-            try fileHandler.seek(toOffset: offset)
+            if #available(macOS 10.15, *) {
+                try fileHandler.seek(toOffset: offset)
+            } else {
+                fileHandler.seek(toFileOffset: offset)
+            }
             return fileHandler.readData(ofLength: bytesCount)
         } catch {
             print("[ERROR:] Can't load file data blocks")

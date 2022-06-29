@@ -8,6 +8,7 @@
 import Foundation
 import Cocoa
 
+//@available(macOS 10.10, *)
 class SplitViewController: NSSplitViewController, TableViewDelegate {
     //var selectedScreen: SelectedScreen = .queue
     
@@ -58,10 +59,6 @@ class SplitViewController: NSSplitViewController, TableViewDelegate {
     }
     
     private func setupLayout() {
-        
-        // minimumThicknessForInlineSidebars = 180
-        
-        
         //itemA.minimumThickness = 80
         if #available(macOS 10.11, *) {
             addSplitViewItem(NSSplitViewItem(sidebarWithViewController: sidebar))

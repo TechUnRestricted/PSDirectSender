@@ -7,15 +7,10 @@
 
 import Cocoa
 
-
-
 var titlebarHeight: CGFloat = 0
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var window: NSWindow!
-    
-    
-    
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         window = NSWindow(
@@ -23,12 +18,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView],
             backing: .buffered, defer: false)
         window.center()
-        window.title = "No Storyboard Window"
+        window.title = Bundle.main.appName
         window.makeKeyAndOrderFront(nil)
         
         let toolbar = NSToolbar(identifier: UUID().uuidString)
         toolbar.allowsUserCustomization = true
         window.toolbar = toolbar
+        
+        if #available(macOS 11.0, *) {
+            window.subtitle = "for Remote Package Installer"
+        }
         
         if let windowFrameHeight = window?.contentView?.frame.height,
             let contentLayoutRectHeight = window?.contentLayoutRect.height {

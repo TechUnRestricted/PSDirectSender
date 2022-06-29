@@ -29,8 +29,8 @@ class ContentViewController: NSViewController {
         nsView.wantsLayer = true
         nsView.layer?.backgroundColor = NSColor.red.cgColor
         
-        tabView.addTabViewItem(NSTabViewItem(viewController: FirstView()))
-        tabView.addTabViewItem(NSTabViewItem(viewController: SecondView()))
+        tabView.addTabViewItem(NSTabViewItem(viewController: QueueViewController()))
+        tabView.addTabViewItem(NSTabViewItem(viewController: ConfigurationViewController()))
         tabView.translatesAutoresizingMaskIntoConstraints = false
         tabView.tabViewType = .noTabsNoBorder
         

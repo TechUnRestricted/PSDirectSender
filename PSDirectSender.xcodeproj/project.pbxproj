@@ -7,20 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E2501941286BA6590055FF55 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E2501940286BA6590055FF55 /* README.md */; };
+		E250194D286BA7260055FF55 /* ServerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E2501948286BA7260055FF55 /* ServerBridge.m */; };
+		E250194E286BA7260055FF55 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E250194A286BA7260055FF55 /* LICENSE */; };
+		E250194F286BA7260055FF55 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = E250194C286BA7260055FF55 /* mongoose.c */; };
+		E2501956286BA7500055FF55 /* JsonSuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2501951286BA7500055FF55 /* JsonSuccess.swift */; };
+		E2501957286BA7500055FF55 /* JsonFailure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2501952286BA7500055FF55 /* JsonFailure.swift */; };
+		E2501958286BA7500055FF55 /* JsonSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2501953286BA7500055FF55 /* JsonSend.swift */; };
+		E2501959286BA7500055FF55 /* PackageExplorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2501954286BA7500055FF55 /* PackageExplorer.swift */; };
+		E250195A286BA7500055FF55 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2501955286BA7500055FF55 /* Networking.swift */; };
+		E250195C286BABD80055FF55 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E250195B286BABD80055FF55 /* LogsViewController.swift */; };
+		E250195E286BABF10055FF55 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E250195D286BABF10055FF55 /* InfoViewController.swift */; };
+		E2501961286BAEDC0055FF55 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2501960286BAEDC0055FF55 /* CustomButton.swift */; };
 		E2656BB6286BA2FA00CBB1BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BB5286BA2FA00CBB1BB /* AppDelegate.swift */; };
 		E2656BBE286BA30100CBB1BB /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BB7286BA30100CBB1BB /* TableViewController.swift */; };
 		E2656BBF286BA30100CBB1BB /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BB8286BA30100CBB1BB /* SplitViewController.swift */; };
 		E2656BC0286BA30100CBB1BB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BB9286BA30100CBB1BB /* main.swift */; };
 		E2656BC1286BA30100CBB1BB /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BBA286BA30100CBB1BB /* ContentViewController.swift */; };
 		E2656BC2286BA30100CBB1BB /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BBB286BA30100CBB1BB /* SidebarViewController.swift */; };
-		E2656BC3286BA30100CBB1BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BBC286BA30100CBB1BB /* ViewController.swift */; };
 		E2656BC4286BA30100CBB1BB /* CustomTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BBD286BA30100CBB1BB /* CustomTextFieldCell.swift */; };
 		E2656BC6286BA30E00CBB1BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2656BC5286BA30E00CBB1BB /* Assets.xcassets */; };
-		E2656BC9286BA31700CBB1BB /* SecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BC7286BA31700CBB1BB /* SecondView.swift */; };
-		E2656BCA286BA31700CBB1BB /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BC8286BA31700CBB1BB /* FirstView.swift */; };
+		E2656BC9286BA31700CBB1BB /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BC7286BA31700CBB1BB /* ConfigurationViewController.swift */; };
+		E2656BCA286BA31700CBB1BB /* QueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BC8286BA31700CBB1BB /* QueueViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E2501940286BA6590055FF55 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E2501946286BA7260055FF55 /* PSDirectSender-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PSDirectSender-Bridging-Header.h"; sourceTree = "<group>"; };
+		E2501947286BA7260055FF55 /* ServerBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerBridge.h; sourceTree = "<group>"; };
+		E2501948286BA7260055FF55 /* ServerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerBridge.m; sourceTree = "<group>"; };
+		E250194A286BA7260055FF55 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		E250194B286BA7260055FF55 /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mongoose.h; sourceTree = "<group>"; };
+		E250194C286BA7260055FF55 /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mongoose.c; sourceTree = "<group>"; };
+		E2501951286BA7500055FF55 /* JsonSuccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSuccess.swift; sourceTree = "<group>"; };
+		E2501952286BA7500055FF55 /* JsonFailure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonFailure.swift; sourceTree = "<group>"; };
+		E2501953286BA7500055FF55 /* JsonSend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonSend.swift; sourceTree = "<group>"; };
+		E2501954286BA7500055FF55 /* PackageExplorer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PackageExplorer.swift; sourceTree = "<group>"; };
+		E2501955286BA7500055FF55 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		E250195B286BABD80055FF55 /* LogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsViewController.swift; sourceTree = "<group>"; };
+		E250195D286BABF10055FF55 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		E2501960286BAEDC0055FF55 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		E2656BA3286BA2B800CBB1BB /* PSDirectSender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSDirectSender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2656BAF286BA2B800CBB1BB /* PSDirectSender.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PSDirectSender.entitlements; sourceTree = "<group>"; };
 		E2656BB5286BA2FA00CBB1BB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -29,11 +55,10 @@
 		E2656BB9286BA30100CBB1BB /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		E2656BBA286BA30100CBB1BB /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		E2656BBB286BA30100CBB1BB /* SidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
-		E2656BBC286BA30100CBB1BB /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E2656BBD286BA30100CBB1BB /* CustomTextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextFieldCell.swift; sourceTree = "<group>"; };
 		E2656BC5286BA30E00CBB1BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E2656BC7286BA31700CBB1BB /* SecondView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondView.swift; sourceTree = "<group>"; };
-		E2656BC8286BA31700CBB1BB /* FirstView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
+		E2656BC7286BA31700CBB1BB /* ConfigurationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
+		E2656BC8286BA31700CBB1BB /* QueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,9 +72,61 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E2501944286BA7260055FF55 /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				E2501945286BA7260055FF55 /* Bridge */,
+				E2501949286BA7260055FF55 /* Mongoose */,
+			);
+			name = Server;
+			path = ../../PSDirectSender/PSDirectSender/Server;
+			sourceTree = "<group>";
+		};
+		E2501945286BA7260055FF55 /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				E2501946286BA7260055FF55 /* PSDirectSender-Bridging-Header.h */,
+				E2501947286BA7260055FF55 /* ServerBridge.h */,
+				E2501948286BA7260055FF55 /* ServerBridge.m */,
+			);
+			path = Bridge;
+			sourceTree = "<group>";
+		};
+		E2501949286BA7260055FF55 /* Mongoose */ = {
+			isa = PBXGroup;
+			children = (
+				E250194A286BA7260055FF55 /* LICENSE */,
+				E250194B286BA7260055FF55 /* mongoose.h */,
+				E250194C286BA7260055FF55 /* mongoose.c */,
+			);
+			path = Mongoose;
+			sourceTree = "<group>";
+		};
+		E2501950286BA7500055FF55 /* Json Structures */ = {
+			isa = PBXGroup;
+			children = (
+				E2501951286BA7500055FF55 /* JsonSuccess.swift */,
+				E2501952286BA7500055FF55 /* JsonFailure.swift */,
+				E2501953286BA7500055FF55 /* JsonSend.swift */,
+			);
+			path = "Json Structures";
+			sourceTree = "<group>";
+		};
+		E250195F286BACAA0055FF55 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				E2656BC8286BA31700CBB1BB /* QueueViewController.swift */,
+				E2656BC7286BA31700CBB1BB /* ConfigurationViewController.swift */,
+				E250195B286BABD80055FF55 /* LogsViewController.swift */,
+				E250195D286BABF10055FF55 /* InfoViewController.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
 		E2656B9A286BA2B800CBB1BB = {
 			isa = PBXGroup;
 			children = (
+				E2501940286BA6590055FF55 /* README.md */,
 				E2656BA5286BA2B800CBB1BB /* PSDirectSender */,
 				E2656BA4286BA2B800CBB1BB /* Products */,
 			);
@@ -66,28 +143,31 @@
 		E2656BA5286BA2B800CBB1BB /* PSDirectSender */ = {
 			isa = PBXGroup;
 			children = (
-				E2656BAF286BA2B800CBB1BB /* PSDirectSender.entitlements */,
 				E2656BB9286BA30100CBB1BB /* main.swift */,
 				E2656BB5286BA2FA00CBB1BB /* AppDelegate.swift */,
+				E2501944286BA7260055FF55 /* Server */,
+				E2656BCB286BA31F00CBB1BB /* View Controllers */,
+				E2501950286BA7500055FF55 /* Json Structures */,
+				E2501955286BA7500055FF55 /* Networking.swift */,
+				E2501954286BA7500055FF55 /* PackageExplorer.swift */,
 				E2656BC5286BA30E00CBB1BB /* Assets.xcassets */,
-				E2656BCB286BA31F00CBB1BB /* Views */,
-				E2656BBA286BA30100CBB1BB /* ContentViewController.swift */,
 				E2656BBD286BA30100CBB1BB /* CustomTextFieldCell.swift */,
-				E2656BBB286BA30100CBB1BB /* SidebarViewController.swift */,
-				E2656BB8286BA30100CBB1BB /* SplitViewController.swift */,
-				E2656BB7286BA30100CBB1BB /* TableViewController.swift */,
-				E2656BBC286BA30100CBB1BB /* ViewController.swift */,
+				E2501960286BAEDC0055FF55 /* CustomButton.swift */,
+				E2656BAF286BA2B800CBB1BB /* PSDirectSender.entitlements */,
 			);
 			path = PSDirectSender;
 			sourceTree = "<group>";
 		};
-		E2656BCB286BA31F00CBB1BB /* Views */ = {
+		E2656BCB286BA31F00CBB1BB /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E2656BC8286BA31700CBB1BB /* FirstView.swift */,
-				E2656BC7286BA31700CBB1BB /* SecondView.swift */,
+				E250195F286BACAA0055FF55 /* Tabs */,
+				E2656BBA286BA30100CBB1BB /* ContentViewController.swift */,
+				E2656BB8286BA30100CBB1BB /* SplitViewController.swift */,
+				E2656BBB286BA30100CBB1BB /* SidebarViewController.swift */,
+				E2656BB7286BA30100CBB1BB /* TableViewController.swift */,
 			);
-			path = Views;
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,6 +229,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E250194E286BA7260055FF55 /* LICENSE in Resources */,
+				E2501941286BA6590055FF55 /* README.md in Resources */,
 				E2656BC6286BA30E00CBB1BB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,15 +243,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2656BC4286BA30100CBB1BB /* CustomTextFieldCell.swift in Sources */,
-				E2656BCA286BA31700CBB1BB /* FirstView.swift in Sources */,
+				E2501961286BAEDC0055FF55 /* CustomButton.swift in Sources */,
+				E2656BCA286BA31700CBB1BB /* QueueViewController.swift in Sources */,
+				E250195A286BA7500055FF55 /* Networking.swift in Sources */,
 				E2656BC1286BA30100CBB1BB /* ContentViewController.swift in Sources */,
 				E2656BC2286BA30100CBB1BB /* SidebarViewController.swift in Sources */,
-				E2656BC9286BA31700CBB1BB /* SecondView.swift in Sources */,
+				E2656BC9286BA31700CBB1BB /* ConfigurationViewController.swift in Sources */,
 				E2656BB6286BA2FA00CBB1BB /* AppDelegate.swift in Sources */,
+				E250194D286BA7260055FF55 /* ServerBridge.m in Sources */,
 				E2656BBE286BA30100CBB1BB /* TableViewController.swift in Sources */,
-				E2656BC3286BA30100CBB1BB /* ViewController.swift in Sources */,
+				E2501958286BA7500055FF55 /* JsonSend.swift in Sources */,
+				E2501957286BA7500055FF55 /* JsonFailure.swift in Sources */,
+				E250195C286BABD80055FF55 /* LogsViewController.swift in Sources */,
+				E2501956286BA7500055FF55 /* JsonSuccess.swift in Sources */,
 				E2656BC0286BA30100CBB1BB /* main.swift in Sources */,
+				E2501959286BA7500055FF55 /* PackageExplorer.swift in Sources */,
+				E250194F286BA7260055FF55 /* mongoose.c in Sources */,
 				E2656BBF286BA30100CBB1BB /* SplitViewController.swift in Sources */,
+				E250195E286BABF10055FF55 /* InfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,11 +399,12 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techunrestricted.PSDirectSender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "PSDirectSender/Server/Bridge/PSDirectSender-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -335,11 +427,12 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.techunrestricted.PSDirectSender;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "PSDirectSender/Server/Bridge/PSDirectSender-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
