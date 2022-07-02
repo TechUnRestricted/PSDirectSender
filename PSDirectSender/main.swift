@@ -27,7 +27,11 @@ extension NSImage.Name {
     static let configuration = NSImage.Name("Configuration")
     static let logs = NSImage.Name("Logs")
     static let info = NSImage.Name("Info")
-    static let temp = NSImage.Name("Temp")
+    
+    static let add = NSImage.Name("Add")
+    static let send = NSImage.Name("Send")
+    static let delete = NSImage.Name("Delete")
+
 }
 
 extension String {

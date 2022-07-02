@@ -18,9 +18,6 @@ let tableScreens = [
     TableScreen(text: "Configuration", image: NSImage(named: .configuration) ?? NSImage()),
     TableScreen(text: "Logs", image: NSImage(named: .logs) ?? NSImage()),
     TableScreen(text: "Info", image: NSImage(named: .info) ?? NSImage()),
-    
-    TableScreen(text: "Temp", image: NSImage(named: .temp) ?? NSImage()),
-    
 ]
 
 protocol TableViewDelegate: AnyObject {

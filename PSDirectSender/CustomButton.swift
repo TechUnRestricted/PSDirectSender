@@ -2,51 +2,59 @@
 //  CustomButton.swift
 //  PSDirectSender
 //
-//  Created by Macintosh on 29.06.2022.
+//  Created by Macintosh on 01.07.2022.
 //
 
-import Foundation
 import Cocoa
 
-@IBDesignable class FlatButton: NSButton {
-    @IBInspectable var bgColor: NSColor = .darkGray
-    @IBInspectable var foreColor: NSColor = .orange
-    @IBInspectable var highlightColor: NSColor = .black
-    @IBInspectable var cornerRadius: CGFloat = 15
-    
-    
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
+class CustomButton: NSStackView {
+    override func viewDidMoveToSuperview() {
+        super.viewDidMoveToSuperview()
         configure()
     }
     
-    func configure() {
-        
-        if !isHighlighted {
-            self.layer?.backgroundColor = bgColor.cgColor
-        } else {
-            self.layer?.backgroundColor = highlightColor.cgColor
-            /*NSAnimationContext.runAnimationGroup { context in
-                context.duration = 0.2
-                self.animator().alphaValue = 0.5
-            } completionHandler: {
-                self.animator().alphaValue = 1
-            }*/
-        }
-        
-        /*if self.animator().alphaValue == 1 {
-         NSAnimationContext.current.duration = 3
-         self.animator().alphaValue = 0
-         } else {
-         NSAnimationContext.current.duration = 3
-         self.animator().alphaValue = 1
-         }
-         */
-        let attributedString = NSAttributedString(string: title,
-                                                  attributes: [NSAttributedString.Key.foregroundColor: foreColor])
-        self.attributedTitle = attributedString
-        
-        // Set the corner radius.
-        self.layer?.cornerRadius = cornerRadius
+    override func mouseDown(with event: NSEvent) {
+        /* */
     }
+    
+    override func mouseUp(with event: NSEvent) {
+        /* */
+    }
+    
+    func configure() {
+        self.orientation = .horizontal // !!!
+        self.alignment = .centerX      // !!!
+        
+        let imageView: NSImageView = {
+            let element = NSImageView()
+            element.image = NSImage(named: .configuration)
+            element.alphaValue = 0.8
+            element.setDimensions(width: 20, height: 20)
+
+            element.wantsLayer = true
+            element.layer?.backgroundColor = NSColor.systemPink.cgColor
+                        
+            return element
+        }()
+        
+        let textField: NSTextField = {
+            let element = NSTextField()
+            element.stringValue = "macOS"
+            element.isBezeled = false
+            element.drawsBackground = false
+            element.isEditable = false
+            
+            element.wantsLayer = true
+            element.layer?.backgroundColor = NSColor.cyan.cgColor
+            
+            return element
+        }()
+        
+        self.addArrangedSubview(imageView)
+        self.addArrangedSubview(textField)
+        
+        /* */
+    }
+    
 }
+

@@ -26,8 +26,8 @@ class ContentViewController: NSViewController {
     
     override func loadView() {
         let nsView = NSView()
-        nsView.wantsLayer = true
-        nsView.layer?.backgroundColor = NSColor.red.cgColor
+        //nsView.wantsLayer = true
+        //nsView.layer?.backgroundColor = NSColor.red.cgColor
         
         tabView.addTabViewItem(NSTabViewItem(viewController: QueueViewController()))
         tabView.addTabViewItem(NSTabViewItem(viewController: ConfigurationViewController()))

@@ -18,7 +18,7 @@
 		E250195A286BA7500055FF55 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2501955286BA7500055FF55 /* Networking.swift */; };
 		E250195C286BABD80055FF55 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E250195B286BABD80055FF55 /* LogsViewController.swift */; };
 		E250195E286BABF10055FF55 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E250195D286BABF10055FF55 /* InfoViewController.swift */; };
-		E2501961286BAEDC0055FF55 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2501960286BAEDC0055FF55 /* CustomButton.swift */; };
+		E2501961286BAEDC0055FF55 /* ColorButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2501960286BAEDC0055FF55 /* ColorButtonView.swift */; };
 		E2656BB6286BA2FA00CBB1BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BB5286BA2FA00CBB1BB /* AppDelegate.swift */; };
 		E2656BBE286BA30100CBB1BB /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BB7286BA30100CBB1BB /* TableViewController.swift */; };
 		E2656BBF286BA30100CBB1BB /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BB8286BA30100CBB1BB /* SplitViewController.swift */; };
@@ -29,6 +29,8 @@
 		E2656BC6286BA30E00CBB1BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2656BC5286BA30E00CBB1BB /* Assets.xcassets */; };
 		E2656BC9286BA31700CBB1BB /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BC7286BA31700CBB1BB /* ConfigurationViewController.swift */; };
 		E2656BCA286BA31700CBB1BB /* QueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2656BC8286BA31700CBB1BB /* QueueViewController.swift */; };
+		E2A11C6B286E656900A13DD9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A11C6A286E656900A13DD9 /* CustomButton.swift */; };
+		E2A11C6D2870A22200A13DD9 /* AutoHuggingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A11C6C2870A22200A13DD9 /* AutoHuggingTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +48,7 @@
 		E2501955286BA7500055FF55 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		E250195B286BABD80055FF55 /* LogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsViewController.swift; sourceTree = "<group>"; };
 		E250195D286BABF10055FF55 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		E2501960286BAEDC0055FF55 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		E2501960286BAEDC0055FF55 /* ColorButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorButtonView.swift; sourceTree = "<group>"; };
 		E2656BA3286BA2B800CBB1BB /* PSDirectSender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PSDirectSender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2656BAF286BA2B800CBB1BB /* PSDirectSender.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PSDirectSender.entitlements; sourceTree = "<group>"; };
 		E2656BB5286BA2FA00CBB1BB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,8 @@
 		E2656BC5286BA30E00CBB1BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2656BC7286BA31700CBB1BB /* ConfigurationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
 		E2656BC8286BA31700CBB1BB /* QueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueViewController.swift; sourceTree = "<group>"; };
+		E2A11C6A286E656900A13DD9 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		E2A11C6C2870A22200A13DD9 /* AutoHuggingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoHuggingTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,7 +156,9 @@
 				E2501954286BA7500055FF55 /* PackageExplorer.swift */,
 				E2656BC5286BA30E00CBB1BB /* Assets.xcassets */,
 				E2656BBD286BA30100CBB1BB /* CustomTextFieldCell.swift */,
-				E2501960286BAEDC0055FF55 /* CustomButton.swift */,
+				E2501960286BAEDC0055FF55 /* ColorButtonView.swift */,
+				E2A11C6C2870A22200A13DD9 /* AutoHuggingTextField.swift */,
+				E2A11C6A286E656900A13DD9 /* CustomButton.swift */,
 				E2656BAF286BA2B800CBB1BB /* PSDirectSender.entitlements */,
 			);
 			path = PSDirectSender;
@@ -243,9 +249,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2656BC4286BA30100CBB1BB /* CustomTextFieldCell.swift in Sources */,
-				E2501961286BAEDC0055FF55 /* CustomButton.swift in Sources */,
+				E2501961286BAEDC0055FF55 /* ColorButtonView.swift in Sources */,
 				E2656BCA286BA31700CBB1BB /* QueueViewController.swift in Sources */,
 				E250195A286BA7500055FF55 /* Networking.swift in Sources */,
+				E2A11C6B286E656900A13DD9 /* CustomButton.swift in Sources */,
 				E2656BC1286BA30100CBB1BB /* ContentViewController.swift in Sources */,
 				E2656BC2286BA30100CBB1BB /* SidebarViewController.swift in Sources */,
 				E2656BC9286BA31700CBB1BB /* ConfigurationViewController.swift in Sources */,
@@ -261,6 +268,7 @@
 				E250194F286BA7260055FF55 /* mongoose.c in Sources */,
 				E2656BBF286BA30100CBB1BB /* SplitViewController.swift in Sources */,
 				E250195E286BABF10055FF55 /* InfoViewController.swift in Sources */,
+				E2A11C6D2870A22200A13DD9 /* AutoHuggingTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
