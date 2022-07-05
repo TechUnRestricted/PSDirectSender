@@ -36,7 +36,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         window.contentViewController = SplitViewController()
         //window.titlebarAppearsTransparent = true
-
         
         
     }

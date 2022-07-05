@@ -25,7 +25,7 @@ class SplitViewController: NSSplitViewController, TableViewDelegate {
     
     lazy var sidebar: SidebarViewController = {
         var parent = SidebarViewController()
-
+        
         parent.stackContainer.addView(tableView.view, in: .bottom)
         
         
@@ -59,13 +59,7 @@ class SplitViewController: NSSplitViewController, TableViewDelegate {
     }
     
     private func setupLayout() {
-        //itemA.minimumThickness = 80
-        if #available(macOS 10.11, *) {
-            addSplitViewItem(NSSplitViewItem(sidebarWithViewController: sidebar))
-        } else {
-            addSplitViewItem(NSSplitViewItem(viewController: sidebar))
-        }
-        
+        addSplitViewItem(NSSplitViewItem(sidebarWithViewController: sidebar))
         addSplitViewItem(NSSplitViewItem(viewController: content))
     }
 }

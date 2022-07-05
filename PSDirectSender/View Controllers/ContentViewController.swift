@@ -31,6 +31,9 @@ class ContentViewController: NSViewController {
         
         tabView.addTabViewItem(NSTabViewItem(viewController: QueueViewController()))
         tabView.addTabViewItem(NSTabViewItem(viewController: ConfigurationViewController()))
+        tabView.addTabViewItem(NSTabViewItem(viewController: LogsViewController()))
+        tabView.addTabViewItem(NSTabViewItem(viewController: InfoViewController()))
+
         tabView.translatesAutoresizingMaskIntoConstraints = false
         tabView.tabViewType = .noTabsNoBorder
         

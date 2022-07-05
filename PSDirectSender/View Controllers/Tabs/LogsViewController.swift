@@ -24,5 +24,8 @@ class LogsViewController: NSViewController {
         nsView.wantsLayer = true
         nsView.layer?.backgroundColor = .white
         view = nsView
+        
+        view.addConstraint(NSLayoutConstraint(item: nsView, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 470))
+        view.addConstraint(NSLayoutConstraint(item: nsView, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 450))
     }
 }

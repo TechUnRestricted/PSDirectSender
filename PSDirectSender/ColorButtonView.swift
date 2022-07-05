@@ -8,20 +8,6 @@
 import Foundation
 import Cocoa
 
-extension NSImageView {
-    func setWidth(_ width: CGFloat) {
-        self.addConstraint(NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: width))
-    }
-    
-    func setHeight(_ height: CGFloat) {
-        self.addConstraint(NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: height))
-    }
-    
-    func setDimensions(width: CGFloat, height: CGFloat) {
-        setWidth(width)
-        setHeight(height)
-    }
-}
 
 @IBDesignable class ColorButtonView: NSButton {
     private let animationDuration: TimeInterval = 0.2
@@ -43,14 +29,14 @@ extension NSImageView {
     }
         
     override func draw(_ dirtyRect: NSRect) {
-        print("\(#function) \(arc4random())")
+        //print("\(#function) \(arc4random())")
         self.highlight(false)
         
         super.draw(dirtyRect)
     }
     
     override func viewDidMoveToSuperview() {
-        print("\(#function) \(arc4random())")
+        //print("\(#function) \(arc4random())")
         configure()
         super.viewDidMoveToSuperview()
     }

@@ -46,6 +46,22 @@ extension Int {
     }
 }
 
+
+extension NSImageView {
+    func setWidth(_ width: CGFloat) {
+        self.addConstraint(NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: width))
+    }
+    
+    func setHeight(_ height: CGFloat) {
+        self.addConstraint(NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: height))
+    }
+    
+    func setDimensions(width: CGFloat, height: CGFloat) {
+        setWidth(width)
+        setHeight(height)
+    }
+}
+
 extension Bundle {
     public var appName: String { getInfo("CFBundleName") }
     public var displayName: String { getInfo("CFBundleDisplayName") }

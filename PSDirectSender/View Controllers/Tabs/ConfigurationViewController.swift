@@ -23,10 +23,13 @@ class ConfigurationViewController: NSViewController {
     @objc func continueButtonClicked(_ sender: NSButton) {
         print("Continue button clicked")
     }
-    
+    let nsView = NSView()
+
     override func loadView() {
-        let mainStackContainer = NSStackView()
     
-        view = mainStackContainer
+        view = nsView
+        
+        view.addConstraint(NSLayoutConstraint(item: nsView, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 470))
+        view.addConstraint(NSLayoutConstraint(item: nsView, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 450))
     }
 }

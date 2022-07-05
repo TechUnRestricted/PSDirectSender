@@ -48,7 +48,7 @@ class TableViewController: NSViewController, NSTableViewDelegate, NSTableViewDat
             initialized = true
             setupView()
             setupTableView()
-            tableView.selectRowIndexes(NSIndexSet(index: 1) as IndexSet, byExtendingSelection: false)
+            tableView.selectRowIndexes(NSIndexSet(index: 0) as IndexSet, byExtendingSelection: false)
         }
     }
     
